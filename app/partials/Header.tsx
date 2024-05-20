@@ -42,7 +42,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
   return (
     <div
       className={cx(
-        "sticky top-0 z-10 w-full py-4 border-b border-b-border/50 backdrop-blur-sm bg-background/95",
+        "sticky top-0 z-10 w-full mb-12 py-4 border-b border-b-border/50 backdrop-blur-sm bg-background/95",
         className
       )}
       {...props}
@@ -55,8 +55,6 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
         </button>
 
         <Logo />
-
-        <span className="h-6 w-[1px] bg-border hidden lg:block" />
 
         <Series className="max-lg:hidden" asChild>
           <nav>

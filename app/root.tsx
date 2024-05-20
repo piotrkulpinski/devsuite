@@ -1,7 +1,7 @@
 import { LinksFunction } from "@remix-run/node"
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react"
 import { Header } from "~/partials/Header"
-import { Container } from "~/components/Container"
+import { Footer } from "~/partials/Footer"
 import { ThemeProvider } from "next-themes"
 
 import stylesheet from "~/styles.css?url"
@@ -25,7 +25,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
 
-      <body className="bg-background text-foreground">
+      <body className="min-h-dvh bg-gradient-to-b from-background to-card text-foreground">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -34,11 +34,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
         >
           <Header />
 
-          <Container className="flex flex-col py-12 gap-12">
-            {children}
+          {children}
 
-            {/* <Footer /> */}
-          </Container>
+          <Footer />
+
+          <div className="gradient-blur-wrapper">
+            <div className="gradient-blur">
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+              <div />
+            </div>
+          </div>
         </ThemeProvider>
 
         <ScrollRestoration />

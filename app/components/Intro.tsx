@@ -5,7 +5,7 @@ import { Prose } from "./Prose"
 import { Series } from "./Series"
 
 const introVariants = cva({
-  base: "flex w-full flex-col gap-y-2",
+  base: "flex w-full flex-col gap-y-4",
 
   variants: {
     alignment: {
@@ -44,10 +44,14 @@ export const Intro = ({
     <div className={cx(introVariants({ alignment, className }))} {...props}>
       <Series size="lg" className="relative w-full">
         {prefix}
-        {title && <Heading {...headingProps}>{title}</Heading>}
-        {suffix}
+        {title && (
+          <Heading {...headingProps} className="relative">
+            {title}
 
-        <div className="absolute -bottom-2 inset-x-0 h-8 bg-gradient-to-t from-background/40 to-transparent pointer-events-none select-none" />
+            <div className="absolute -bottom-2 inset-x-0 h-8 bg-gradient-to-t from-background/40 to-transparent pointer-events-none select-none" />
+          </Heading>
+        )}
+        {suffix}
       </Series>
 
       {description && (
