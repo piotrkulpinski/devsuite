@@ -12,6 +12,22 @@ export const meta: MetaFunction = () => {
 }
 
 export default function Index() {
+  const categories = [
+    "Workflow Automation",
+    "Repository Management",
+    "Documentation",
+    "Emails",
+    "Internal Tooling",
+    "Mono Fonts",
+    "Background Jobs",
+    "Notifications",
+    "Onboarding",
+    "Hosting",
+    "API Development",
+    "Low-Code & No-Code",
+    "Code Boilerplates",
+  ]
+
   return (
     <>
       <Intro
@@ -19,7 +35,7 @@ export default function Index() {
           <>
             A suite of developer tools that help you{" "}
             <span className="italic underline decoration-from-font decoration-foreground/25">
-              ship faster.
+              ship faster
             </span>
           </>
         }
@@ -28,16 +44,21 @@ export default function Index() {
         className="mb-12 max-w-[40rem] mx-auto text-pretty"
       >
         <div className="mt-4 relative w-full max-w-md mx-auto">
-          <Input shape="rounded" placeholder="Search for tools..." className="w-full pr-10" />
+          <Input
+            size="lg"
+            shape="rounded"
+            placeholder="Search for tools..."
+            className="w-full pr-10"
+          />
 
           <SearchIcon className="absolute top-1/2 right-4 -translate-y-1/2 size-4 pointer-events-none" />
         </div>
       </Intro>
 
       <div className="grid grid-auto-fill-lg gap-6">
-        {Array.from({ length: 12 }).map((_, i) => (
+        {categories.map((category, i) => (
           <Card key={i} asChild>
-            <NavLink to="/tool" unstable_viewTransition>
+            <NavLink to="/tools" unstable_viewTransition>
               <div className="flex items-center gap-3 overflow-clip">
                 {Array.from({ length: 4 }).map((_, j) => (
                   <img
@@ -51,11 +72,11 @@ export default function Index() {
 
               <div className="flex gap-4 items-center justify-between">
                 <div className="flex flex-col gap-1">
-                  <H5>Design System</H5>
+                  <H5>{category}</H5>
                   <span className="text-xs text-muted">22 tools</span>
                 </div>
 
-                <span className="size-10 grid place-items-center bg-foreground/10 rounded-full">
+                <span className="size-10 grid place-items-center bg-foreground/10 rounded-full shrink-0">
                   <ArrowRightIcon />
                 </span>
               </div>

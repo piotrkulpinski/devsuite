@@ -1,0 +1,117 @@
+import * as TooltipPrimitive from "@radix-ui/react-tooltip"
+import type { ComponentPropsWithoutRef, ElementRef, ReactNode } from "react"
+import { forwardRef } from "react"
+import { VariantProps, cva, cx } from "~/utils/cva"
+
+export const tooltipVariants = cva({
+  base: "z-50 px-2 py-1 max-w-[12rem] overflow-hidden rounded-md bg-foreground text-background text-xs text-pretty font-medium outline-none shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px]",
+
+  variants: {
+    align: {
+      start: "text-start",
+      center: "text-center",
+      end: "text-end",
+    },
+  },
+
+  defaultVariants: {
+    align: "center",
+  },
+})
+
+export const tooltipArrowVariants = cva({
+  base: "-mt-px block fill-current text-foreground drop-shadow-sm",
+})
+
+export type TooltipElement = ElementRef<typeof TooltipPrimitive.Trigger>
+export type TooltipProps = ComponentPropsWithoutRef<typeof TooltipPrimitive.Root> &
+  ComponentPropsWithoutRef<typeof TooltipContent> & {
+    tooltip: ReactNode
+  }
+
+export const TooltipProvider = TooltipPrimitive.Provider
+export const TooltipRoot = TooltipPrimitive.Root
+export const TooltipTrigger = TooltipPrimitive.Trigger
+export const TooltipPortal = TooltipPrimitive.Portal
+
+export const TooltipContent = forwardRef<
+  ElementRef<typeof TooltipPrimitive.Content>,
+  ComponentPropsWithoutRef<typeof TooltipPrimitive.Content> & VariantProps<typeof tooltipVariants>
+>((props, ref) => {
+  const {
+    children,
+    className,
+    align = "center",
+    collisionPadding = 5,
+    sideOffset = 4,
+    ...rest
+  } = props
+  return (
+    <TooltipPrimitive.Content
+      ref={ref}
+      align={align}
+      collisionPadding={collisionPadding}
+      sideOffset={sideOffset}
+      className={cx(tooltipVariants({ align, className }))}
+      {...rest}
+    >
+      {children}
+      <TooltipArrow />
+    </TooltipPrimitive.Content>
+  )
+})
+TooltipContent.displayName = TooltipPrimitive.Content.displayName
+
+export const TooltipArrow = forwardRef<
+  ElementRef<typeof TooltipPrimitive.Arrow>,
+  ComponentPropsWithoutRef<typeof TooltipPrimitive.Arrow> &
+    VariantProps<typeof tooltipArrowVariants>
+>(({ className, ...props }, ref) => (
+  <TooltipPrimitive.Arrow
+    ref={ref}
+    className={cx(tooltipArrowVariants({ className }))}
+    {...props}
+  />
+))
+TooltipArrow.displayName = TooltipPrimitive.Arrow.displayName
+
+export const TooltipBase = forwardRef<TooltipElement, TooltipProps>((props, ref) => {
+  const { children, className, delayDuration = 0, tooltip, ...rest } = props
+
+  if (!tooltip) {
+    return children
+  }
+
+  return (
+    <TooltipPrimitive.Provider disableHoverableContent>
+      <TooltipPrimitive.Root delayDuration={delayDuration}>
+        <TooltipPrimitive.Trigger ref={ref} className={className} asChild>
+          {children}
+        </TooltipPrimitive.Trigger>
+
+        <TooltipPrimitive.Portal>
+          <TooltipContent {...rest}>
+            <p>{tooltip}</p>
+          </TooltipContent>
+        </TooltipPrimitive.Portal>
+      </TooltipPrimitive.Root>
+    </TooltipPrimitive.Provider>
+  )
+})
+TooltipBase.displayName = "Tooltip"
+
+export const Tooltip = Object.assign(TooltipBase, {
+  Provider: TooltipProvider,
+  Root: TooltipRoot,
+  Trigger: TooltipTrigger,
+  Portal: TooltipPortal,
+  Content: TooltipContent,
+  Arrow: TooltipArrow,
+})
+
+Tooltip.defaultProps = {
+  align: "center",
+  delayDuration: 0,
+  collisionPadding: 5,
+  sideOffset: 4,
+}

@@ -1,12 +1,12 @@
 import { LinksFunction } from "@remix-run/node"
+import { ThemeProvider } from "next-themes"
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react"
 import { Header } from "~/partials/Header"
 import { Footer } from "~/partials/Footer"
-import { GradientBlur } from "~/components/GradientBlur"
-import { ThemeProvider } from "next-themes"
+import { Container } from "./components/Container"
 
 import stylesheet from "~/styles.css?url"
-import { Container } from "./components/Container"
+import { GradientBlur } from "./components/GradientBlur"
 
 export const links: LinksFunction = () => {
   return [
@@ -27,7 +27,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
 
-      <body className="min-h-dvh flex flex-col bg-background text-foreground dark:bg-gradient-to-b dark:from-background dark:to-card">
+      <body className="min-h-dvh flex flex-col bg-background text-foreground">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

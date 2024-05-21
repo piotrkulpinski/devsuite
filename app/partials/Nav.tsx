@@ -9,6 +9,7 @@ import {
 } from "lucide-react"
 import { HTMLAttributes } from "react"
 import { Dock } from "~/components/Dock"
+import { Tooltip } from "~/components/Tooltip"
 
 export const Nav = ({ ...props }: HTMLAttributes<HTMLElement>) => {
   return (
@@ -57,9 +58,11 @@ export const Nav = ({ ...props }: HTMLAttributes<HTMLElement>) => {
 
       <NavLink to="/test">
         {({ isActive }) => (
-          <Dock.Item isActive={isActive}>
-            <GithubIcon />
-          </Dock.Item>
+          <Tooltip tooltip="Share on GitHub">
+            <Dock.Item isActive={isActive}>
+              <GithubIcon />
+            </Dock.Item>
+          </Tooltip>
         )}
       </NavLink>
     </Dock>

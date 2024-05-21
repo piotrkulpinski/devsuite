@@ -1,5 +1,5 @@
 import { AnimatePresence, HTMLMotionProps, motion } from "framer-motion"
-import { HTMLAttributes, ReactNode } from "react"
+import { ComponentProps, ElementRef, HTMLAttributes, ReactNode, forwardRef } from "react"
 import { VariantProps, cva, cx } from "~/utils/cva"
 
 const dockItemVariants = cva({
@@ -26,9 +26,12 @@ type DockItemProps = HTMLMotionProps<"div"> &
     asChild?: boolean
   }
 
-const DockItem = ({ children, className, isActive, ...props }: DockItemProps) => {
+const DockItem = forwardRef<ElementRef<"div">, DockItemProps>((props, ref) => {
+  const { children, className, isActive, ...rest } = props
+
   return (
     <motion.div
+      ref={ref}
       className={cx(dockItemVariants({ isActive, className }))}
       style={{
         paddingBottom: 0,
@@ -40,7 +43,7 @@ const DockItem = ({ children, className, isActive, ...props }: DockItemProps) =>
         transition: { type: "spring", stiffness: 300, damping: 20 },
       }}
       whileTap={{ scale: 0.95 }}
-      {...props}
+      {...rest}
     >
       {children as ReactNode}
 
@@ -56,11 +59,15 @@ const DockItem = ({ children, className, isActive, ...props }: DockItemProps) =>
       </AnimatePresence>
     </motion.div>
   )
-}
+})
+DockItem.displayName = "Dock.Item"
 
-const DockSeparator = () => {
-  return <div className="w-[1px] h-4 -my-2 bg-border" />
-}
+const DockSeparator = forwardRef<ElementRef<"div">, ComponentProps<"div">>((props, ref) => {
+  const { className, ...rest } = props
+
+  return <div ref={ref} className={cx("w-[1px] h-4 -my-2 bg-border", className)} {...rest} />
+})
+DockSeparator.displayName = "Dock.Separator"
 
 export const Dock = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (

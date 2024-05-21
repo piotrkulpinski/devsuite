@@ -1,7 +1,7 @@
 import { Intro } from "~/components/Intro"
 import { Wrapper } from "~/components/Wrapper"
 
-export default function SubmitPackages() {
+export default function SubmitThanks() {
   return (
     <Wrapper className="flex flex-col gap-16">
       <Intro
