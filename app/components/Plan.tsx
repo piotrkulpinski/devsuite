@@ -5,21 +5,10 @@ import { CheckIcon, XIcon } from "lucide-react"
 import { H3 } from "./Heading"
 import { Prose } from "./Prose"
 import { Series } from "./Series"
-import { Card } from "./Card"
+import { Card, cardVariants } from "./Card"
 
 export const planVariants = cva({
-  base: "gap-8 p-4 min-w-64 overflow-clip md:p-6",
-
-  variants: {
-    isFeatured: {
-      // className="bg-card ring-[3px] ring-card-dark border-border-dark"
-      true: "bg-card border-border-dark",
-    },
-  },
-
-  defaultVariants: {
-    isFeatured: false,
-  },
+  base: "gap-8 p-4 min-w-64 md:p-6",
 })
 
 export const planFeatureVariants = cva({
@@ -41,6 +30,7 @@ export const planFeatureCheckVariants = cva({
 export type PlanElement = HTMLDivElement
 
 export type PlanProps = Omit<HTMLAttributes<PlanElement>, "size"> &
+  VariantProps<typeof cardVariants> &
   VariantProps<typeof planVariants> & {
     /**
      * If set to `true`, the button will be rendered as a child within the component.
@@ -110,8 +100,8 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
   const finalPrice = discount ? (price * (100 - discount)) / 100 : price
 
   return (
-    <Card asChild>
-      <Component ref={ref} className={cx(planVariants({ isFeatured, className }))} {...rest}>
+    <Card isRevealed={false} isFeatured={isFeatured} asChild>
+      <Component ref={ref} className={cx(planVariants({ className }))} {...rest}>
         {isFeatured && (
           <img
             src="/3d-coin.png"

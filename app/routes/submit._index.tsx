@@ -36,7 +36,7 @@ export default function Submit() {
             type="text"
             name="name"
             id="name"
-            // placeholder="John Doe"
+            placeholder="John Doe"
             data-1p-ignore
             required
           />
@@ -55,7 +55,7 @@ export default function Submit() {
             type="url"
             name="email"
             id="email"
-            // placeholder="john@example.com"
+            placeholder="john@example.com"
             required
           />
 
@@ -73,7 +73,7 @@ export default function Submit() {
             type="text"
             name="name"
             id="name"
-            // placeholder="PostHog"
+            placeholder="PostHog"
             data-1p-ignore
             required
           />
@@ -92,7 +92,7 @@ export default function Submit() {
             type="url"
             name="website"
             id="website"
-            // placeholder="https://posthog.com"
+            placeholder="https://posthog.com"
             required
           />
 
@@ -110,7 +110,7 @@ export default function Submit() {
             name="description"
             id="description"
             rows={3}
-            // placeholder="A platform that helps engineers build better products"
+            placeholder="A platform that helps engineers build better products"
             required
           />
 

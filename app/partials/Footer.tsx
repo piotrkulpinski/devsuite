@@ -5,7 +5,7 @@ import { Logo } from "~/components/Logo"
 
 export const Footer = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
-    <div className={cx("relative z-20 w-full py-4 border-t", className)} {...props}>
+    <div className={cx("relative z-20 mt-12 w-full py-4 border-t", className)} {...props}>
       <Container className="flex flex-wrap items-center gap-3 md:gap-4 lg:gap-6">
         <Logo />
 

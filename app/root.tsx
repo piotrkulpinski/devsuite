@@ -38,6 +38,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
           <Container className="flex-1 flex flex-col gap-12 py-12 md:py-16 lg:py-20">
             {children}
+
             <GradientBlur className="h-40" />
             {/* <Nav className="sticky bottom-4 z-30 mx-auto mt-auto" /> */}
           </Container>
