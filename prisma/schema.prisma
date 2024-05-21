@@ -14,7 +14,8 @@ model Tool {
   slug           String              @unique
   description    String?
   content        String?
-  website        String              @unique
+  websiteUrl     String              @unique
+  affiliateUrl   String?
   faviconUrl     String?
   screenshotUrl  String?
   isFeatured     Boolean             @default(false)

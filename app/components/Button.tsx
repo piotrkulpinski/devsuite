@@ -17,7 +17,7 @@ export const buttonVariants = cva({
       fancy: "bg-gradient-to-br from-blue-500 to-blue-700 text-white hover:ring-blue-500/25",
       primary: "text-background bg-foreground hover:opacity-90 hover:ring-border",
       secondary:
-        "border bg-background text-foreground hover:bg-card hover:border-border-dark hover:ring-border",
+        "border bg-background text-foreground hover:border-border-dark hover:ring-card-dark",
     },
     size: {
       sm: "text-sm/none gap-[0.5ch] py-1 px-2",

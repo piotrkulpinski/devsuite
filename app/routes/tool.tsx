@@ -1,9 +1,9 @@
 import type { MetaFunction } from "@remix-run/node"
 import { ArrowUpRightIcon } from "lucide-react"
 import { Button } from "~/components/Button"
-import { Container } from "~/components/Container"
 import { Favicon } from "~/components/Favicon"
 import { Intro } from "~/components/Intro"
+import { Wrapper } from "~/components/Wrapper"
 
 export const meta: MetaFunction = () => {
   return [{ title: "New Remix App" }, { name: "description", content: "Welcome to Remix!" }]
@@ -11,7 +11,7 @@ export const meta: MetaFunction = () => {
 
 export default function Tool() {
   return (
-    <Container size="sm" className="py-12">
+    <Wrapper>
       <Intro
         prefix={
           <Favicon
@@ -30,6 +30,6 @@ export default function Tool() {
         headingProps={{ size: "h2", as: "h1" }}
         className="text-pretty"
       />
-    </Container>
+    </Wrapper>
   )
 }

@@ -45,7 +45,7 @@ export const Intro = ({
       <Series size="lg" className="relative w-full">
         {prefix}
         {title && (
-          <Heading {...headingProps} className="relative">
+          <Heading {...headingProps} className="relative flex-1">
             {title}
 
             <div className="absolute -bottom-2 inset-x-0 h-8 bg-gradient-to-t from-background/40 to-transparent pointer-events-none select-none" />

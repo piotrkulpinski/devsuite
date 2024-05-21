@@ -1,7 +1,6 @@
 import type { MetaFunction } from "@remix-run/node"
 import { NavLink } from "@remix-run/react"
 import { ArrowRightIcon, SearchIcon } from "lucide-react"
-import { Container } from "~/components/Container"
 import { H5 } from "~/components/Heading"
 import { Intro } from "~/components/Intro"
 import { Input } from "~/components/forms/Input"
@@ -12,7 +11,7 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <Container className="flex flex-col py-12 gap-12">
+    <>
       <Intro
         title="AI design assets for truly independent creators"
         description="We’ve curated some great open source alternatives to tools that your business requires in day-to-day operations."
@@ -20,7 +19,7 @@ export default function Index() {
         className="py-12 max-w-[40rem] mx-auto text-pretty"
       >
         <div className="mt-4 relative w-full max-w-md mx-auto">
-          <Input placeholder="Search for tools..." className="w-full pr-10" />
+          <Input shape="rounded" placeholder="Search for tools..." className="w-full pr-10" />
 
           <SearchIcon className="absolute top-1/2 right-4 -translate-y-1/2 size-4 pointer-events-none" />
         </div>
@@ -31,7 +30,7 @@ export default function Index() {
           <NavLink
             to="/tool"
             key={i}
-            className="fade-in flex flex-col gap-4 border rounded-lg p-6 hover:ring-[3px] hover:ring-border hover:border-border-dark"
+            className="fade-in flex flex-col gap-4 border rounded-lg p-6 hover:ring-[3px] hover:ring-card-dark hover:border-border-dark"
             unstable_viewTransition
           >
             <div className="flex items-center gap-3 overflow-clip">
@@ -58,6 +57,6 @@ export default function Index() {
           </NavLink>
         ))}
       </div>
-    </Container>
+    </>
   )
 }
