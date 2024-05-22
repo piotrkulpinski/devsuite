@@ -17,7 +17,7 @@ export default function Index() {
     "Documentation",
     "Emails",
     "Internal Tooling",
-    "Mono Fonts",
+    // "Mono Fonts",
     "Background Jobs",
     "Notifications",
     "Onboarding",
@@ -40,7 +40,7 @@ export default function Index() {
         }
         description="Find the best tools to help you build faster and more efficiently. Stop wasting time and money by developing tools that already exist."
         alignment="center"
-        className="mb-12 max-w-[40rem] mx-auto text-pretty"
+        className="mb-12 max-w-2xl mx-auto text-pretty"
       >
         <div className="mt-4 relative w-full max-w-md mx-auto">
           <Input
@@ -55,8 +55,8 @@ export default function Index() {
       </Intro>
 
       <Grid>
-        {categories.map((_, i) => (
-          <CategoryCard key={i} />
+        {categories.map((category, i) => (
+          <CategoryCard key={i} category={category} />
         ))}
       </Grid>
 

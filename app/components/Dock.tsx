@@ -10,7 +10,7 @@ const dockItemVariants = cva({
 
   variants: {
     isActive: {
-      true: "after:absolute after:mt-1 after:left-1/2 after:-translate-x-1/2 after:pointer-events-none after:bg-current after:size-[3px] after:rounded-full",
+      true: "after:absolute after:mt-1 after:left-1/2 after:-translate-x-1/2 after:pointer-events-none after:bg-current after:w-2.5 after:h-px after:rounded-full",
       false: "text-secondary",
     },
   },

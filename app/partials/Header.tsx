@@ -58,7 +58,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
         <Series className="max-lg:hidden" asChild>
           <nav>
-            <DropdownMenu>
+            <DropdownMenu modal={false}>
               <DropdownMenuTrigger className={cx(navigationLinkVariants({ className: "gap-1" }))}>
                 Browse{" "}
                 <ChevronDownIcon className="group-data-[state=open]:-rotate-180 duration-200" />
@@ -95,6 +95,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
             <NavigationLink to="/about">About</NavigationLink>
             <NavigationLink to="/sponsor">Sponsor</NavigationLink>
+            <NavigationLink to="/admin">Admin</NavigationLink>
           </nav>
         </Series>
 

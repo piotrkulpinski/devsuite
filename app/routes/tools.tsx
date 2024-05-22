@@ -14,7 +14,7 @@ export default function Tools() {
       <Intro
         title="Workflow Automation Tools"
         description="A collection of hand-curated developer tools to help you automate your workflow and increase productivity."
-        className="max-w-[40rem] mx-auto text-pretty"
+        className="max-w-2xl mx-auto text-pretty"
         alignment="center"
       />
 

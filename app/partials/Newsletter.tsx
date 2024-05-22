@@ -35,7 +35,7 @@ export const Newsletter = ({
           <Form
             method="POST"
             action="/api/subscribe"
-            className="mt-4 flex gap-2 w-full max-w-sm"
+            className="mt-4 relative w-full max-w-sm"
             noValidate
           >
             <Input
@@ -45,10 +45,14 @@ export const Newsletter = ({
               data-1p-ignore
               required
               shape="rounded"
-              className="w-full"
+              className="w-full pr-32"
             />
 
-            <Button variant={buttonVariant} isPending={state !== "idle"}>
+            <Button
+              variant={buttonVariant}
+              isPending={state !== "idle"}
+              className="absolute inset-y-1 right-1"
+            >
               Subscribe
             </Button>
           </Form>

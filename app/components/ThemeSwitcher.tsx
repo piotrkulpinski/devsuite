@@ -13,7 +13,7 @@ export const ThemeSwitcher = ({ ...props }: ButtonProps) => {
   const { resolvedTheme, setTheme } = useTheme()
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button
           title="Toggle theme"
