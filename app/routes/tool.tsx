@@ -4,10 +4,13 @@ import { ArrowUpRightIcon, HashIcon } from "lucide-react"
 import { Button } from "~/components/Button"
 import { Favicon } from "~/components/Favicon"
 import { Gallery } from "~/components/Gallery"
+import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { Prose } from "~/components/Prose"
 import { Wrapper } from "~/components/Wrapper"
 import { Nav } from "~/partials/Nav"
+import { Newsletter } from "~/partials/Newsletter"
+import { ToolCard } from "~/partials/cards/ToolCard"
 
 export const meta: MetaFunction = () => {
   return [{ title: "New Remix App" }, { name: "description", content: "Welcome to Remix!" }]
@@ -116,6 +119,14 @@ export default function Tool() {
       </Wrapper>
 
       <Nav className="sticky bottom-4 z-30 mx-auto mt-auto" />
+
+      <Grid>
+        {Array.from({ length: 3 }).map((_, i) => (
+          <ToolCard key={i} />
+        ))}
+      </Grid>
+
+      <Newsletter className="mt-auto" />
     </>
   )
 }

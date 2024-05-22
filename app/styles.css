@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+:root,
+.light {
   --color-background: 0 0% 100%;
 
   --color-card: 0 0% 96%;

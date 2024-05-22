@@ -1,10 +1,9 @@
 import type { MetaFunction } from "@remix-run/node"
-import { NavLink } from "@remix-run/react"
-import { ArrowRightIcon, SearchIcon } from "lucide-react"
-import { Card } from "~/components/Card"
-import { H5 } from "~/components/Heading"
+import { SearchIcon } from "lucide-react"
+import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { Input } from "~/components/forms/Input"
+import { CategoryCard } from "~/partials/cards/CategoryCard"
 import { Newsletter } from "~/partials/Newsletter"
 
 export const meta: MetaFunction = () => {
@@ -55,35 +54,11 @@ export default function Index() {
         </div>
       </Intro>
 
-      <div className="grid grid-auto-fill-lg gap-6">
-        {categories.map((category, i) => (
-          <Card key={i} asChild>
-            <NavLink to="/tools" unstable_viewTransition>
-              <div className="flex items-center gap-3 overflow-clip">
-                {Array.from({ length: 4 }).map((_, j) => (
-                  <img
-                    key={j}
-                    src="https://framerusercontent.com/images/4dKAgLp4CiDi6x2Yoacvyp33JA.webp"
-                    alt=""
-                    className="size-20 object-cover"
-                  />
-                ))}
-              </div>
-
-              <div className="flex gap-4 items-center justify-between">
-                <div className="flex flex-col gap-1">
-                  <H5>{category}</H5>
-                  <span className="text-xs text-muted">22 tools</span>
-                </div>
-
-                <span className="size-10 grid place-items-center bg-foreground/10 rounded-full shrink-0">
-                  <ArrowRightIcon />
-                </span>
-              </div>
-            </NavLink>
-          </Card>
+      <Grid>
+        {categories.map((_, i) => (
+          <CategoryCard key={i} />
         ))}
-      </div>
+      </Grid>
 
       <Newsletter className="mt-auto" />
     </>

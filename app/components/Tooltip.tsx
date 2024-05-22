@@ -1,10 +1,14 @@
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
+import { useTheme } from "next-themes"
 import type { ComponentPropsWithoutRef, ElementRef, ReactNode } from "react"
 import { forwardRef } from "react"
 import { VariantProps, cva, cx } from "~/utils/cva"
 
 export const tooltipVariants = cva({
-  base: "z-50 px-2 py-1 max-w-[12rem] overflow-hidden rounded-md bg-foreground text-background text-xs text-pretty font-medium outline-none shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px]",
+  base: [
+    "z-50 px-2.5 py-1 min-h-6 inline-flex items-center gap-2 max-w-[12rem] rounded-md bg-background text-foreground text-xs/none text-pretty font-medium outline-none select-none shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] will-change-[transform,opacity]",
+    "animate-in fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+  ],
 
   variants: {
     align: {
@@ -20,7 +24,7 @@ export const tooltipVariants = cva({
 })
 
 export const tooltipArrowVariants = cva({
-  base: "-mt-px block fill-current text-foreground drop-shadow-sm",
+  base: "w-2 h-1 block fill-background",
 })
 
 export type TooltipElement = ElementRef<typeof TooltipPrimitive.Trigger>
@@ -46,13 +50,18 @@ export const TooltipContent = forwardRef<
     sideOffset = 4,
     ...rest
   } = props
+  const { resolvedTheme } = useTheme()
+
   return (
     <TooltipPrimitive.Content
       ref={ref}
       align={align}
       collisionPadding={collisionPadding}
       sideOffset={sideOffset}
-      className={cx(tooltipVariants({ align, className }))}
+      className={cx(
+        resolvedTheme === "light" ? "dark" : "light",
+        tooltipVariants({ align, className })
+      )}
       {...rest}
     >
       {children}
@@ -90,9 +99,7 @@ export const TooltipBase = forwardRef<TooltipElement, TooltipProps>((props, ref)
         </TooltipPrimitive.Trigger>
 
         <TooltipPrimitive.Portal>
-          <TooltipContent {...rest}>
-            <p>{tooltip}</p>
-          </TooltipContent>
+          <TooltipContent {...rest}>{tooltip}</TooltipContent>
         </TooltipPrimitive.Portal>
       </TooltipPrimitive.Root>
     </TooltipPrimitive.Provider>
@@ -108,10 +115,3 @@ export const Tooltip = Object.assign(TooltipBase, {
   Content: TooltipContent,
   Arrow: TooltipArrow,
 })
-
-Tooltip.defaultProps = {
-  align: "center",
-  delayDuration: 0,
-  collisionPadding: 5,
-  sideOffset: 4,
-}
