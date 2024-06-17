@@ -72,48 +72,45 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
           <Logo />
 
-          <Series size="lg" className="text-sm max-lg:hidden" asChild>
-            <nav>
-              <DropdownMenu modal={false}>
-                <DropdownMenuTrigger className={cx(navigationLinkVariants({ className: "gap-1" }))}>
-                  Browse{" "}
-                  <ChevronDownIcon className="group-data-[state=open]:-rotate-180 duration-200" />
-                </DropdownMenuTrigger>
+          <nav className="flex flex-wrap items-center gap-3 text-sm md:gap-4 max-lg:hidden">
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger className={cx(navigationLinkVariants({ className: "gap-1" }))}>
+                Browse{" "}
+                <ChevronDownIcon className="group-data-[state=open]:-rotate-180 duration-200" />
+              </DropdownMenuTrigger>
 
-                <DropdownMenuContent align="start">
-                  <DropdownMenuItem asChild>
-                    <NavigationLink to="/latest">
-                      <GemIcon className="size-4 opacity-75" /> Latest
-                    </NavigationLink>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <NavigationLink to="/categories">
-                      <BlocksIcon className="size-4 opacity-75" /> Categories
-                    </NavigationLink>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <NavigationLink to="/alternatives">
-                      <SmilePlusIcon className="size-4 opacity-75" /> Alternatives
-                    </NavigationLink>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <NavigationLink to="/languages">
-                      <BracesIcon className="size-4 opacity-75" /> Languages
-                    </NavigationLink>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <NavigationLink to="/topics">
-                      <TagIcon className="size-4 opacity-75" /> Topics
-                    </NavigationLink>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem asChild>
+                  <NavigationLink to="/latest">
+                    <GemIcon className="size-4 opacity-75" /> Latest
+                  </NavigationLink>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <NavigationLink to="/categories">
+                    <BlocksIcon className="size-4 opacity-75" /> Categories
+                  </NavigationLink>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <NavigationLink to="/alternatives">
+                    <SmilePlusIcon className="size-4 opacity-75" /> Alternatives
+                  </NavigationLink>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <NavigationLink to="/languages">
+                    <BracesIcon className="size-4 opacity-75" /> Languages
+                  </NavigationLink>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <NavigationLink to="/topics">
+                    <TagIcon className="size-4 opacity-75" /> Topics
+                  </NavigationLink>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-              <NavigationLink to="/about">About</NavigationLink>
-              <NavigationLink to="/sponsor">Sponsor</NavigationLink>
-              <NavigationLink to="/admin">Admin</NavigationLink>
-            </nav>
-          </Series>
+            <NavigationLink to="/about">About</NavigationLink>
+            <NavigationLink to="/sponsor">Sponsor</NavigationLink>
+          </nav>
 
           <Series size="sm" className="ml-auto -my-1.5 -mr-1.5">
             <ClientOnly>{() => <ThemeSwitcher size="md" variant="secondary" />}</ClientOnly>
