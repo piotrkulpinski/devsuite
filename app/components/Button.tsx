@@ -4,20 +4,20 @@ import type { ButtonHTMLAttributes, ReactNode } from "react"
 import { Children, forwardRef, isValidElement } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 import { Slottable } from "./Slottable"
+import { Box } from "./Box"
 
 export const buttonVariants = cva({
   base: [
     "group/button relative inline-flex items-center justify-center font-medium -tracking-micro rounded-full",
-    "hover:ring-[3px]",
     "disabled:opacity-60 disabled:pointer-events-none",
   ],
 
   variants: {
     variant: {
-      fancy: "bg-gradient-to-br from-blue-500 to-blue-700 text-white hover:ring-blue-500/25",
-      primary: "text-background bg-foreground hover:opacity-90 hover:ring-border",
-      secondary:
-        "border bg-background text-foreground hover:border-border-dark hover:ring-card-dark",
+      fancy:
+        "border-0 bg-gradient-to-br from-blue-500 to-blue-700 text-white hover:!ring-blue-500/25",
+      primary: "border-0 text-background bg-foreground hover:opacity-90",
+      secondary: "",
     },
     size: {
       sm: "text-xs/none gap-[0.5ch] py-1.5 px-2.5",
@@ -98,24 +98,26 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
   const isAffixOnly = isChildrenEmpty(children) && (!prefix || !suffix)
 
   return (
-    <Component
-      ref={ref}
-      disabled={disabled ?? isPending}
-      className={cx(buttonVariants({ variant, size, isAffixOnly, isPending, className }))}
-      {...rest}
-    >
-      <Slottable child={children} asChild={asChild}>
-        {(child) => (
-          <>
-            <Slot className={buttonAffixVariants()}>{prefix}</Slot>
-            {!isChildrenEmpty(child) && <span className="truncate">{child}</span>}
-            <Slot className={buttonAffixVariants()}>{suffix}</Slot>
+    <Box>
+      <Component
+        ref={ref}
+        disabled={disabled ?? isPending}
+        className={cx(buttonVariants({ variant, size, isAffixOnly, isPending, className }))}
+        {...rest}
+      >
+        <Slottable child={children} asChild={asChild}>
+          {(child) => (
+            <>
+              <Slot className={buttonAffixVariants()}>{prefix}</Slot>
+              {!isChildrenEmpty(child) && <span className="truncate">{child}</span>}
+              <Slot className={buttonAffixVariants()}>{suffix}</Slot>
 
-            {!!isPending && <LoaderIcon className="absolute size-[1.25em] animate-spin" />}
-          </>
-        )}
-      </Slottable>
-    </Component>
+              {!!isPending && <LoaderIcon className="absolute size-[1.25em] animate-spin" />}
+            </>
+          )}
+        </Slottable>
+      </Component>
+    </Box>
   )
 })
 

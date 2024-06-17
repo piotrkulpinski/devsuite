@@ -22,7 +22,7 @@ export const ToolCard = () => {
         <div className="flex gap-4 items-center justify-between">
           <div className="flex flex-col gap-1">
             <H5>PostHog</H5>
-            <span className="text-xs text-muted">Product analytics platform</span>
+            <span className="text-xs text-foreground/50">Product analytics platform</span>
           </div>
 
           {/* <span className="size-10 grid place-items-center bg-foreground/10 rounded-full p-1 shrink-0"> */}

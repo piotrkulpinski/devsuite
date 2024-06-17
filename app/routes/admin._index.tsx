@@ -1,25 +1,25 @@
 import {
-    ColumnDef,
-    ColumnFiltersState,
-    SortingState,
-    VisibilityState,
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    useReactTable,
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
 } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal, PlusIcon } from "lucide-react"
 
 import { Button } from "~/components/Button"
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "~/components/DropdownMenu"
 import { Input } from "~/components/forms/Input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/Table"
@@ -216,7 +216,7 @@ export default function AdminIndex() {
       </div>
 
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
+        <div className="flex-1 text-sm text-foreground/50-foreground">
           {table.getFilteredRowModel().rows.length} result(s)
         </div>
         <div className="space-x-2">

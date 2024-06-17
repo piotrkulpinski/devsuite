@@ -54,7 +54,7 @@ const TableHead = forwardRef<HTMLTableCellElement, ThHTMLAttributes<HTMLTableCel
     <th
       ref={ref}
       className={cx(
-        "h-12 px-4 text-left align-middle font-medium text-secondary [&:has([role=checkbox])]:pr-0",
+        "h-12 px-4 text-left align-middle font-medium text-foreground/70 [&:has([role=checkbox])]:pr-0",
         className
       )}
       {...props}
@@ -76,7 +76,7 @@ TableCell.displayName = "TableCell"
 
 const TableCaption = forwardRef<HTMLTableCaptionElement, HTMLAttributes<HTMLTableCaptionElement>>(
   ({ className, ...props }, ref) => (
-    <caption ref={ref} className={cx("mt-4 text-sm text-secondary", className)} {...props} />
+    <caption ref={ref} className={cx("mt-4 text-sm text-foreground/70", className)} {...props} />
   )
 )
 TableCaption.displayName = "TableCaption"

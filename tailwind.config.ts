@@ -9,26 +9,18 @@ export default {
     extend: {
       colors: {
         background: "hsl(var(--color-background) / <alpha-value>)",
-        muted: "hsl(var(--color-muted) / <alpha-value>)",
-        secondary: "hsl(var(--color-secondary) / <alpha-value>)",
+        dimmed: "hsl(var(--color-dimmed) / <alpha-value>)",
         foreground: "hsl(var(--color-foreground) / <alpha-value>)",
-        border: {
-          DEFAULT: "hsl(var(--color-border) / <alpha-value>)",
-          dark: "hsl(var(--color-border-dark) / <alpha-value>)",
-        },
-        card: {
-          DEFAULT: "hsl(var(--color-card) / <alpha-value>)",
-          dark: "hsl(var(--color-card-dark) / <alpha-value>)",
-        },
       },
       letterSpacing: {
-        micro: "0.0125em",
+        micro: "-0.0125em",
       },
       borderColor: {
         DEFAULT: "hsl(var(--color-border))",
       },
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
+        display: ["Satoshi Variable", ...defaultTheme.fontFamily.sans],
       },
       gridColumns: {
         DEFAULT: "16rem",
@@ -38,6 +30,9 @@ export default {
         md: "16rem",
         lg: "18rem",
         xl: "20rem",
+      },
+      scale: {
+        flip: "-1",
       },
 
       transitionTimingFunction: {

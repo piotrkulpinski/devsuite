@@ -1,6 +1,7 @@
 import { Slot } from "@radix-ui/react-slot"
 import { ComponentProps, ElementRef, HTMLAttributes, forwardRef, isValidElement } from "react"
 import { VariantProps, cva, cx } from "~/utils/cva"
+import { Box } from "./Box"
 
 const dockItemVariants = cva({
   base: [
@@ -11,7 +12,7 @@ const dockItemVariants = cva({
   variants: {
     isActive: {
       true: "after:absolute after:mt-1 after:left-1/2 after:-translate-x-1/2 after:pointer-events-none after:bg-current after:w-2.5 after:h-px after:rounded-full",
-      false: "text-secondary",
+      false: "text-foreground/70",
     },
   },
 
@@ -41,19 +42,27 @@ DockItem.displayName = "Dock.Item"
 const DockSeparator = forwardRef<ElementRef<"div">, ComponentProps<"div">>((props, ref) => {
   const { className, ...rest } = props
 
-  return <div ref={ref} className={cx("w-[1px] h-4 -my-2 mx-1.5 bg-border", className)} {...rest} />
+  return (
+    <div
+      ref={ref}
+      className={cx("w-[1px] h-4 -my-2 mx-1.5 bg-foreground/15", className)}
+      {...rest}
+    />
+  )
 })
 DockSeparator.displayName = "Dock.Separator"
 
 export const Dock = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
-    <div
-      className={cx(
-        "inline-flex items-center bg-background border rounded-full py-1.5 px-2",
-        className
-      )}
-      {...props}
-    />
+    <Box>
+      <div
+        className={cx(
+          "flex items-center bg-background/25 backdrop-blur-xl rounded-full py-1.5 px-2 isolate",
+          className
+        )}
+        {...props}
+      />
+    </Box>
   )
 }
 

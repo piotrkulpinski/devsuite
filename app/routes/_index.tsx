@@ -5,6 +5,7 @@ import { Intro } from "~/components/Intro"
 import { Input } from "~/components/forms/Input"
 import { CategoryCard } from "~/partials/cards/CategoryCard"
 import { Newsletter } from "~/partials/Newsletter"
+import { Stars } from "~/components/Stars"
 
 export const meta: MetaFunction = () => {
   return [{ title: "New Remix App" }, { name: "description", content: "Welcome to Remix!" }]
@@ -33,14 +34,14 @@ export default function Index() {
         title={
           <>
             A suite of developer tools that help you{" "}
-            <span className="italic underline decoration-from-font decoration-foreground/25">
+            <span className="underline decoration-from-font decoration-foreground/25">
               ship faster
             </span>
           </>
         }
         description="Find the best tools to help you build faster and more efficiently. Stop wasting time and money by developing tools that already exist."
         alignment="center"
-        className="mb-12 max-w-2xl mx-auto text-pretty"
+        className="relative z-10 mb-24 max-w-2xl mx-auto text-pretty"
       >
         <div className="mt-4 relative w-full max-w-md mx-auto">
           <Input
@@ -53,6 +54,8 @@ export default function Index() {
           <SearchIcon className="absolute top-1/2 right-4 -translate-y-1/2 size-4 pointer-events-none" />
         </div>
       </Intro>
+
+      <Stars className="!absolute" />
 
       <Grid>
         {categories.map((category, i) => (

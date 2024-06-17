@@ -5,32 +5,18 @@
 :root,
 .light {
   --color-background: 0 0% 100%;
-
-  --color-card: 0 0% 96%;
-  --color-card-dark: 0 0% 94%;
-  --color-border: 0 0% 88%;
-  --color-border-dark: 0 0% 83%;
-
-  --color-muted: 0 0% 50%;
-  --color-secondary: 0 0% 33.3%;
   --color-foreground: 0 0% 15%;
 }
 
 .dark {
-  --color-background: 0 0% 6%;
-
-  --color-card: 0 0% 11%;
-  --color-card-dark: 0 0% 13%;
-  --color-border: 0 0% 18%;
-  --color-border-dark: 0 0% 25%;
-
-  --color-muted: 0 0% 50%;
-  --color-secondary: 0 0% 66.6%;
-  --color-foreground: 0 0% 90%;
+  --color-background: 233 100% 4%;
+  --color-dimmed: 221 79% 54%;
+  --color-foreground: 0 0% 95%;
 }
 
 /* CSS */
 :root {
+  --tw-backdrop-saturate: 140%;
   font-family: Inter, sans-serif;
   font-feature-settings:
     "liga" 1,
@@ -60,6 +46,47 @@
     animation-range-start: cover;
     animation-range-end: 15%;
   }
+
+  .stars {
+    pointer-events: none;
+    user-select: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    margin: 0px auto;
+    height: 600px;
+    overflow: hidden;
+    mask-image: radial-gradient(circle, black, transparent 80%);
+  }
+
+  .stars::before {
+    content: "";
+    position: absolute;
+    inset: 0px;
+    background: radial-gradient(circle at bottom center, hsl(var(--color-dimmed)), transparent 70%);
+    opacity: 0.4;
+  }
+
+  .stars::after {
+    content: "";
+    position: absolute;
+    background: hsl(var(--color-background));
+    width: 250%;
+    left: -75%;
+    aspect-ratio: 1 / 0.7;
+    border-radius: 50%;
+    outline: 1px solid hsl(242 41% 62% / 0.25);
+    top: 50%;
+  }
+
+  .stars svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    mask-image: radial-gradient(circle at center bottom, black, transparent);
+  }
 }
 
 a,
@@ -76,6 +103,16 @@ svg:not([class*="stroke"]) {
   @apply !stroke-[1.75];
 }
 
-svg:not([class*="size-"]):not([class*="h-"]) {
+svg:not([class*="size-"]):not([class*="h-"]):not([role]) {
   @apply size-[1em];
+}
+
+/* Local fonts */
+@font-face {
+  font-family: "Satoshi Variable";
+  font-style: normal;
+  src:
+    local(""),
+    url("/fonts/Satoshi-Variable.woff2") format("woff2"),
+    url("/fonts/Satoshi-Variable.woff") format("woff");
 }

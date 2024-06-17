@@ -56,7 +56,7 @@ export const Intro = ({
 
       {description && (
         <Prose className="max-w-3xl">
-          <h2 className="text-base !font-normal !tracking-normal !text-secondary md:text-lg">
+          <h2 className="text-base !font-normal !tracking-normal !text-foreground/70 md:text-lg">
             {description}
           </h2>
         </Prose>

@@ -21,10 +21,10 @@ export const CategoryCard = ({ category }: { category: string }) => {
         <div className="flex gap-4 items-center justify-between">
           <div className="flex flex-col gap-1">
             <H5>{category}</H5>
-            <span className="text-xs text-muted">22 tools</span>
+            <span className="text-xs text-foreground/50">22 tools</span>
           </div>
 
-          <span className="size-10 grid place-items-center bg-foreground/10 rounded-full shrink-0">
+          <span className="size-10 grid place-items-center bg-foreground/5 rounded-full shrink-0 dark:bg-foreground/10">
             <ArrowRightIcon />
           </span>
         </div>

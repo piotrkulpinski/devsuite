@@ -41,8 +41,14 @@ export default function Tool() {
             />
           }
           suffix={
-            <Button size="md" variant="primary" suffix={<ArrowUpRightIcon />} className="ml-auto">
-              www.posthog.com
+            <Button
+              size="md"
+              variant="primary"
+              suffix={<ArrowUpRightIcon />}
+              className="ml-auto"
+              asChild
+            >
+              <a href="https://posthog.com">www.posthog.com</a>
             </Button>
           }
           title="Posthog"
@@ -109,7 +115,7 @@ export default function Tool() {
             <Link
               key={tag}
               to={`/tags/${tag}`}
-              className="flex items-center gap-0.5 text-secondary text-sm hover:text-foreground"
+              className="flex items-center gap-0.5 text-foreground/70 text-sm hover:text-foreground"
             >
               <HashIcon className="opacity-30" />
               {tag}

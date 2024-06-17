@@ -3,16 +3,14 @@ import type { HTMLAttributes } from "react"
 import { forwardRef, isValidElement } from "react"
 
 import { type VariantProps, cva, cx } from "~/utils/cva"
+import { Box } from "./Box"
 
 export const cardVariants = cva({
-  base: [
-    "group/card relative flex flex-col gap-4 border rounded-lg p-6 overflow-clip transform-gpu",
-    "hover:[&[href]]:ring-[3px] hover:[&[href]]:ring-card-dark hover:[&[href]]:border-border-dark",
-  ],
+  base: "group/card relative flex flex-col gap-4 rounded-lg p-6 overflow-clip transform-gpu",
 
   variants: {
     isFeatured: {
-      true: "bg-card border-border-dark ring-[3px] ring-card-dark",
+      true: "bg-foreground/10 border-foreground/25 ring-[3px] ring-foreground/10",
     },
     isRevealed: {
       true: "animate-reveal",
@@ -40,11 +38,13 @@ export const Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
   const Component = useAsChild ? Slot : "div"
 
   return (
-    <Component
-      ref={ref}
-      className={cx(cardVariants({ isFeatured, isRevealed, className }))}
-      {...rest}
-    />
+    <Box>
+      <Component
+        ref={ref}
+        className={cx(cardVariants({ isFeatured, isRevealed, className }))}
+        {...rest}
+      />
+    </Box>
   )
 })
 

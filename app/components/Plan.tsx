@@ -113,17 +113,19 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
         <div className="space-y-3">
           <H3>{name}</H3>
 
-          {description && <Prose className="text-muted text-sm text-pretty">{description}</Prose>}
+          {description && (
+            <Prose className="text-foreground/50 text-sm text-pretty">{description}</Prose>
+          )}
         </div>
 
         <div className="flex items-end gap-1">
           <span className="text-xl/none opacity-30">$</span>
 
-          <strong className="text-4xl/[0.85] sm:text-5xl/[0.85]">
+          <strong className="font-semibold text-4xl/[0.85] sm:text-5xl/[0.85]">
             {Math.round(finalPrice / 100)}
 
             {originalPrice && (
-              <span className="absolute ml-1 -mt-3 text-[0.5em] font-normal align-top text-secondary line-through decoration-from-font">
+              <span className="absolute ml-1 -mt-3 text-[0.5em] font-normal align-top text-foreground/70 line-through decoration-from-font">
                 {Math.round(originalPrice / 100)}
               </span>
             )}
@@ -138,7 +140,7 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
                   {type === "negative" ? <XIcon /> : <CheckIcon />}
                 </Slot>
 
-                <span className={cx(type === "negative" && "text-muted")}>{text}</span>
+                <span className={cx(type === "negative" && "text-foreground/50")}>{text}</span>
               </div>
             ))}
           </Series>

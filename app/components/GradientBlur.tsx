@@ -1,20 +1,29 @@
 import { HTMLAttributes } from "react"
-import { cx } from "~/utils/cva"
+import { VariantProps, cva, cx } from "~/utils/cva"
 
-export type GradientBlurProps = HTMLAttributes<HTMLElement> & {
-  /**
-   * Number of steps to blur
-   * @default 8
-   */
-  steps?: number
-}
+const gradientBlurVariants = cva({
+  base: "fixed inset-x-0 z-20 h-40 pointer-events-none",
 
-export const GradientBlur = ({ className, steps = 8, ...props }: GradientBlurProps) => {
+  variants: {
+    position: {
+      top: "top-0",
+      bottom: "bottom-0 scale-y-flip",
+    },
+  },
+})
+
+export type GradientBlurProps = HTMLAttributes<HTMLElement> &
+  VariantProps<typeof gradientBlurVariants> & {
+    /**
+     * Number of steps to blur
+     * @default 8
+     */
+    steps?: number
+  }
+
+export const GradientBlur = ({ className, position, steps = 8, ...props }: GradientBlurProps) => {
   return (
-    <div
-      className={cx("fixed bottom-0 left-0 right-0 pointer-events-none z-10", className)}
-      {...props}
-    >
+    <div className={cx(gradientBlurVariants({ position, className }))} {...props}>
       <div className="relative size-full">
         {Array.from({ length: steps }).map((_, i) => {
           const blur = 0.078125 * Math.pow(2, i)
@@ -27,7 +36,7 @@ export const GradientBlur = ({ className, steps = 8, ...props }: GradientBlurPro
               style={{
                 zIndex: i + 1,
                 backdropFilter: `blur(${blur}px)`,
-                maskImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0) ${i * step}%, rgba(0, 0, 0, 1) ${(i + 1) * step}%, rgba(0, 0, 0, 1) ${(i + 2) * step}%, rgba(0, 0, 0, 0) ${(i + 3) * step}%)`,
+                maskImage: `linear-gradient(to top, rgba(0, 0, 0, 0) ${i * step}%, rgba(0, 0, 0, 1) ${(i + 1) * step}%, rgba(0, 0, 0, 1) ${(i + 2) * step}%, rgba(0, 0, 0, 0) ${(i + 3) * step}%)`,
               }}
             />
           )

@@ -2,7 +2,7 @@ import { useFetcher, useLocation } from "@remix-run/react"
 import { type ComponentProps, type HTMLAttributes, useId } from "react"
 import { Button } from "~/components/Button"
 import { Card } from "~/components/Card"
-import { H2 } from "~/components/Heading"
+import { H3 } from "~/components/Heading"
 import { Input } from "~/components/forms/Input"
 import { cx } from "~/utils/cva"
 
@@ -14,19 +14,19 @@ type NewsletterProps = HTMLAttributes<HTMLElement> & {
 export const Newsletter = ({
   className,
   placeholder = "Enter your email...",
-  buttonVariant = "fancy",
+  buttonVariant = "primary",
   ...props
 }: NewsletterProps) => {
   const id = useId()
   const { key } = useLocation()
-  const { data, state, Form } = useFetcher<any>({ key: `${id}-${key}` })
+  const { data, state, Form } = useFetcher<unknown>({ key: `${id}-${key}` })
 
   return (
     <Card isRevealed={false} className="md:py-8 md:px-10">
-      <div className={cx("flex flex-col gap-2 max-w-lg", className)} {...props}>
-        <H2 as="h3">Subscribe to our newsletter</H2>
+      <div className={cx("flex flex-col gap-4 max-w-lg", className)} {...props}>
+        <H3>Subscribe to our newsletter</H3>
 
-        <p className="text-muted">
+        <p className="text-foreground/50">
           Stay updated with the newest additions to our digital assets library, upcoming promotions
           or discounts.
         </p>
@@ -35,7 +35,7 @@ export const Newsletter = ({
           <Form
             method="POST"
             action="/api/subscribe"
-            className="mt-4 relative w-full max-w-sm"
+            className="mt-2 relative w-full max-w-sm"
             noValidate
           >
             <Input
@@ -49,9 +49,11 @@ export const Newsletter = ({
             />
 
             <Button
+              type="submit"
+              size="md"
               variant={buttonVariant}
               isPending={state !== "idle"}
-              className="absolute inset-y-1 right-1"
+              className="absolute inset-y-1 right-1 px-5"
             >
               Subscribe
             </Button>

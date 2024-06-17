@@ -8,6 +8,7 @@ import {
   FacebookIcon,
   HeartIcon,
   EraserIcon,
+  LinkIcon,
 } from "lucide-react"
 import { Fragment, HTMLAttributes, useEffect, useState } from "react"
 import { Dock } from "~/components/Dock"
@@ -90,6 +91,11 @@ export const Nav = ({ ...props }: HTMLAttributes<HTMLElement>) => {
       shortcut: "→",
     },
     null,
+    {
+      icon: LinkIcon,
+      tooltip: "Copy Link",
+      shortcut: "C",
+    },
     {
       icon: TwitterIcon,
       tooltip: "Share on Twitter",

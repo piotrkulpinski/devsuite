@@ -1,13 +1,14 @@
+/** eslint-disable @typescript-eslint/no-unused-vars */
 import { LinksFunction } from "@remix-run/node"
 import { ThemeProvider } from "next-themes"
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useNavigation } from "@remix-run/react"
-import { Header } from "~/partials/Header"
 import { Footer } from "~/partials/Footer"
 import { Container } from "./components/Container"
-
-import stylesheet from "~/styles.css?url"
 import { GradientBlur } from "./components/GradientBlur"
 import TopBarProgress from "react-topbar-progress-indicator"
+
+import stylesheet from "~/styles.css?url"
+import { Header } from "./partials/Header"
 
 export const links: LinksFunction = () => {
   return [
@@ -19,6 +20,7 @@ export const links: LinksFunction = () => {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigation = useNavigation()
 
   return (
@@ -42,9 +44,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <Header />
 
           <Container className="flex-1 flex flex-col gap-12 py-12 md:py-16 lg:py-20">
+            <GradientBlur position="top" />
             {children}
 
-            <GradientBlur className="h-40" />
+            <GradientBlur position="bottom" />
             {/* <Nav className="sticky bottom-4 z-30 mx-auto mt-auto" /> */}
           </Container>
 

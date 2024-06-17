@@ -6,7 +6,7 @@ import { NavLink } from "@remix-run/react"
 
 export const Logo = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
   return (
-    <Series size="sm" className={cx("text-foreground", className)} asChild {...props}>
+    <Series size="sm" className={cx("text-sm text-foreground", className)} asChild {...props}>
       <NavLink to="/">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -15,7 +15,7 @@ export const Logo = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) =>
           width="24"
           role="img"
           aria-label="Logo"
-          className="size-5"
+          className="size-4"
         >
           <path
             fill="currentColor"
