@@ -2,7 +2,7 @@ import { HTMLAttributes } from "react"
 import { VariantProps, cva, cx } from "~/utils/cva"
 
 const gradientBlurVariants = cva({
-  base: "fixed inset-x-0 z-20 h-40 pointer-events-none",
+  base: "fixed inset-x-0 z-20 h-32 pointer-events-none md:h-40",
 
   variants: {
     position: {

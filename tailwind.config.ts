@@ -9,7 +9,6 @@ export default {
     extend: {
       colors: {
         background: "hsl(var(--color-background) / <alpha-value>)",
-        dimmed: "hsl(var(--color-dimmed) / <alpha-value>)",
         foreground: "hsl(var(--color-foreground) / <alpha-value>)",
       },
       letterSpacing: {

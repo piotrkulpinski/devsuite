@@ -43,7 +43,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         >
           <Header />
 
-          <Container className="flex-1 flex flex-col gap-12 py-12 md:py-16 lg:py-20">
+          <Container className="flex-1 flex flex-col gap-12 py-12 mt-[calc(var(--header-top)+var(--header-height))] md:py-16 lg:py-20">
             <GradientBlur position="top" />
             {children}
 

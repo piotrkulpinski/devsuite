@@ -2,21 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-:root,
-.light {
+:root {
+  --header-height: 3.125rem;
+  --header-top: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-top: 1rem;
+  }
+}
+
+:root {
   --color-background: 0 0% 100%;
   --color-foreground: 0 0% 15%;
 }
 
 .dark {
   --color-background: 233 100% 4%;
-  --color-dimmed: 221 79% 54%;
   --color-foreground: 0 0% 95%;
 }
 
 /* CSS */
 :root {
-  --tw-backdrop-saturate: 140%;
   font-family: Inter, sans-serif;
   font-feature-settings:
     "liga" 1,
@@ -48,23 +56,17 @@
   }
 
   .stars {
-    pointer-events: none;
-    user-select: none;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    margin: 0px auto;
-    height: 600px;
     overflow: hidden;
     mask-image: radial-gradient(circle, black, transparent 80%);
+    pointer-events: none;
+    user-select: none;
   }
 
   .stars::before {
     content: "";
     position: absolute;
     inset: 0px;
-    background: radial-gradient(circle at bottom center, hsl(var(--color-dimmed)), transparent 70%);
+    background: radial-gradient(circle at bottom center, hsl(221 79% 54%), transparent 70%);
     opacity: 0.4;
   }
 

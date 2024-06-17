@@ -39,9 +39,17 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
   }, [])
 
   return (
-    <Container className={cx("sticky top-2 z-30 mt-2 lg:top-4 lg:mt-4", className)} {...props}>
+    <Container
+      className={cx("fixed top-[var(--header-top)] z-30 left-1/2 -translate-x-1/2", className)}
+      {...props}
+    >
       <Box>
-        <div className="flex flex-wrap items-center gap-3 py-3.5 px-4 -mx-2 bg-background/75 backdrop-blur-xl rounded-3xl isolate md:-mx-4 md:gap-4 lg:gap-6">
+        <div
+          className={cx(
+            "flex flex-wrap items-center gap-3 py-3.5 px-4 -mx-2 bg-background/75 backdrop-blur-xl rounded-3xl isolate overflow-clip transition-all md:-mx-4 md:gap-4 lg:gap-6",
+            isNavOpen ? "h-[calc(100dvh-(var(--header-top)*2))]" : "h-[var(--header-height)]"
+          )}
+        >
           <button
             type="button"
             onClick={() => setNavOpen(!isNavOpen)}
@@ -117,18 +125,21 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             </Button>
           </Series>
 
-          {isNavOpen && (
-            <nav className="mt-6 mb-4 grid grid-cols-2 gap-x-4 gap-y-3 text-lg w-full lg:hidden">
-              <NavigationLink to="/latest">Latest</NavigationLink>
-              <NavigationLink to="/categories">Categories</NavigationLink>
-              <NavigationLink to="/alternatives">Alternatives</NavigationLink>
-              <NavigationLink to="/languages">Languages</NavigationLink>
-              <NavigationLink to="/topics">Topics</NavigationLink>
-              <NavigationLink to="/submit">Submit</NavigationLink>
-              <NavigationLink to="/sponsor">Sponsor</NavigationLink>
-              <NavigationLink to="/about">About</NavigationLink>
-            </nav>
-          )}
+          <nav
+            className={cx(
+              "size-full mt-6 mb-4 grid grid-cols-2 place-content-start gap-x-4 gap-y-6 transition-opacity lg:hidden",
+              isNavOpen ? "opacity-100" : "opacity-0"
+            )}
+          >
+            <NavigationLink to="/latest">Latest</NavigationLink>
+            <NavigationLink to="/categories">Categories</NavigationLink>
+            <NavigationLink to="/alternatives">Alternatives</NavigationLink>
+            <NavigationLink to="/languages">Languages</NavigationLink>
+            <NavigationLink to="/topics">Topics</NavigationLink>
+            <NavigationLink to="/submit">Submit</NavigationLink>
+            <NavigationLink to="/sponsor">Sponsor</NavigationLink>
+            <NavigationLink to="/about">About</NavigationLink>
+          </nav>
         </div>
       </Box>
     </Container>

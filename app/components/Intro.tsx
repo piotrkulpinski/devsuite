@@ -5,7 +5,7 @@ import { Prose } from "./Prose"
 import { Series } from "./Series"
 
 const introVariants = cva({
-  base: "flex w-full flex-col gap-y-4",
+  base: "flex w-full flex-col gap-y-4 w-[85%] mx-auto",
 
   variants: {
     alignment: {

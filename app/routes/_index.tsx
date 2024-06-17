@@ -41,7 +41,7 @@ export default function Index() {
         }
         description="Find the best tools to help you build faster and more efficiently. Stop wasting time and money by developing tools that already exist."
         alignment="center"
-        className="relative z-10 mb-24 max-w-2xl mx-auto text-pretty"
+        className="relative z-10 max-w-2xl text-pretty"
       >
         <div className="mt-4 relative w-full max-w-md mx-auto">
           <Input
@@ -55,7 +55,7 @@ export default function Index() {
         </div>
       </Intro>
 
-      <Stars className="!absolute" />
+      <Stars className="relative w-full h-96 mx-auto -my-44 md:-my-40" />
 
       <Grid>
         {categories.map((category, i) => (

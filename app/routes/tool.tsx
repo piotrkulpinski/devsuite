@@ -124,7 +124,7 @@ export default function Tool() {
         </nav>
       </Wrapper>
 
-      <Nav className="sticky bottom-4 z-30 mx-auto mt-auto" />
+      <Nav className="sticky bottom-4 z-20 mx-auto mt-auto" />
 
       <Grid>
         {Array.from({ length: 3 }).map((_, i) => (
