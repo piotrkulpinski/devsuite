@@ -1,21 +1,42 @@
 import { HTMLAttributes } from "react"
-import { cx } from "~/utils/cva"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselDots,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "./Carousel"
 
 type GalleryProps = HTMLAttributes<HTMLElement> & {
   images: string[]
 }
 
-export const Gallery = ({ className, images, ...props }: GalleryProps) => {
+export const Gallery = ({ images, ...props }: GalleryProps) => {
+  if (images.length === 0) {
+    return null
+  }
+
+  if (images.length === 1) {
+    return <img src={images[0]} alt="" className="w-full h-auto rounded md:rounded-lg" />
+  }
+
   return (
-    <div className={cx("flex gap-6 h-72", className)} {...props}>
-      {images.map((image, index) => (
-        <img
-          key={index}
-          src={image}
-          alt=""
-          className="w-auto h-full border border-foreground/15 rounded-lg"
-        />
-      ))}
-    </div>
+    <Carousel
+      className="left-1/2 w-dvw mb-8 -translate-x-1/2 overflow-x-clip"
+      opts={{ align: "center", loop: true }}
+      {...props}
+    >
+      <CarouselContent>
+        {images.map((image, index) => (
+          <CarouselItem className="basis-4/5 md:basis-[656px]" key={index}>
+            <img src={image} alt="" className="w-auto h-full rounded md:rounded-lg" />
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+      <CarouselDots className="absolute -bottom-8 left-1/2 -translate-x-1/2" />
+    </Carousel>
   )
 }

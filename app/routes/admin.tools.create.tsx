@@ -8,6 +8,7 @@ import { prisma } from "~/services.server/prisma"
 import { z } from "zod"
 import { Input } from "~/components/forms/Input"
 import { Prisma } from "@prisma/client"
+import { Button } from "~/components/Button"
 
 const schema = z.object({
   name: z.string().min(1),
@@ -53,7 +54,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   return redirect(`/admin`)
 }
 
-export default function AdminToolsNew() {
+export default function AdminToolsCreate() {
   const {
     handleSubmit,
     formState: { errors },
@@ -64,20 +65,23 @@ export default function AdminToolsNew() {
 
   return (
     <Wrapper>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} className="flex flex-col items-start gap-4">
         <div>
+          <label htmlFor="name">Name</label>
           <Input type="text" {...register("name")} />
           {errors.name && <p>{errors.name.message}</p>}
         </div>
         <div>
+          <label htmlFor="websiteUrl">Website URL</label>
           <Input type="url" {...register("websiteUrl")} />
           {errors.websiteUrl && <p>{errors.websiteUrl.message}</p>}
         </div>
         <div>
+          <label htmlFor="description">Description</label>
           <Input type="text" {...register("description")} />
           {errors.description && <p>{errors.description.message}</p>}
         </div>
-        <button type="submit">Create Tool</button>
+        <Button type="submit">Create Tool</Button>
       </Form>
     </Wrapper>
   )

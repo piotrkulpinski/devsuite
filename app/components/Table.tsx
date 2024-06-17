@@ -3,7 +3,7 @@ import { cx } from "~/utils/cva"
 
 const Table = forwardRef<HTMLTableElement, HTMLAttributes<HTMLTableElement>>(
   ({ className, ...props }, ref) => (
-    <div className="relative w-full overflow-auto">
+    <div className="relative w-full overflow-auto border border-foreground/15 rounded-md">
       <table ref={ref} className={cx("w-full caption-bottom text-sm", className)} {...props} />
     </div>
   )
@@ -12,7 +12,11 @@ Table.displayName = "Table"
 
 const TableHeader = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTableSectionElement>>(
   ({ className, ...props }, ref) => (
-    <thead ref={ref} className={cx("[&_tr]:border-b", className)} {...props} />
+    <thead
+      ref={ref}
+      className={cx("[&_tr]:border-b [&_tr]:border-foreground/15", className)}
+      {...props}
+    />
   )
 )
 TableHeader.displayName = "TableHeader"
@@ -28,7 +32,10 @@ const TableFooter = forwardRef<HTMLTableSectionElement, HTMLAttributes<HTMLTable
   ({ className, ...props }, ref) => (
     <tfoot
       ref={ref}
-      className={cx("border-t bg-card/50 font-medium [&>tr]:last:border-b-0", className)}
+      className={cx(
+        "border-t border-foreground/15 bg-foreground/10 font-medium [&>tr]:last:border-b-0",
+        className
+      )}
       {...props}
     />
   )
@@ -40,7 +47,7 @@ const TableRow = forwardRef<HTMLTableRowElement, HTMLAttributes<HTMLTableRowElem
     <tr
       ref={ref}
       className={cx(
-        "border-b transition-colors hover:bg-card/50 data-[state=selected]:bg-card",
+        "border-b border-foreground/15 transition-colors hover:bg-foreground/10 data-[state=selected]:bg-foreground/20",
         className
       )}
       {...props}

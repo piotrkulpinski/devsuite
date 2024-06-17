@@ -5,8 +5,9 @@ import { Button } from "~/components/Button"
 import { Favicon } from "~/components/Favicon"
 import { Gallery } from "~/components/Gallery"
 import { Grid } from "~/components/Grid"
-import { Intro } from "~/components/Intro"
+import { H2 } from "~/components/Heading"
 import { Prose } from "~/components/Prose"
+import { Series } from "~/components/Series"
 import { Wrapper } from "~/components/Wrapper"
 import { Nav } from "~/partials/Nav"
 import { Newsletter } from "~/partials/Newsletter"
@@ -31,16 +32,17 @@ export default function Tool() {
 
   return (
     <>
-      <Wrapper>
-        <Intro
-          prefix={
+      <Wrapper className="flex flex-col gap-12">
+        <div className="flex w-full flex-col gap-y-4">
+          <Series size="lg" className="relative w-full">
             <Favicon
               src={`https://www.google.com/s2/favicons?sz=128&domain_url=posthog.com`}
               style={{ viewTransitionName: "tool-favicon" }}
               className="size-10"
             />
-          }
-          suffix={
+            <H2 as="h1" className="relative flex-1">
+              Posthog
+            </H2>
             <Button
               size="md"
               variant="primary"
@@ -50,17 +52,23 @@ export default function Tool() {
             >
               <a href="https://posthog.com">www.posthog.com</a>
             </Button>
-          }
-          title="Posthog"
-          description="PostHog provides open-source product analytics, session recording, feature flagging and A/B testing that you can self-host."
-          headingProps={{ size: "h2", as: "h1" }}
-          className="text-pretty"
+          </Series>
+
+          <h2 className="text-foreground/70 md:text-lg">
+            PostHog provides open-source product analytics, session recording, feature flagging and
+            A/B testing that you can self-host.
+          </h2>
+        </div>
+
+        <Gallery
+          images={[
+            "/media/screenshot-1.webp",
+            "/media/screenshot-2.avif",
+            "/media/screenshot-1.webp",
+            "/media/screenshot-2.avif",
+          ]}
         />
-      </Wrapper>
 
-      <Gallery images={["/media/screenshot-1.webp", "/media/screenshot-2.avif"]} />
-
-      <Wrapper className="flex flex-col gap-12">
         <Prose>
           <p>
             PostHog is an open-source product analytics platform that helps businesses understand
@@ -124,7 +132,7 @@ export default function Tool() {
         </nav>
       </Wrapper>
 
-      <Nav className="sticky bottom-4 z-20 mx-auto mt-auto" />
+      <Nav className="sticky bottom-4 z-30 mx-auto mt-auto" />
 
       <Grid>
         {Array.from({ length: 3 }).map((_, i) => (

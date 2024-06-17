@@ -40,7 +40,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
   return (
     <Container
-      className={cx("fixed top-[var(--header-top)] z-30 left-1/2 -translate-x-1/2", className)}
+      className={cx("fixed top-[var(--header-top)] z-40 left-1/2 -translate-x-1/2", className)}
       {...props}
     >
       <Box>

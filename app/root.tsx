@@ -20,7 +20,6 @@ export const links: LinksFunction = () => {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const navigation = useNavigation()
 
   return (
@@ -46,9 +45,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <Container className="flex-1 flex flex-col gap-12 py-12 mt-[calc(var(--header-top)+var(--header-height))] md:py-16 lg:py-20">
             <GradientBlur position="top" />
             {children}
-
             <GradientBlur position="bottom" />
-            {/* <Nav className="sticky bottom-4 z-30 mx-auto mt-auto" /> */}
           </Container>
 
           <Footer />

@@ -6,7 +6,7 @@ export const labelVariants = cva({
 
   variants: {
     isRequired: {
-      true: "after:ml-0.5 after:text-red-600 after:content-['*']",
+      true: "after:ml-0.5 after:text-red-500/75 after:content-['*']",
     },
   },
 })

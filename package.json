@@ -32,6 +32,7 @@
     "@sindresorhus/slugify": "^2.2.1",
     "@tanstack/react-table": "^8.17.3",
     "cva": "^1.0.0-beta.1",
+    "embla-carousel-react": "^8.1.5",
     "hotkeys-js": "^3.13.7",
     "isbot": "^4.1.0",
     "lucide-react": "^0.378.0",

@@ -13,7 +13,8 @@
   }
 }
 
-:root {
+:root,
+.light {
   --color-background: 0 0% 100%;
   --color-foreground: 0 0% 15%;
 }
