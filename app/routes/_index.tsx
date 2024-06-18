@@ -18,7 +18,7 @@ export default function Index() {
     "Documentation",
     "Emails",
     "Internal Tooling",
-    // "Mono Fonts",
+    "Mono Fonts",
     "Background Jobs",
     "Notifications",
     "Onboarding",

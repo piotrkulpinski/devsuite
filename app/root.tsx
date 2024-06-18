@@ -1,14 +1,12 @@
-/** eslint-disable @typescript-eslint/no-unused-vars */
 import { LinksFunction } from "@remix-run/node"
 import { ThemeProvider } from "next-themes"
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useNavigation } from "@remix-run/react"
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react"
+import { Header } from "./partials/Header"
 import { Footer } from "~/partials/Footer"
 import { Container } from "./components/Container"
 import { GradientBlur } from "./components/GradientBlur"
-import TopBarProgress from "react-topbar-progress-indicator"
 
 import stylesheet from "~/styles.css?url"
-import { Header } from "./partials/Header"
 
 export const links: LinksFunction = () => {
   return [
@@ -20,8 +18,6 @@ export const links: LinksFunction = () => {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const navigation = useNavigation()
-
   return (
     <html lang="en">
       <head>
@@ -32,8 +28,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
 
       <body className="min-h-dvh flex flex-col bg-background text-foreground">
-        {navigation.state == "loading" && <TopBarProgress />}
-
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

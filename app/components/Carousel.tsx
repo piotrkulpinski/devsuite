@@ -340,24 +340,23 @@ const CarouselDots = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     }
 
     return (
-      <div ref={ref} className={cx("flex justify-center items-center", className)} {...props}>
+      <div
+        ref={ref}
+        className={cx("flex justify-center items-center w-full px-4", className)}
+        {...props}
+      >
         {Array.from({ length: numberOfSlides }, (_, i) => (
           <button
             key={i}
             type="button"
             className={cx(
-              "p-1 text-foreground/25 hover:text-foreground/75 transition",
-              i === currentSlide && "text-blue-500"
+              "shrink-1 basis-7 p-1 h-3 text-foreground/25 hover:text-foreground/75 transition-all",
+              i === currentSlide && "basis-8 text-blue-500"
             )}
             aria-label={`Go to slide ${i + 1}`}
             onClick={() => api?.scrollTo(i)}
           >
-            <div
-              className={cx(
-                "h-1 w-5 rounded-full transition-[width] bg-current",
-                i === currentSlide && "w-6"
-              )}
-            />
+            <div className="size-full rounded-full bg-current" />
           </button>
         ))}
       </div>

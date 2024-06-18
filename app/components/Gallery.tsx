@@ -23,20 +23,24 @@ export const Gallery = ({ images, ...props }: GalleryProps) => {
 
   return (
     <Carousel
-      className="left-1/2 w-dvw mb-8 -translate-x-1/2 overflow-x-clip"
+      className="left-1/2 w-dvw -translate-x-1/2 overflow-x-clip"
       opts={{ align: "center", loop: true }}
       {...props}
     >
-      <CarouselContent>
-        {images.map((image, index) => (
-          <CarouselItem className="basis-4/5 md:basis-[656px]" key={index}>
-            <img src={image} alt="" className="w-auto h-full rounded md:rounded-lg" />
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-      <CarouselDots className="absolute -bottom-8 left-1/2 -translate-x-1/2" />
+      <div className="relative">
+        <CarouselContent>
+          {images.map((image, index) => (
+            <CarouselItem className="basis-4/5 md:basis-[656px]" key={index}>
+              <img src={image} alt="" className="w-auto h-full rounded md:rounded-lg" />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+
+        <CarouselPrevious />
+        <CarouselNext />
+      </div>
+
+      <CarouselDots className="mt-6" />
     </Carousel>
   )
 }
