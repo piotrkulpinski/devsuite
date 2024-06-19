@@ -37,6 +37,7 @@
     "isbot": "^4.1.0",
     "lucide-react": "^0.378.0",
     "next-themes": "^0.3.0",
+    "plur": "^5.1.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
     "remix-hook-form": "^4.3.1",

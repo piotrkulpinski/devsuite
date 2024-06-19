@@ -20,8 +20,8 @@ export const ToolCard = () => {
         </div>
 
         <div className="flex gap-4 items-center justify-between">
-          <div className="flex flex-col gap-1">
-            <H5>PostHog</H5>
+          <div className="flex flex-col gap-2">
+            <H5 className="!leading-snug">PostHog</H5>
             <span className="text-xs text-foreground/50">Product analytics platform</span>
           </div>
 

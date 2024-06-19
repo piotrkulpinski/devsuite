@@ -1,3 +1,4 @@
+/** eslint-disable react/jsx-no-duplicate-props */
 import { NavLink } from "@remix-run/react"
 import {
   BlocksIcon,
@@ -45,29 +46,44 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
     >
       <Box>
         <div
+          data-state={isNavOpen ? "open" : "close"}
           className={cx(
-            "flex flex-wrap items-center gap-3 py-3.5 px-4 -mx-2 bg-background/25 backdrop-blur-xl rounded-3xl isolate overflow-clip transition-all md:-mx-4 md:gap-4 lg:gap-6",
-            isNavOpen ? "h-[calc(100dvh-(var(--header-top)*2))]" : "h-[var(--header-height)]"
+            "group/menu flex flex-wrap items-center gap-3 py-3.5 px-4 -mx-2 h-[var(--header-height)] bg-background/25 backdrop-blur-xl rounded-3xl isolate overflow-clip duration-300 md:-mx-4 md:gap-4 lg:gap-6",
+            "max-lg:data-[state=open]:h-[calc(100dvh-(var(--header-top)*2))] max-lg:data-[state=open]:bg-background/75"
           )}
         >
           <button
             type="button"
             onClick={() => setNavOpen(!isNavOpen)}
-            className="size-4 lg:hidden"
+            className="block -m-1 lg:hidden"
             aria-label="Toggle navigation"
           >
-            <div
-              className={cx(
-                "absolute h-px w-3.5 bg-current transition-all",
-                isNavOpen ? "rotate-45" : "-translate-y-[3.5px]"
-              )}
-            />
-            <div
-              className={cx(
-                "absolute h-px w-3.5 bg-current transition-all",
-                isNavOpen ? "-rotate-45" : "translate-y-[3.5px]"
-              )}
-            />
+            <svg
+              className="size-7 duration-300 select-none will-change-transform group-data-[state=open]/menu:rotate-45"
+              viewBox="0 0 100 100"
+              role="img"
+            >
+              <circle
+                cx="50"
+                cy="50"
+                r="45"
+                pathLength="100"
+                transform="rotate(-90 50 50)"
+                className="sm:hidden fill-none duration-300 stroke-[5] stroke-current group-data-[state=open]/menu:[stroke-linecap:round] [stroke-dasharray:0_100] group-data-[state=open]/menu:[stroke-dasharray:100_100]"
+              />
+              <path
+                className="fill-none duration-300 stroke-current stroke-[5] [stroke-linecap:round] [stroke-dasharray:40_121] group-data-[state=open]/menu:[stroke-dashoffset:-68px]"
+                d="m 70,33 h -40 c 0,0 -8.5,-0.149796 -8.5,8.5 0,8.649796 8.5,8.5 8.5,8.5 h 20 v -20"
+              />
+              <path
+                className="fill-none duration-300 stroke-current stroke-[5] [stroke-linecap:round]"
+                d="m 55,50 h -25"
+              />
+              <path
+                className="fill-none duration-300 stroke-current stroke-[5] [stroke-linecap:round] [stroke-dasharray:40_121] group-data-[state=open]/menu:[stroke-dashoffset:-68px]"
+                d="m 30,67 h 40 c 0,0 8.5,0.149796 8.5,-8.5 0,-8.649796 -8.5,-8.5 -8.5,-8.5 h -20 v 20"
+              />
+            </svg>
           </button>
 
           <Logo />
