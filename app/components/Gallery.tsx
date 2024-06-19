@@ -31,7 +31,7 @@ export const Gallery = ({ images, ...props }: GalleryProps) => {
         <CarouselContent>
           {images.map((image, index) => (
             <CarouselItem className="basis-4/5 md:basis-[656px]" key={index}>
-              <img src={image} alt="" className="w-auto h-full rounded md:rounded-lg" />
+              <img src={image} alt="" className="w-auto rounded md:rounded-lg" />
             </CarouselItem>
           ))}
         </CarouselContent>

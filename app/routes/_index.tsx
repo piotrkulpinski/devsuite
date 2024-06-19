@@ -1,13 +1,18 @@
-import type { MetaFunction } from "@remix-run/node"
+/** eslint-disable @typescript-eslint/no-unused-vars */
+import { json, type MetaFunction } from "@remix-run/node"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { CategoryCard } from "~/partials/cards/CategoryCard"
 import { Input } from "~/components/forms/Input"
 import { SearchIcon } from "lucide-react"
+import { prisma } from "~/services.server/prisma"
+import { categoryManyPayload } from "~/services.server/api"
+import { useLoaderData } from "@remix-run/react"
+import { JSON_HEADERS, SITE_NAME } from "~/utils/constants"
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "A Suite of Developer Tools to Help you Ship Faster – DevSuite" },
+    { title: `A Suite of Developer Tools to Help you Ship Faster – ${SITE_NAME}` },
     {
       name: "description",
       content:
@@ -16,44 +21,23 @@ export const meta: MetaFunction = () => {
   ]
 }
 
+export const loader = async () => {
+  const categories = await prisma.category.findMany({
+    orderBy: { name: "asc" },
+    include: categoryManyPayload,
+  })
+
+  const meta = {
+    title: "Open Source Software Categories",
+    description: "Browse top categories to find your best Open Source software options.",
+  }
+
+  return json({ meta, categories }, { headers: JSON_HEADERS })
+}
+
 export default function Index() {
-  const categories = [
-    "Analytics",
-    "API Development",
-    "APIs",
-    "Authentication",
-    "Backend-as-a-Service",
-    "Background Jobs",
-    "CI/CD",
-    "Cloud Cost Management",
-    "Code Boilerplates",
-    "Copilots & Autopilots",
-    "Databases & Spreadsheets",
-    "Debug & Get Help",
-    "Deployment & Hosting",
-    "Developer Portal",
-    "Documentation",
-    "Environment & Secret Management",
-    "Feature Flags",
-    "File Handling",
-    "IDEs & Environment",
-    "Internal Tooling",
-    "Issue Tracknig",
-    "Localization",
-    "Mail",
-    "Media",
-    "Messaging",
-    "Misc",
-    "Monitoring",
-    "Mono Fonts",
-    "Observability",
-    "Onboarding",
-    "Payment & Pricing",
-    "Realtime API",
-    "Repository Management",
-    "Search API",
-    "Workflow Automation",
-  ]
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { meta, categories } = useLoaderData<typeof loader>()
 
   return (
     <>
