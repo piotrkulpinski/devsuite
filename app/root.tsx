@@ -9,7 +9,10 @@ import stylesheet from "~/styles.css?url"
 export const links: LinksFunction = () => {
   return [
     { rel: "stylesheet", href: stylesheet },
-    { rel: "icon", href: "/favicon.png", type: "image/png" },
+    {
+      rel: "icon",
+      href: "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>",
+    },
     { rel: "preconnect", href: "https://rsms.me/" },
     { rel: "stylesheet", href: "https://rsms.me/inter/inter.css" },
   ]

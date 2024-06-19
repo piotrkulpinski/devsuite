@@ -6,7 +6,14 @@ import { Badge } from "~/components/Badge"
 import { NewsletterForm } from "~/partials/NewsletterForm"
 
 export const meta: MetaFunction = () => {
-  return [{ title: "New Remix App" }, { name: "description", content: "Welcome to Remix!" }]
+  return [
+    { title: "A Suite of Developer Tools to Help you Ship Faster – DevSuite" },
+    {
+      name: "description",
+      content:
+        "Find the best tools to help you build faster and more efficiently. Stop wasting time and money by developing tools that already exist.",
+    },
+  ]
 }
 
 export default function Index() {
