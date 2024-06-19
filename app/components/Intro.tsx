@@ -37,13 +37,7 @@ export const Intro = ({
 }: IntroProps) => {
   return (
     <div className={cx(introVariants({ alignment, className }))} {...props}>
-      {title && (
-        <Heading {...headingProps} className="relative flex-1">
-          {title}
-
-          <div className="absolute -bottom-2 inset-x-0 h-8 bg-gradient-to-t from-background/40 to-transparent pointer-events-none select-none" />
-        </Heading>
-      )}
+      {title && <Heading {...headingProps}>{title}</Heading>}
 
       {description && (
         <Prose className="max-w-3xl">

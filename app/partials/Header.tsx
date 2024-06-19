@@ -46,7 +46,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
       <Box>
         <div
           className={cx(
-            "flex flex-wrap items-center gap-3 py-3.5 px-4 -mx-2 bg-background/75 backdrop-blur-xl rounded-3xl isolate overflow-clip transition-all md:-mx-4 md:gap-4 lg:gap-6",
+            "flex flex-wrap items-center gap-3 py-3.5 px-4 -mx-2 bg-background/25 backdrop-blur-xl rounded-3xl isolate overflow-clip transition-all md:-mx-4 md:gap-4 lg:gap-6",
             isNavOpen ? "h-[calc(100dvh-(var(--header-top)*2))]" : "h-[var(--header-height)]"
           )}
         >
