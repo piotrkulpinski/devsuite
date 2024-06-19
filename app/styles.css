@@ -5,23 +5,22 @@
 :root {
   --header-height: 3.125rem;
   --header-top: 0.5rem;
+
+  --color-background: 0 0% 100%;
+  --color-foreground: 0 0% 15%;
+  --color-accent: 217 91% 60%;
+}
+
+.dark {
+  --color-background: 233 100% 4%;
+  --color-foreground: 0 0% 95%;
+  --color-accent: 217 91% 60%;
 }
 
 @media (min-width: 768px) {
   :root {
     --header-top: 1rem;
   }
-}
-
-:root,
-.light {
-  --color-background: 0 0% 100%;
-  --color-foreground: 0 0% 15%;
-}
-
-.dark {
-  --color-background: 233 100% 4%;
-  --color-foreground: 0 0% 95%;
 }
 
 /* CSS */
@@ -67,11 +66,11 @@
     content: "";
     position: absolute;
     inset: 0px;
-    background: radial-gradient(circle at bottom center, hsl(221 79% 54%), transparent 70%);
+    background: radial-gradient(circle at bottom center, hsl(var(--color-accent)), transparent 70%);
     opacity: 0.4;
   }
 
-  .stars::after {
+  /* .stars::after {
     content: "";
     position: absolute;
     background: hsl(var(--color-background));
@@ -81,7 +80,7 @@
     border-radius: 50%;
     outline: 1px solid hsl(242 41% 62% / 0.25);
     top: 50%;
-  }
+  } */
 
   .stars svg {
     position: absolute;

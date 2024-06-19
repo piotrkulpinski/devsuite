@@ -2,7 +2,6 @@ import type { MetaFunction } from "@remix-run/node"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"
 import { ToolCard } from "~/partials/cards/ToolCard"
-import { Newsletter } from "~/partials/Newsletter"
 
 export const meta: MetaFunction = () => {
   return [{ title: "New Remix App" }, { name: "description", content: "Welcome to Remix!" }]
@@ -23,8 +22,6 @@ export default function Tools() {
           <ToolCard key={i} />
         ))}
       </Grid>
-
-      <Newsletter className="mt-auto" />
     </>
   )
 }

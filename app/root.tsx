@@ -1,10 +1,8 @@
+/** eslint-disable @typescript-eslint/no-unused-vars */
 import { LinksFunction } from "@remix-run/node"
-import { ThemeProvider } from "next-themes"
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react"
-import { Header } from "./partials/Header"
-import { Footer } from "~/partials/Footer"
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "@remix-run/react"
 import { Container } from "./components/Container"
-import { GradientBlur } from "./components/GradientBlur"
+import { ThemeProvider } from "next-themes"
 
 import stylesheet from "~/styles.css?url"
 
@@ -18,6 +16,9 @@ export const links: LinksFunction = () => {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { pathname } = useLocation()
+
   return (
     <html lang="en">
       <head>
@@ -34,15 +35,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
+          {/* <Header /> */}
 
-          <Container className="flex-1 flex flex-col gap-12 py-12 mt-[calc(var(--header-top)+var(--header-height))] md:py-16 lg:py-20">
-            <GradientBlur position="top" />
+          <Container className="flex-1 flex flex-col gap-12 py-12 mt-[calc(var(--header-top)+var(--header-height))] md:pt-16 lg:pt-20">
+            {/* <GradientBlur position="top" /> */}
+
             {children}
-            <GradientBlur position="bottom" />
+
+            {/* {!pathname.includes("submit") && (
+              <Newsletter
+                title="Subscribe to our newsletter"
+                description="Stay updated with the newest additions to our digital assets library, upcoming promotions or discounts."
+              />
+            )} */}
+
+            {/* <GradientBlur position="bottom" /> */}
           </Container>
 
-          <Footer />
+          {/* <Footer /> */}
         </ThemeProvider>
 
         <ScrollRestoration />

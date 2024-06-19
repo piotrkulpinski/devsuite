@@ -1,3 +1,4 @@
+/** eslint-disable react-hooks/exhaustive-deps */
 import { keepNumberInRange } from "@curiousleaf/utils"
 import { EmblaCarouselType, EmblaEventType } from "embla-carousel"
 import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react"
@@ -165,7 +166,8 @@ const Carousel = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement> & Car
         .on("reInit", tweenOpacity)
         .on("scroll", tweenOpacity)
         .on("slideFocus", tweenOpacity)
-    }, [api, tweenOpacity])
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [api, setTweenFactor, tweenOpacity])
 
     return (
       <CarouselContext.Provider
@@ -350,7 +352,7 @@ const CarouselDots = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
             key={i}
             type="button"
             className={cx(
-              "shrink-1 basis-7 p-1 h-3 text-foreground/25 hover:text-foreground/75 transition-all",
+              "shrink-1 basis-5 p-1 h-3 text-foreground/25 hover:text-foreground/75 transition-all",
               i === currentSlide && "basis-8 text-blue-500"
             )}
             aria-label={`Go to slide ${i + 1}`}

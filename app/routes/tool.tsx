@@ -10,7 +10,6 @@ import { Prose } from "~/components/Prose"
 import { Series } from "~/components/Series"
 import { Wrapper } from "~/components/Wrapper"
 import { Nav } from "~/partials/Nav"
-import { Newsletter } from "~/partials/Newsletter"
 import { ToolCard } from "~/partials/cards/ToolCard"
 
 export const meta: MetaFunction = () => {
@@ -139,8 +138,6 @@ export default function Tool() {
           <ToolCard key={i} />
         ))}
       </Grid>
-
-      <Newsletter className="mt-auto" />
     </>
   )
 }

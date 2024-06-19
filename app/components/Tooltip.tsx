@@ -1,12 +1,11 @@
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
-import { useTheme } from "next-themes"
 import type { ComponentPropsWithoutRef, ElementRef, ReactNode } from "react"
 import { forwardRef } from "react"
 import { VariantProps, cva, cx } from "~/utils/cva"
 
 export const tooltipVariants = cva({
   base: [
-    "z-50 px-2.5 py-1 min-h-6 max-w-[12rem] inline-flex items-center gap-2 rounded-md bg-background text-foreground text-xs/tight text-pretty font-medium pointer-events-none outline-none select-none shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] will-change-[transform,opacity]",
+    "z-50 px-2.5 py-1 min-h-6 max-w-[12rem] inline-flex items-center gap-2 rounded-md bg-foreground text-background text-xs/tight text-pretty font-medium pointer-events-none outline-none select-none shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] will-change-[transform,opacity]",
     "animate-in fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
   ],
 
@@ -24,7 +23,7 @@ export const tooltipVariants = cva({
 })
 
 export const tooltipArrowVariants = cva({
-  base: "w-2 h-1 block fill-background",
+  base: "w-2 h-1 block fill-foreground",
 })
 
 export type TooltipElement = ElementRef<typeof TooltipPrimitive.Trigger>
@@ -50,7 +49,6 @@ export const TooltipContent = forwardRef<
     sideOffset = 4,
     ...rest
   } = props
-  const { resolvedTheme } = useTheme()
 
   return (
     <TooltipPrimitive.Content
@@ -58,10 +56,7 @@ export const TooltipContent = forwardRef<
       align={align}
       collisionPadding={collisionPadding}
       sideOffset={sideOffset}
-      className={cx(
-        resolvedTheme === "light" ? "dark" : "light",
-        tooltipVariants({ align, className })
-      )}
+      className={cx(tooltipVariants({ align, className }))}
       {...rest}
     >
       {children}

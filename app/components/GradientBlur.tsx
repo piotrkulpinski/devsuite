@@ -35,6 +35,7 @@ export const GradientBlur = ({ className, position, steps = 8, ...props }: Gradi
               className="absolute inset-0 pointer-events-none"
               style={{
                 zIndex: i + 1,
+                WebkitBackdropFilter: `blur(${blur}px)`,
                 backdropFilter: `blur(${blur}px)`,
                 maskImage: `linear-gradient(to top, rgba(0, 0, 0, 0) ${i * step}%, rgba(0, 0, 0, 1) ${(i + 1) * step}%, rgba(0, 0, 0, 1) ${(i + 2) * step}%, rgba(0, 0, 0, 0) ${(i + 3) * step}%)`,
               }}
