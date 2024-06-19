@@ -59,7 +59,7 @@ export default function Index() {
   return (
     <>
       <Stars className="relative w-full h-96 mx-auto scale-y-flip -my-44 md:-my-40 md:-mb-60" />
-      <Badge className="-mb-10 self-center">Coming soon</Badge>
+      <Badge className="-mb-10 self-center">Coming soon ✨</Badge>
 
       <Intro
         title={
