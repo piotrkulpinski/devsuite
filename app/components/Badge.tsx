@@ -3,12 +3,12 @@ import { type HTMLAttributes, isValidElement } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const badgeVariants = cva({
-  base: "rounded bg-foreground/5 border border-foreground/15 hover:[&[href]]:bg-border/75",
+  base: "rounded bg-background border border-foreground/15 hover:[&[href]]:bg-border/75",
 
   variants: {
     size: {
       sm: "px-1 py-px text-[10px]/tight",
-      md: "px-1.5 py-0.5 text-xs/tight",
+      md: "px-1.5 py-[3px] text-xs/tight",
       lg: "px-2 py-1 text-sm/tight",
     },
   },

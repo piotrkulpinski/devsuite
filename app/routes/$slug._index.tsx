@@ -1,5 +1,5 @@
 import { Link, json, useLoaderData } from "@remix-run/react"
-import { ArrowUpRightIcon, HashIcon } from "lucide-react"
+import { ArrowUpRightIcon, DollarSignIcon, HashIcon, SparkleIcon } from "lucide-react"
 import { Button } from "~/components/Button"
 import { Favicon } from "~/components/Favicon"
 import { Gallery } from "~/components/Gallery"
@@ -11,8 +11,11 @@ import { Nav } from "~/partials/Nav"
 import { LoaderFunctionArgs } from "@remix-run/node"
 import { prisma } from "~/services.server/prisma"
 import { toolOnePayload } from "~/services.server/api"
-import { JSON_HEADERS } from "~/utils/constants"
+import { JSON_HEADERS, SITE_NAME } from "~/utils/constants"
 import { getUrlHostname } from "~/utils/helpers"
+import { Badge } from "~/components/Badge"
+import { slugify } from "@curiousleaf/utils"
+import { updateUrlWithSearchParams } from "~/utils/query-string"
 
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   try {
@@ -52,8 +55,9 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   }
 }
 
-export default function CategoryPage() {
+export default function ToolPage() {
   const { tool, previous, next } = useLoaderData<typeof loader>()
+
   const websiteUrl = tool.affiliateUrl || tool.websiteUrl
   const tags = [
     "ab-testing",
@@ -92,7 +96,13 @@ export default function CategoryPage() {
                 className="ml-auto"
                 asChild
               >
-                <a href={websiteUrl}>{getUrlHostname(websiteUrl)}</a>
+                <a
+                  href={updateUrlWithSearchParams(websiteUrl, { ref: slugify(SITE_NAME) })}
+                  target="_blank"
+                  rel="nofollow noreferrer"
+                >
+                  {getUrlHostname(websiteUrl)}
+                </a>
               </Button>
             )}
           </Series>
@@ -103,11 +113,23 @@ export default function CategoryPage() {
           >
             {tool.description}
           </h2>
+
+          <Series className="mt-4">
+            {tool.isOpenSource && (
+              <Badge>
+                <SparkleIcon className="inline-flex text-yellow-500" /> Open Source
+              </Badge>
+            )}
+
+            <span className="flex items-center gap-1 text-xs">
+              <DollarSignIcon className="inline-flex text-green-500" /> free + from $9/mo
+            </span>
+          </Series>
         </div>
 
-        {tool.imageUrl && <Gallery images={[tool.imageUrl]} />}
+        <Gallery images={tool.images} />
 
-        {tool.content && <Prose>{tool.content}</Prose>}
+        {tool.content && <Prose dangerouslySetInnerHTML={{ __html: tool.content }} />}
 
         <nav className="flex flex-wrap gap-y-2 gap-x-4">
           {tags.map((tag) => (

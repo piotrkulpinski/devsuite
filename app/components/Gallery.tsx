@@ -1,18 +1,21 @@
 import { HTMLAttributes } from "react"
 import {
-  Carousel,
-  CarouselContent,
-  CarouselDots,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+    Carousel,
+    CarouselContent,
+    CarouselDots,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
 } from "./Carousel"
+import { useLocation } from "@remix-run/react"
 
 type GalleryProps = HTMLAttributes<HTMLElement> & {
   images: string[]
 }
 
 export const Gallery = ({ images, ...props }: GalleryProps) => {
+  const { key } = useLocation()
+
   if (images.length === 0) {
     return null
   }
@@ -20,6 +23,7 @@ export const Gallery = ({ images, ...props }: GalleryProps) => {
   if (images.length === 1) {
     return (
       <img
+        key={key}
         src={images[0]}
         alt=""
         className="w-full h-auto rounded aspect-[1200/630] object-cover md:rounded-lg"
@@ -29,6 +33,7 @@ export const Gallery = ({ images, ...props }: GalleryProps) => {
 
   return (
     <Carousel
+      key={key}
       className="left-1/2 w-dvw -translate-x-1/2 overflow-x-clip"
       opts={{ align: "center", loop: true }}
       {...props}

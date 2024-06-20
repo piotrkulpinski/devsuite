@@ -60,9 +60,11 @@ export const getRelativeUrl = (url: string, imageUrl: string) => {
   if (!imageUrl) {
     return null
   }
+
   if (isValidUrl(imageUrl)) {
     return imageUrl
   }
+
   const { protocol, host } = new URL(url)
   const baseURL = `${protocol}//${host}`
   return new URL(imageUrl, baseURL).toString()
@@ -74,43 +76,38 @@ export const getMetaTags = async (url: string) => {
   if (!html) {
     return {
       title: url,
-      description: "No description",
-      image: null,
+      description: undefined,
+      imageUrl: undefined,
+      faviconUrl: undefined,
     }
   }
   const { metaTags, title: titleTag, linkTags } = getHeadChildNodes(html)
 
-  const object = {}
+  const meta: Record<string, string> = {}
 
   for (const k in metaTags) {
     const { property, content } = metaTags[k]
 
-    // !object[property] → (meaning we're taking the first instance of a metatag and ignoring the rest)
-    property && !object[property] && (object[property] = content && he.decode(content))
+    // !meta[property] → (meaning we're taking the first instance of a metatag and ignoring the rest)
+    property && !meta[property] && (meta[property] = content && he.decode(content))
   }
 
   for (const m in linkTags) {
     const { rel, href } = linkTags[m]
 
-    // !object[rel] → (ditto the above)
-    rel && !object[rel] && (object[rel] = href)
+    // !meta[rel] → (ditto the above)
+    rel && !meta[rel] && (meta[rel] = href)
   }
 
-  const title = object["og:title"] || object["twitter:title"] || titleTag
-
-  const description =
-    object["description"] || object["og:description"] || object["twitter:description"]
-
-  const image =
-    object["og:image"] ||
-    object["twitter:image"] ||
-    object["image_src"] ||
-    object["icon"] ||
-    object["shortcut icon"]
+  const title = meta["og:title"] || meta["twitter:title"] || titleTag
+  const description = meta["description"] || meta["og:description"] || meta["twitter:description"]
+  const imageUrl = meta["og:image"] || meta["twitter:image"] || meta["image_src"]
+  const faviconUrl = meta["icon"] || meta["shortcut icon"]
 
   return {
     title: title || url,
     description: description,
-    image: getRelativeUrl(url, image),
+    imageUrl: getRelativeUrl(url, imageUrl),
+    faviconUrl: getRelativeUrl(url, faviconUrl),
   }
 }

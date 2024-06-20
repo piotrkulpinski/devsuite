@@ -42,7 +42,8 @@ export const loader = async () => {
         data: {
           tagline: newTagline,
           description: metadata.description,
-          imageUrl: metadata.image,
+          images: metadata.imageUrl ? [metadata.imageUrl] : undefined,
+          faviconUrl: metadata.faviconUrl,
         },
       })
     })
