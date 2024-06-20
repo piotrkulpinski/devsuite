@@ -2,8 +2,7 @@ import { Form, useFetcher, useLocation } from "@remix-run/react"
 import { SparkleIcon } from "lucide-react"
 import { useId } from "react"
 import { Button } from "~/components/Button"
-import { Intro } from "~/components/Intro"
-import { Wrapper } from "~/components/Wrapper"
+import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
 import { Input } from "~/components/forms/Input"
 import { Label } from "~/components/forms/Label"
 import { TextArea } from "~/components/forms/TextArea"
@@ -11,15 +10,18 @@ import { TextArea } from "~/components/forms/TextArea"
 export default function Submit() {
   const id = useId()
   const { key } = useLocation()
-  const { data, state } = useFetcher<any>({ key: `${id}-${key}` })
+  const { data, state } = useFetcher<unknown>({ key: `${id}-${key}` })
 
   return (
-    <Wrapper className="flex flex-col gap-16">
-      <Intro
-        title="Submit a Tool"
-        description={`A high-quality website curation is the most important aspect for us. We can't list all sites since it's a highly curated directory.`}
-        alignment="center"
-      />
+    <>
+      <Intro alignment="center">
+        <IntroTitle>Submit a Tool</IntroTitle>
+
+        <IntroDescription>
+          A high-quality website curation is the most important aspect for us. We can&apos;t list
+          all sites since it&apos;s a highly curated directory.
+        </IntroDescription>
+      </Intro>
 
       <Form
         method="GET"
@@ -32,14 +34,7 @@ export default function Submit() {
             Your Name:
           </Label>
 
-          <Input
-            type="text"
-            name="name"
-            id="name"
-            placeholder="John Doe"
-            data-1p-ignore
-            required
-          />
+          <Input type="text" name="name" id="name" placeholder="John Doe" data-1p-ignore required />
 
           {data?.error?.name && (
             <p className="text-xs text-red-600">{data.error.name?._errors[0]}</p>
@@ -51,13 +46,7 @@ export default function Submit() {
             Your Email:
           </Label>
 
-          <Input
-            type="url"
-            name="email"
-            id="email"
-            placeholder="john@example.com"
-            required
-          />
+          <Input type="url" name="email" id="email" placeholder="john@example.com" required />
 
           {data?.error?.website && (
             <p className="text-xs text-red-600">{data.error.website?._errors[0]}</p>
@@ -69,14 +58,7 @@ export default function Submit() {
             Tool Name:
           </Label>
 
-          <Input
-            type="text"
-            name="name"
-            id="name"
-            placeholder="PostHog"
-            data-1p-ignore
-            required
-          />
+          <Input type="text" name="name" id="name" placeholder="PostHog" data-1p-ignore required />
 
           {data?.error?.name && (
             <p className="text-xs text-red-600">{data.error.name?._errors[0]}</p>
@@ -120,11 +102,16 @@ export default function Submit() {
         </div>
 
         <div className="col-span-full">
-          <Button variant="fancy" suffix={<SparkleIcon />} isPending={state !== "idle"} className="flex ml-auto min-w-32">
+          <Button
+            variant="fancy"
+            suffix={<SparkleIcon />}
+            isPending={state !== "idle"}
+            className="flex ml-auto min-w-32"
+          >
             Submit
           </Button>
         </div>
       </Form>
-    </Wrapper>
+    </>
   )
 }

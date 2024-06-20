@@ -21,7 +21,11 @@ export type CategoryOne = Prisma.CategoryGetPayload<{ include: typeof categoryOn
 export type CategoryMany = Prisma.CategoryGetPayload<{ include: typeof categoryManyPayload }>
 
 // Tools
-export const toolOnePayload = Prisma.validator<Prisma.ToolInclude>()({})
+export const toolOnePayload = Prisma.validator<Prisma.ToolInclude>()({
+  categories: {
+    select: { id: true, name: true, slug: true },
+  },
+})
 export const toolManyPayload = Prisma.validator<Prisma.ToolInclude>()({})
 
 export type ToolOne = Prisma.ToolGetPayload<{ include: typeof toolOnePayload }>

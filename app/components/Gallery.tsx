@@ -1,11 +1,11 @@
 import { HTMLAttributes } from "react"
 import {
-    Carousel,
-    CarouselContent,
-    CarouselDots,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
+  Carousel,
+  CarouselContent,
+  CarouselDots,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "./Carousel"
 import { useLocation } from "@remix-run/react"
 
@@ -26,7 +26,7 @@ export const Gallery = ({ images, ...props }: GalleryProps) => {
         key={key}
         src={images[0]}
         alt=""
-        className="w-full h-auto rounded aspect-[1200/630] object-cover md:rounded-lg"
+        className="w-full h-auto border border-foreground/15 rounded aspect-[1200/630] object-cover md:rounded-lg"
       />
     )
   }
@@ -45,7 +45,7 @@ export const Gallery = ({ images, ...props }: GalleryProps) => {
               <img
                 src={image}
                 alt=""
-                className="w-auto rounded aspect-[1200/630] object-cover md:rounded-lg"
+                className="w-auto border border-foreground/15 rounded aspect-[1200/630] object-cover md:rounded-lg"
               />
             </CarouselItem>
           ))}

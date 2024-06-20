@@ -1,6 +1,5 @@
-/** eslint-disable @typescript-eslint/no-unused-vars */
 import { json, useLoaderData } from "@remix-run/react"
-import { Intro } from "~/components/Intro"
+import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
 import { LoaderFunctionArgs } from "@remix-run/node"
 import { prisma } from "~/services.server/prisma"
 import { categoryOnePayload } from "~/services.server/api"
@@ -41,12 +40,13 @@ export default function CategoryPage() {
 
   return (
     <>
-      <Intro
-        title={`${category.name}`}
-        description={category.description}
-        className="max-w-2xl mx-auto text-pretty"
-        alignment="center"
-      />
+      <Intro alignment="center" className="max-w-2xl mx-auto text-pretty">
+        <IntroTitle style={{ viewTransitionName: "category-name" }}>{category.name}</IntroTitle>
+
+        <IntroDescription style={{ viewTransitionName: "category-description" }}>
+          {category.description}
+        </IntroDescription>
+      </Intro>
 
       <Grid>
         {tools.map((tool) => (

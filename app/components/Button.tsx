@@ -98,7 +98,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
   const isAffixOnly = isChildrenEmpty(children) && (!prefix || !suffix)
 
   return (
-    <Box>
+    <Box hover focus>
       <Component
         ref={ref}
         disabled={disabled ?? isPending}

@@ -24,9 +24,19 @@ export const links: LinksFunction = () => {
   ]
 }
 
+type RouteMatch = {
+  handle: {
+    newsletter?: boolean
+    topBlur?: boolean
+    bottomBlur?: boolean
+  }
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
-  const matches = useMatches() as { handle: { newsletter?: boolean } }[]
+  const matches = useMatches() as RouteMatch[]
   const noNewsletter = matches.some(({ handle }) => handle?.newsletter === false)
+  const noTopBlur = matches.some(({ handle }) => handle?.topBlur === false)
+  const noBottomBlur = matches.some(({ handle }) => handle?.bottomBlur === false)
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -47,7 +57,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <Header />
 
           <Container className="flex-1 flex flex-col gap-12 py-12 mt-[calc(var(--header-top)+var(--header-height))] md:pt-16 lg:pt-20">
-            <GradientBlur position="top" />
+            {!noTopBlur && <GradientBlur position="top" />}
             <Stars className="fixed left-1/2 -top-0 w-full min-w-[1000px] max-w-screen-2xl aspect-[10/5] mx-auto scale-y-flip -translate-x-1/2 -translate-y-1/3" />
 
             {children}
@@ -59,7 +69,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               />
             )}
 
-            <GradientBlur position="bottom" />
+            {!noBottomBlur && <GradientBlur position="bottom" />}
           </Container>
 
           <Footer />
