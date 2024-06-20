@@ -6,7 +6,7 @@ import { type VariantProps, cva, cx } from "~/utils/cva"
 import { Box } from "./Box"
 
 export const cardVariants = cva({
-  base: "group/card relative flex flex-col gap-4 rounded-lg p-6 overflow-clip transform-gpu",
+  base: "group/card relative w-full flex flex-col gap-4 rounded-lg p-6 overflow-clip transform-gpu",
 
   variants: {
     isFeatured: {

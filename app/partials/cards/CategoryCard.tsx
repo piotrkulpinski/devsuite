@@ -14,7 +14,7 @@ type CategoryCardProps = HTMLAttributes<HTMLElement> & {
 export const CategoryCard = ({ category }: CategoryCardProps) => {
   return (
     <Card asChild>
-      <NavLink to={category.slug} unstable_viewTransition>
+      <NavLink to={`/category/${category.slug}`} unstable_viewTransition>
         <div className="flex items-center gap-3 overflow-clip">
           {Array.from({ length: 4 }).map((_, j) => (
             <img
@@ -26,7 +26,7 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
           ))}
         </div>
 
-        <div className="flex gap-4 items-start justify-between">
+        <div className="flex gap-3 items-start justify-between">
           <div className="flex flex-col gap-2 min-w-0">
             <H5 className="!leading-snug flex-1 truncate">{category.name}</H5>
 
@@ -35,7 +35,7 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
             </span>
           </div>
 
-          <span className="size-10 grid place-items-center mt-1.5 bg-foreground/5 rounded-full shrink-0 dark:bg-foreground/10">
+          <span className="size-10 grid place-items-center mt-1 bg-foreground/5 rounded-full shrink-0 dark:bg-foreground/10">
             <ArrowRightIcon />
           </span>
         </div>

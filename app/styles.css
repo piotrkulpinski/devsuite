@@ -94,7 +94,7 @@
 a,
 button,
 label[for],
-[class*="group-hover"] {
+[href] [class*="group-hover"] {
   @apply transition;
   @apply ease-out;
   @apply duration-200;
@@ -105,7 +105,7 @@ svg:not([class*="stroke"]) {
   @apply !stroke-[1.75];
 }
 
-svg:not([class*="size-"]):not([class*="h-"]):not([role]) {
+svg.lucide:not([class*="size-"]):not([class*="h-"]) {
   @apply size-[1em];
 }
 

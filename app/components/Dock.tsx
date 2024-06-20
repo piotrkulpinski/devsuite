@@ -7,6 +7,7 @@ const dockItemVariants = cva({
   base: [
     "relative p-1.5 rounded transition-all duration-200 ease-[cubic-bezier(0.5,1.5,0.5,1)]",
     "hover:pb-2.5 hover:-mt-1 hover:z-10",
+    "disabled:opacity-50 disabled:pointer-events-none",
   ],
 
   variants: {

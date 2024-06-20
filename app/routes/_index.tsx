@@ -1,4 +1,6 @@
 /** eslint-disable @typescript-eslint/no-unused-vars */
+/** eslint-disable @typescript-eslint/no-unused-vars */
+/** eslint-disable @typescript-eslint/no-unused-vars */
 import { json, type MetaFunction } from "@remix-run/node"
 import { Grid } from "~/components/Grid"
 import { Intro } from "~/components/Intro"

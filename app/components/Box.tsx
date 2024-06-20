@@ -8,6 +8,7 @@ export const boxVariants = cva({
   base: [
     "border border-foreground/15",
     "hover:[&[href]]:ring-[3px] hover:[&[href]]:ring-foreground/10 hover:[&[href]]:border-foreground/30",
+    "group-hover-[&[href]]:ring-[3px] group-hover-[&[href]]:ring-foreground/10 group-hover-[&[href]]:border-foreground/30",
     "hover:[&[type]]:ring-[3px] hover:[&[type]]:ring-foreground/10 hover:[&[type]]:border-foreground/30",
     "focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-foreground/10 focus-visible:border-foreground/25 focus-visible:z-10",
   ],

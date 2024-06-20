@@ -1,14 +1,31 @@
+import { SerializeFrom } from "@remix-run/node"
 import { NavLink } from "@remix-run/react"
-import { DollarSignIcon } from "lucide-react"
+import { DollarSignIcon, SparkleIcon } from "lucide-react"
+import { HTMLAttributes } from "react"
+import { Badge } from "~/components/Badge"
 import { Card } from "~/components/Card"
 import { Favicon } from "~/components/Favicon"
-import { H5 } from "~/components/Heading"
+import { H4 } from "~/components/Heading"
+import { Series } from "~/components/Series"
+import { ToolMany } from "~/services.server/api"
+import { cx } from "~/utils/cva"
 
-export const ToolCard = () => {
+type ToolCardProps = HTMLAttributes<HTMLElement> & {
+  tool: SerializeFrom<ToolMany>
+}
+
+export const ToolCard = ({ className, tool, ...props }: ToolCardProps) => {
   return (
-    <Card asChild>
-      <NavLink to="/tool" unstable_viewTransition>
-        <div className="flex items-center gap-3 overflow-clip">
+    <NavLink
+      to={`/${tool.slug}`}
+      className={cx("group flex", className)}
+      prefetch="intent"
+      unstable_viewTransition
+      {...props}
+    >
+      {({ isTransitioning }) => (
+        <Card style={isTransitioning ? { viewTransitionName: "tool" } : undefined}>
+          {/* <div className="flex items-center gap-3 overflow-clip">
           {Array.from({ length: 4 }).map((_, j) => (
             <img
               key={j}
@@ -17,26 +34,47 @@ export const ToolCard = () => {
               className="size-20 object-cover"
             />
           ))}
-        </div>
+        </div> */}
 
-        <div className="flex gap-4 items-center justify-between">
-          <div className="flex flex-col gap-2">
-            <H5 className="!leading-snug">PostHog</H5>
-            <span className="text-xs text-foreground/50">Product analytics platform</span>
+          <div className="flex gap-3 items-start justify-between">
+            <div className="flex flex-col gap-2">
+              <H4
+                className="!leading-snug"
+                style={isTransitioning ? { viewTransitionName: "tool-name" } : undefined}
+              >
+                {tool.name}
+              </H4>
+
+              <span
+                className="text-sm text-foreground/60 text-pretty"
+                style={isTransitioning ? { viewTransitionName: "tool-description" } : undefined}
+              >
+                {tool.tagline}
+              </span>
+            </div>
+
+            {tool.faviconUrl && (
+              <Favicon
+                src={tool.faviconUrl}
+                className="mt-1 rounded-full"
+                style={isTransitioning ? { viewTransitionName: "tool-favicon" } : undefined}
+              />
+            )}
           </div>
 
-          {/* <span className="size-10 grid place-items-center bg-foreground/10 rounded-full p-1 shrink-0"> */}
-          <Favicon
-            src={`https://www.google.com/s2/favicons?sz=128&domain_url=posthog.com`}
-            className="rounded-full"
-          />
-          {/* </span> */}
-        </div>
+          <Series>
+            {tool.isOpenSource && (
+              <Badge>
+                <SparkleIcon className="inline-flex text-yellow-500" /> Open Source
+              </Badge>
+            )}
 
-        <span className="flex items-center gap-1 text-xs">
-          <DollarSignIcon className="inline-flex text-green-500" /> free + from $9/mo
-        </span>
-      </NavLink>
-    </Card>
+            <span className="flex items-center gap-1 text-xs">
+              <DollarSignIcon className="inline-flex text-green-500" /> free + from $9/mo
+            </span>
+          </Series>
+        </Card>
+      )}
+    </NavLink>
   )
 }
