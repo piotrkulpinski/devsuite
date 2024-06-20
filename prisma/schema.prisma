@@ -18,7 +18,8 @@ model Tool {
   websiteUrl     String              @unique
   affiliateUrl   String?
   faviconUrl     String?
-  imageUrl       String?
+  images         String[]
+  links          String[]
   isFeatured     Boolean             @default(false)
   isOpenSource   Boolean             @default(false)
   submitterName  String?

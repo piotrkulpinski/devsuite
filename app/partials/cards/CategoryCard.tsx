@@ -15,16 +15,15 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
   return (
     <Card asChild>
       <NavLink to={`/category/${category.slug}`} unstable_viewTransition>
-        <div className="flex items-center gap-3 overflow-clip">
-          {Array.from({ length: 4 }).map((_, j) => (
-            <img
-              key={j}
-              src="https://framerusercontent.com/images/4dKAgLp4CiDi6x2Yoacvyp33JA.webp"
-              alt=""
-              className="size-20 object-cover"
-            />
+        {/* <div className="flex items-center gap-3 overflow-clip mix-blend-overlay">
+          {category.tools.map((tool) => (
+            <Fragment key={tool.id}>
+              {tool.images[0] && (
+                <img src={tool.images[0]} alt="" className="size-20 object-cover" />
+              )}
+            </Fragment>
           ))}
-        </div>
+        </div> */}
 
         <div className="flex gap-3 items-start justify-between">
           <div className="flex flex-col gap-2 min-w-0">
@@ -39,6 +38,7 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
             <ArrowRightIcon />
           </span>
         </div>
+        <span className="text-sm text-foreground/60">{category.description}</span>
       </NavLink>
     </Card>
   )

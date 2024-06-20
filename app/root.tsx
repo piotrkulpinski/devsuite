@@ -1,5 +1,5 @@
 import { LinksFunction } from "@remix-run/node"
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from "@remix-run/react"
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useMatches } from "@remix-run/react"
 import { Container } from "./components/Container"
 import { Header } from "./partials/Header"
 import { Footer } from "./partials/Footer"
@@ -25,7 +25,8 @@ export const links: LinksFunction = () => {
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const { pathname } = useLocation()
+  const matches = useMatches() as { handle: { newsletter?: boolean } }[]
+  const noNewsletter = matches.some(({ handle }) => handle?.newsletter === false)
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -51,7 +52,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
             {children}
 
-            {!pathname.includes("submit") && (
+            {!noNewsletter && (
               <Newsletter
                 title="Subscribe to our newsletter"
                 description="Stay updated with the newest additions to our digital assets library, upcoming promotions or discounts."

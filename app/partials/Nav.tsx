@@ -8,11 +8,9 @@ import {
   ArrowLeftIcon,
   ArrowRightIcon,
   FacebookIcon,
-  HeartIcon,
-  EraserIcon,
   LinkIcon,
 } from "lucide-react"
-import { Fragment, HTMLAttributes, useEffect, useState } from "react"
+import { Fragment, HTMLAttributes, useEffect } from "react"
 import { toast } from "sonner"
 import { Dock } from "~/components/Dock"
 import { Shortcut } from "~/components/Shortcut"
@@ -34,13 +32,13 @@ const NavItem = ({ ...props }: NavItemProps) => {
   useEffect(() => {
     const key = hotkey || shortcut
 
-    if (key && onClick) {
+    if (key && !isDisabled && onClick) {
       hotkeys(key, () => onClick())
     }
 
     return () => {
       if (key) {
-        hotkeys.unbind(shortcut)
+        hotkeys.unbind(key)
       }
     }
   }, [shortcut, onClick, hotkey])
@@ -69,7 +67,7 @@ type NavProps = HTMLAttributes<HTMLElement> & {
 }
 
 export const Nav = ({ previous, next, ...props }: NavProps) => {
-  const [isFavorite, setIsFavorite] = useState(false)
+  // const [isFavorite, setIsFavorite] = useState(false)
   const navigate = useNavigate()
 
   const actions: (null | NavItemProps)[] = [
@@ -77,20 +75,20 @@ export const Nav = ({ previous, next, ...props }: NavProps) => {
       icon: HomeIcon,
       tooltip: "Go Home",
       shortcut: "H",
-      onClick: () => navigate("/"),
+      onClick: () => navigate("/", { unstable_viewTransition: true }),
     },
-    {
-      icon: EraserIcon,
-      tooltip: "Request a Change",
-      shortcut: "R",
-    },
-    {
-      icon: HeartIcon,
-      tooltip: "Add to favorites",
-      shortcut: "L",
-      isActive: isFavorite,
-      onClick: () => setIsFavorite(!isFavorite),
-    },
+    // {
+    //   icon: EraserIcon,
+    //   tooltip: "Request a Change",
+    //   shortcut: "R",
+    // },
+    // {
+    //   icon: HeartIcon,
+    //   tooltip: "Add to favorites",
+    //   shortcut: "L",
+    //   isActive: isFavorite,
+    //   onClick: () => setIsFavorite(!isFavorite),
+    // },
     null,
     {
       icon: ArrowLeftIcon,
@@ -98,7 +96,7 @@ export const Nav = ({ previous, next, ...props }: NavProps) => {
       shortcut: "←",
       hotkey: "left",
       isDisabled: !previous,
-      onClick: previous ? () => navigate(`/${previous}`) : undefined,
+      onClick: () => navigate(`/${previous}`, { unstable_viewTransition: true }),
     },
     {
       icon: ArrowRightIcon,
@@ -106,7 +104,7 @@ export const Nav = ({ previous, next, ...props }: NavProps) => {
       shortcut: "→",
       hotkey: "right",
       isDisabled: !next,
-      onClick: next ? () => navigate(`/${next}`) : undefined,
+      onClick: () => navigate(`/${next}`, { unstable_viewTransition: true }),
     },
     null,
     {
@@ -127,6 +125,12 @@ export const Nav = ({ previous, next, ...props }: NavProps) => {
       tooltip: "Share on Facebook",
     },
   ]
+
+  useEffect(() => {
+    hotkeys("E", () => navigate(`edit`))
+
+    return () => hotkeys.unbind("E")
+  }, [])
 
   return (
     <Dock {...props}>
