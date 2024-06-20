@@ -100,7 +100,7 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
   const finalPrice = discount ? (price * (100 - discount)) / 100 : price
 
   return (
-    <Card isRevealed={false} isFeatured={isFeatured} asChild>
+    <Card hover={false} isRevealed={false} isFeatured={isFeatured} asChild>
       <Component ref={ref} className={cx(planVariants({ className }))} {...rest}>
         {isFeatured && (
           <img

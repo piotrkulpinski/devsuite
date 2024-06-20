@@ -1,4 +1,12 @@
 import { Form, Link, json, useLoaderData, useNavigate } from "@remix-run/react"
+import {
+  MultiSelect,
+  MultiSelectContent,
+  MultiSelectInput,
+  MultiSelectItem,
+  MultiSelectList,
+  MultiSelectTrigger,
+} from "~/components/forms/MultiSelect"
 import { Favicon } from "~/components/Favicon"
 import { H2 } from "~/components/Heading"
 import { Series } from "~/components/Series"
@@ -20,19 +28,22 @@ import { useEffect } from "react"
 import hotkeys from "hotkeys-js"
 import { z } from "zod"
 import { Input } from "~/components/forms/Input"
+import { Hint } from "~/components/forms/Hint"
 
 export const handle = {
   newsletter: false,
+  bottomBlur: false,
 }
 
 const schema = z.object({
   name: z.string().min(1).max(100),
   slug: z.string().min(1).max(100),
-  websiteUrl: z.string().url().nullable(),
-  affiliateUrl: z.string().url().nullable(),
-  tagline: z.string().max(100).nullable(),
-  description: z.string().max(200).nullable(),
-  content: z.string().nullable(),
+  websiteUrl: z.string().trim().url(),
+  affiliateUrl: z.union([z.literal(""), z.string().trim().url()]).nullish(),
+  tagline: z.string().max(100).nullish(),
+  description: z.string().max(200).nullish(),
+  content: z.string().nullish(),
+  categories: z.array(z.string()).nullish(),
 })
 
 type FormData = z.infer<typeof schema>
@@ -41,12 +52,17 @@ const resolver = zodResolver(schema)
 
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   try {
-    const tool = await prisma.tool.findUniqueOrThrow({
-      where: { slug },
-      include: toolOnePayload,
-    })
+    const [tool, categories] = await Promise.all([
+      prisma.tool.findUniqueOrThrow({
+        where: { slug },
+        include: toolOnePayload,
+      }),
+      prisma.category.findMany({
+        select: { id: true, name: true },
+      }),
+    ])
 
-    return json({ tool }, { headers: JSON_HEADERS })
+    return json({ tool, categories }, { headers: JSON_HEADERS })
   } catch (error) {
     console.error(error)
     throw json(null, { status: 404, statusText: "Not Found" })
@@ -61,32 +77,26 @@ export const action = async ({ request, params: { slug } }: ActionFunctionArgs) 
   } = await getValidatedFormData<FormData>(request, resolver)
 
   if (errors) {
-    // The keys "errors" and "defaultValues" are picked up automatically by useRemixForm
     return json({ errors, defaultValues })
   }
 
-  // Destructure the parsed data
-  const { tagline, description, content } = data
+  const { categories, ...toolData } = data
 
-  try {
-    const tool = await prisma.tool.update({
-      where: { slug },
-      data: { tagline, description, content },
-    })
-
-    return redirect(`/${tool.slug}`, {
-      headers: {
-        "Cache-Control": "no-store",
+  const tool = await prisma.tool.update({
+    where: { slug },
+    data: {
+      ...toolData,
+      categories: {
+        set: categories?.map((name) => ({ name })),
       },
-    })
-  } catch (error) {
-    console.error(error)
-    throw json(null, { status: 404, statusText: "Not Found" })
-  }
+    },
+  })
+
+  return redirect(`/${tool.slug}`)
 }
 
 export default function ToolPageEdit() {
-  const { tool } = useLoaderData<typeof loader>()
+  const { tool, categories } = useLoaderData<typeof loader>()
   const navigate = useNavigate()
 
   const {
@@ -97,14 +107,14 @@ export default function ToolPageEdit() {
   } = useRemixForm<FormData>({
     mode: "onSubmit",
     resolver,
-    defaultValues: tool,
+    defaultValues: { ...tool, categories: tool.categories.map(({ name }) => name) },
   })
 
   useEffect(() => {
-    hotkeys("esc", () => navigate("..", { relative: "path" }))
+    hotkeys("esc", () => navigate("..", { relative: "path", unstable_viewTransition: true }))
 
     return () => hotkeys.unbind("esc")
-  }, [])
+  }, [navigate])
 
   return (
     <>
@@ -149,7 +159,7 @@ export default function ToolPageEdit() {
             </Label>
 
             <Input {...register("name")} placeholder="Enter a name" data-1p-ignore />
-            {errors.name && <p>{errors.name.message}</p>}
+            {errors.name && <Hint>{errors.name.message}</Hint>}
           </div>
 
           <div className="flex flex-col gap-1">
@@ -158,35 +168,37 @@ export default function ToolPageEdit() {
             </Label>
 
             <Input {...register("slug")} placeholder="Enter a slug" />
-            {errors.slug && <p>{errors.slug.message}</p>}
+            {errors.slug && <Hint>{errors.slug.message}</Hint>}
           </div>
 
           <div className="flex flex-col gap-1">
-            <Label htmlFor="websiteUrl">Website URL:</Label>
+            <Label htmlFor="websiteUrl" isRequired>
+              Website URL:
+            </Label>
 
             <Input type="url" {...register("websiteUrl")} />
-            {errors.websiteUrl && <p>{errors.websiteUrl.message}</p>}
+            {errors.websiteUrl && <Hint>{errors.websiteUrl.message}</Hint>}
           </div>
 
           <div className="flex flex-col gap-1">
             <Label htmlFor="affiliateUrl">Affiliate URL:</Label>
 
             <Input type="url" {...register("affiliateUrl")} />
-            {errors.affiliateUrl && <p>{errors.affiliateUrl.message}</p>}
+            {errors.affiliateUrl && <Hint>{errors.affiliateUrl.message}</Hint>}
           </div>
 
           <div className="flex flex-col gap-1 col-span-full">
             <Label htmlFor="tagline">Tagline:</Label>
 
             <TextArea {...register("tagline")} placeholder="Enter a tagline" />
-            {errors.tagline && <p>{errors.tagline.message}</p>}
+            {errors.tagline && <Hint>{errors.tagline.message}</Hint>}
           </div>
 
           <div className="flex flex-col gap-1 col-span-full">
             <Label htmlFor="description">Description:</Label>
 
             <TextArea {...register("description")} placeholder="Enter a description" />
-            {errors.description && <p>{errors.description.message}</p>}
+            {errors.description && <Hint>{errors.description.message}</Hint>}
           </div>
 
           <div className="flex flex-col gap-1 col-span-full">
@@ -201,6 +213,33 @@ export default function ToolPageEdit() {
                 </Prose>
               )}
             />
+            {errors.content && <Hint>{errors.content.message}</Hint>}
+          </div>
+
+          <div className="flex flex-col gap-1 col-span-full">
+            <Label htmlFor="categories">Categories:</Label>
+
+            <Controller
+              control={control}
+              name="categories"
+              render={({ field: { value, onChange } }) => (
+                <MultiSelect values={value ?? []} onValuesChange={onChange} loop>
+                  <MultiSelectTrigger>
+                    <MultiSelectInput placeholder="Select categories" />
+                  </MultiSelectTrigger>
+                  <MultiSelectContent>
+                    <MultiSelectList>
+                      {categories.map((category) => (
+                        <MultiSelectItem key={category.id} value={category.name}>
+                          {category.name}
+                        </MultiSelectItem>
+                      ))}
+                    </MultiSelectList>
+                  </MultiSelectContent>
+                </MultiSelect>
+              )}
+            />
+            {errors.categories && <Hint>{errors.categories.message}</Hint>}
           </div>
 
           <div className="col-span-full">

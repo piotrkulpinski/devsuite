@@ -3,7 +3,7 @@ import type { HTMLAttributes } from "react"
 import { forwardRef, isValidElement } from "react"
 
 import { type VariantProps, cva, cx } from "~/utils/cva"
-import { Box } from "./Box"
+import { Box, BoxProps } from "./Box"
 
 export const cardVariants = cva({
   base: "group/card relative w-full flex flex-col gap-4 rounded-lg p-6 overflow-clip transform-gpu",
@@ -24,6 +24,7 @@ export const cardVariants = cva({
 })
 
 type CardProps = HTMLAttributes<HTMLDivElement> &
+  BoxProps &
   VariantProps<typeof cardVariants> & {
     /**
      * If card to `true`, the button will be rendered as a child within the component.
@@ -33,12 +34,12 @@ type CardProps = HTMLAttributes<HTMLDivElement> &
   }
 
 export const Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
-  const { className, asChild, isFeatured, isRevealed, ...rest } = props
+  const { className, hover = true, focus = true, asChild, isFeatured, isRevealed, ...rest } = props
   const useAsChild = asChild && isValidElement(props.children)
   const Component = useAsChild ? Slot : "div"
 
   return (
-    <Box>
+    <Box hover={hover} focus={focus}>
       <Component
         ref={ref}
         className={cx(cardVariants({ isFeatured, isRevealed, className }))}

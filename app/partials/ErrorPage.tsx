@@ -1,4 +1,4 @@
-import { Intro } from "~/components/Intro"
+import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
 import { Button } from "~/components/Button"
 import { Link, isRouteErrorResponse, useLocation, useRouteError } from "@remix-run/react"
 
@@ -25,7 +25,10 @@ export const ErrorPage = () => {
   }
 
   return (
-    <Intro title={response.title} description={response.description} className="w-full">
+    <Intro className="w-full">
+      <IntroTitle>{response.title}</IntroTitle>
+      <IntroDescription>{response.description}</IntroDescription>
+
       {response.stack && (
         <pre className="text-xs text-red-500 mt-4 overflow-x-auto w-full">{response.stack}</pre>
       )}

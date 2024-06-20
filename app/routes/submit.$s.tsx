@@ -1,17 +1,19 @@
 import { Link } from "@remix-run/react"
 import { Button } from "~/components/Button"
-import { Intro } from "~/components/Intro"
+import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
 import { Plan } from "~/components/Plan"
-import { Wrapper } from "~/components/Wrapper"
 
 export default function SubmitPackages() {
   return (
-    <Wrapper className="flex flex-col gap-16">
-      <Intro
-        title="Choose a package"
-        description={`A high-quality website curation is the most important aspect for us. We can't list all sites since it's a highly curated directory.`}
-        alignment="center"
-      />
+    <>
+      <Intro alignment="center">
+        <IntroTitle>Choose a package</IntroTitle>
+
+        <IntroDescription>
+          A high-quality website curation is the most important aspect for us. We can&apos;t list
+          all sites since it&apos;s a highly curated directory.
+        </IntroDescription>
+      </Intro>
 
       <div className="grid gap-6 md:grid-cols-2">
         <Plan
@@ -48,6 +50,6 @@ export default function SubmitPackages() {
           </Button>
         </Plan>
       </div>
-    </Wrapper>
+    </>
   )
 }

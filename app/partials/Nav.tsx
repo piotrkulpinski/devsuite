@@ -1,4 +1,6 @@
 /** eslint-disable react-hooks/exhaustive-deps */
+/** eslint-disable react-hooks/exhaustive-deps */
+/** eslint-disable react-hooks/exhaustive-deps */
 /** eslint-disable @typescript-eslint/no-unused-vars */
 import { useNavigate } from "@remix-run/react"
 import hotkeys from "hotkeys-js"
@@ -41,7 +43,8 @@ const NavItem = ({ ...props }: NavItemProps) => {
         hotkeys.unbind(key)
       }
     }
-  }, [shortcut, onClick, hotkey])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shortcut, onClick, hotkey, isDisabled])
 
   return (
     <Tooltip
@@ -127,10 +130,10 @@ export const Nav = ({ previous, next, ...props }: NavProps) => {
   ]
 
   useEffect(() => {
-    hotkeys("E", () => navigate(`edit`))
+    hotkeys("E", () => navigate(`edit`, { unstable_viewTransition: true }))
 
     return () => hotkeys.unbind("E")
-  }, [])
+  }, [navigate])
 
   return (
     <Dock {...props}>

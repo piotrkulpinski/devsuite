@@ -2,12 +2,10 @@ import { useEditor, EditorContent } from "@tiptap/react"
 import { StarterKit } from "@tiptap/starter-kit"
 import { HTMLAttributes } from "react"
 import { VariantProps, cva, cx } from "~/utils/cva"
+import { Box } from "../Box"
 
 export const editorVariants = cva({
-  base: [
-    "relative w-full border border-foreground/15 rounded-md overflow-hidden transition",
-    "focus-within:outline-none focus-within:ring-[3px] focus-within:ring-foreground/10 focus-within:border-foreground/30 focus-within:z-10",
-  ],
+  base: "relative w-full rounded-md overflow-hidden transition",
 
   variants: {
     error: {
@@ -51,5 +49,9 @@ export const Tiptap = ({ className, value, onChange }: TipTapProps) => {
     },
   })
 
-  return <EditorContent editor={editor} className={cx(editorVariants({ className }))} />
+  return (
+    <Box focusWithin>
+      <EditorContent editor={editor} className={cx(editorVariants({ className }))} />
+    </Box>
+  )
 }

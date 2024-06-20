@@ -1,9 +1,7 @@
 /** eslint-disable @typescript-eslint/no-unused-vars */
-/** eslint-disable @typescript-eslint/no-unused-vars */
-/** eslint-disable @typescript-eslint/no-unused-vars */
 import { json, type MetaFunction } from "@remix-run/node"
 import { Grid } from "~/components/Grid"
-import { Intro } from "~/components/Intro"
+import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
 import { CategoryCard } from "~/partials/cards/CategoryCard"
 import { Input } from "~/components/forms/Input"
 import { SearchIcon } from "lucide-react"
@@ -43,20 +41,20 @@ export default function Index() {
 
   return (
     <>
-      <Intro
-        title={
-          <>
-            A suite of developer tools that help you{" "}
-            <span className="underline decoration-from-font decoration-foreground/25">
-              ship faster
-            </span>{" "}
-            🚀
-          </>
-        }
-        description="Find the best tools to help you build faster and more efficiently. Stop wasting time and money by developing tools that already exist."
-        alignment="center"
-        className="max-w-2xl text-pretty md:mb-12"
-      >
+      <Intro alignment="center" className="max-w-2xl text-pretty md:mb-12">
+        <IntroTitle>
+          A suite of developer tools that help you{" "}
+          <span className="underline decoration-from-font decoration-foreground/25">
+            ship faster
+          </span>{" "}
+          🚀
+        </IntroTitle>
+
+        <IntroDescription>
+          Find the best tools to help you build faster and more efficiently. Stop wasting time and
+          money by developing tools that already exist.
+        </IntroDescription>
+
         <div className="mt-4 relative w-full max-w-md mx-auto">
           <Input
             size="lg"
