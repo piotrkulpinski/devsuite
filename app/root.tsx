@@ -6,9 +6,11 @@ import { Footer } from "./partials/Footer"
 import { GradientBlur } from "./components/GradientBlur"
 import { Newsletter } from "./partials/Newsletter"
 import { ThemeProvider } from "next-themes"
+import { ErrorPage } from "./partials/ErrorPage"
+import { Toaster } from "./components/Toaster"
+import { Stars } from "./components/Stars"
 
 import stylesheet from "~/styles.css?url"
-import { Stars } from "./components/Stars"
 
 export const links: LinksFunction = () => {
   return [
@@ -26,7 +28,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation()
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -62,6 +64,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <Footer />
         </ThemeProvider>
 
+        <Toaster />
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -71,4 +74,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return <Outlet />
+}
+
+export function ErrorBoundary() {
+  return <ErrorPage />
 }

@@ -1,3 +1,5 @@
+/** eslint-disable react-hooks/exhaustive-deps */
+/** eslint-disable @typescript-eslint/no-unused-vars */
 import { useNavigate } from "@remix-run/react"
 import hotkeys from "hotkeys-js"
 import {
@@ -11,6 +13,7 @@ import {
   LinkIcon,
 } from "lucide-react"
 import { Fragment, HTMLAttributes, useEffect, useState } from "react"
+import { toast } from "sonner"
 import { Dock } from "~/components/Dock"
 import { Shortcut } from "~/components/Shortcut"
 import { Tooltip } from "~/components/Tooltip"
@@ -19,24 +22,28 @@ type NavItemProps = {
   icon: React.ComponentType
   tooltip: string
   shortcut?: string
+  hotkey?: string
   isActive?: boolean
+  isDisabled?: boolean
   onClick?: () => void
 }
 
 const NavItem = ({ ...props }: NavItemProps) => {
-  const { icon: Icon, tooltip, shortcut, isActive, onClick } = props
+  const { icon: Icon, tooltip, shortcut, hotkey, isActive, isDisabled, onClick } = props
 
   useEffect(() => {
-    if (shortcut && onClick) {
-      hotkeys(shortcut, () => onClick())
+    const key = hotkey || shortcut
+
+    if (key && onClick) {
+      hotkeys(key, () => onClick())
     }
 
     return () => {
-      if (shortcut) {
+      if (key) {
         hotkeys.unbind(shortcut)
       }
     }
-  }, [shortcut, onClick])
+  }, [shortcut, onClick, hotkey])
 
   return (
     <Tooltip
@@ -48,7 +55,7 @@ const NavItem = ({ ...props }: NavItemProps) => {
       sideOffset={0}
     >
       <Dock.Item isActive={isActive} asChild>
-        <button type="button" onClick={onClick}>
+        <button type="button" onClick={onClick} disabled={isDisabled}>
           <Icon />
         </button>
       </Dock.Item>
@@ -56,7 +63,12 @@ const NavItem = ({ ...props }: NavItemProps) => {
   )
 }
 
-export const Nav = ({ ...props }: HTMLAttributes<HTMLElement>) => {
+type NavProps = HTMLAttributes<HTMLElement> & {
+  previous?: string
+  next?: string
+}
+
+export const Nav = ({ previous, next, ...props }: NavProps) => {
   const [isFavorite, setIsFavorite] = useState(false)
   const navigate = useNavigate()
 
@@ -84,17 +96,27 @@ export const Nav = ({ ...props }: HTMLAttributes<HTMLElement>) => {
       icon: ArrowLeftIcon,
       tooltip: "Previous Tool",
       shortcut: "←",
+      hotkey: "left",
+      isDisabled: !previous,
+      onClick: previous ? () => navigate(`/${previous}`) : undefined,
     },
     {
       icon: ArrowRightIcon,
       tooltip: "Next Tool",
       shortcut: "→",
+      hotkey: "right",
+      isDisabled: !next,
+      onClick: next ? () => navigate(`/${next}`) : undefined,
     },
     null,
     {
       icon: LinkIcon,
       tooltip: "Copy Link",
       shortcut: "C",
+      onClick: () => {
+        navigator.clipboard.writeText(window.location.href)
+        toast.success("Link copied to clipboard")
+      },
     },
     {
       icon: TwitterIcon,

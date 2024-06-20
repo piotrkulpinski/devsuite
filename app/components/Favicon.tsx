@@ -10,7 +10,7 @@ export const Favicon = ({ className, src, title, ...props }: FaviconProps) => {
   return (
     <div
       className={cx(
-        "flex size-9 items-center justify-center shrink-0 rounded-md border border-foreground/15 bg-background p-1",
+        "flex size-9 items-center justify-center shrink-0 rounded-md border border-foreground/15 bg-background p-0.5",
         className
       )}
       {...props}
@@ -29,7 +29,7 @@ export const FaviconImage = ({ className, src, title, ...props }: FaviconProps) 
       loading="eager"
       width="64"
       height="64"
-      className={cx("aspect-square size-9 rounded", className)}
+      className={cx("aspect-square size-9 rounded-[inherit]", className)}
       src={src}
       {...props}
     />

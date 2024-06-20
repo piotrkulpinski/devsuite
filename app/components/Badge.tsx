@@ -3,7 +3,7 @@ import { type HTMLAttributes, isValidElement } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const badgeVariants = cva({
-  base: "rounded bg-foreground/10 border border-foreground/15 text-foreground/70 hover:[&[href]]:bg-border/75",
+  base: "rounded bg-foreground/5 border border-foreground/15 hover:[&[href]]:bg-border/75",
 
   variants: {
     size: {

@@ -12,13 +12,15 @@ model Tool {
   id             String              @id @default(cuid())
   name           String
   slug           String              @unique
+  tagline        String?
   description    String?
   content        String?
   websiteUrl     String              @unique
   affiliateUrl   String?
   faviconUrl     String?
-  screenshotUrl  String?
+  imageUrl       String?
   isFeatured     Boolean             @default(false)
+  isOpenSource   Boolean             @default(false)
   submitterName  String?
   submitterEmail String?
   publishedAt    DateTime?
@@ -32,7 +34,7 @@ model Tool {
 
 model Category {
   id          String            @id @default(cuid())
-  name        String
+  name        String            @unique
   slug        String            @unique
   description String?
   updatedAt   DateTime          @updatedAt
@@ -42,7 +44,7 @@ model Category {
 
 model Tag {
   id        String            @id @default(cuid())
-  name      String
+  name      String            @unique
   slug      String            @unique
   updatedAt DateTime          @updatedAt
   createdAt DateTime          @default(now())

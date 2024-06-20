@@ -40,7 +40,7 @@ export const Intro = ({
       {title && <Heading {...headingProps}>{title}</Heading>}
 
       {description && (
-        <Prose className="max-w-3xl">
+        <Prose className="max-w-2xl">
           <h2 className="text-base !font-normal !tracking-normal !text-foreground/70 md:text-lg">
             {description}
           </h2>
