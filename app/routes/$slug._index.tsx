@@ -1,30 +1,32 @@
-import { Link, json, useLoaderData } from "@remix-run/react"
+import { Link, json, unstable_useViewTransitionState, useLoaderData } from "@remix-run/react"
 import { ArrowUpRightIcon, DollarSignIcon, HashIcon, SparkleIcon } from "lucide-react"
 import { Button } from "~/components/Button"
 import { Favicon } from "~/components/Favicon"
 import { Gallery } from "~/components/Gallery"
-import { H2 } from "~/components/Heading"
+import { H2, H4 } from "~/components/Heading"
 import { Prose } from "~/components/Prose"
 import { Series } from "~/components/Series"
 import { Wrapper } from "~/components/Wrapper"
 import { Nav } from "~/partials/Nav"
 import { LoaderFunctionArgs } from "@remix-run/node"
 import { prisma } from "~/services.server/prisma"
-import { toolOnePayload } from "~/services.server/api"
+import { getRelatedTools, toolOnePayload } from "~/services.server/api"
 import { JSON_HEADERS, SITE_NAME } from "~/utils/constants"
 import { getUrlHostname } from "~/utils/helpers"
 import { Badge } from "~/components/Badge"
 import { slugify } from "@curiousleaf/utils"
 import { updateUrlWithSearchParams } from "~/utils/query-string"
+import { ToolCard } from "~/partials/cards/ToolCard"
+import { Grid } from "~/components/Grid"
 
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   try {
     const tool = await prisma.tool.findUniqueOrThrow({
-      where: { slug },
+      where: { slug, publishedAt: { lte: new Date() } },
       include: toolOnePayload,
     })
 
-    const [prevTool, nextTool] = await Promise.all([
+    const [prevTool, nextTool, relatedTools] = await Promise.all([
       prisma.tool.findFirst({
         select: { slug: true },
         where: { id: { lt: tool.id } },
@@ -38,6 +40,8 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
         orderBy: { id: "asc" },
         take: 1,
       }),
+
+      getRelatedTools(tool),
     ])
 
     // const meta = {
@@ -48,7 +52,10 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
     //   }`,
     // }
 
-    return json({ tool, previous: prevTool?.slug, next: nextTool?.slug }, { headers: JSON_HEADERS })
+    return json(
+      { tool, previous: prevTool?.slug, next: nextTool?.slug, relatedTools },
+      { headers: JSON_HEADERS }
+    )
   } catch (error) {
     console.error(error)
     throw json(null, { status: 404, statusText: "Not Found" })
@@ -56,7 +63,8 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 }
 
 export default function ToolPage() {
-  const { tool, previous, next } = useLoaderData<typeof loader>()
+  const { tool, previous, next, relatedTools } = useLoaderData<typeof loader>()
+  const vt = unstable_useViewTransitionState(`/${tool.slug}`)
 
   const websiteUrl = tool.affiliateUrl || tool.websiteUrl
   const tags = [
@@ -73,14 +81,17 @@ export default function ToolPage() {
 
   return (
     <>
-      <Wrapper className="flex flex-col gap-12 flex-1" style={{ viewTransitionName: "tool" }}>
+      <Wrapper
+        className="flex flex-col gap-12 flex-1"
+        style={{ viewTransitionName: vt ? `tool-${tool.id}` : undefined }}
+      >
         <div className="flex w-full flex-col items-start gap-y-4">
           <Series size="lg" className="relative w-full justify-between">
             <Series>
               {tool.faviconUrl && (
                 <Favicon
                   src={tool.faviconUrl}
-                  style={{ viewTransitionName: "tool-favicon" }}
+                  style={{ viewTransitionName: vt ? `tool-${tool.id}-favicon` : undefined }}
                   className="size-10"
                 />
               )}
@@ -88,7 +99,7 @@ export default function ToolPage() {
               <H2
                 as="h1"
                 className="!leading-snug -my-1.5"
-                style={{ viewTransitionName: "tool-name" }}
+                style={{ viewTransitionName: vt ? `tool-${tool.id}-name` : undefined }}
               >
                 {tool.name}
               </H2>
@@ -107,12 +118,16 @@ export default function ToolPage() {
 
           <h2
             className="text-foreground/70 md:text-lg"
-            style={{ viewTransitionName: "tool-description" }}
+            style={{ viewTransitionName: vt ? `tool-${tool.id}-description` : undefined }}
           >
             {tool.description}
           </h2>
 
-          <Series size="sm" className="mt-4" style={{ viewTransitionName: "tool-features" }}>
+          <Series
+            size="sm"
+            className="mt-4"
+            style={{ viewTransitionName: vt ? `tool-${tool.id}-features` : undefined }}
+          >
             {tool.isOpenSource && (
               <Badge>
                 <SparkleIcon className="text-yellow-500" /> Open Source
@@ -145,11 +160,19 @@ export default function ToolPage() {
 
       <Nav className="sticky bottom-4 z-30 mx-auto mt-auto" previous={previous} next={next} />
 
-      {/* <Grid>
-          {Array.from({ length: 3 }).map((_, i) => (
-            <ToolCard key={i} />
-          ))}
-        </Grid> */}
+      {!!relatedTools.length && (
+        <Series size="lg" direction="column" className="items-center">
+          <H4 as="h3" className="text-center">
+            Other Alternatives to {tool.name}:
+          </H4>
+
+          <Grid className="w-full">
+            {relatedTools.map((tool) => (
+              <ToolCard key={tool.id} tool={tool} isRelated />
+            ))}
+          </Grid>
+        </Series>
+      )}
     </>
   )
 }

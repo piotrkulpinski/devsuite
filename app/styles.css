@@ -52,7 +52,7 @@
   .animate-reveal {
     animation-timeline: view();
     animation-range-start: cover;
-    animation-range-end: 15%;
+    animation-range-end: 10%;
   }
 
   .stars {
