@@ -1,4 +1,10 @@
-import { Link, json, unstable_useViewTransitionState, useLoaderData } from "@remix-run/react"
+import {
+  Link,
+  ShouldRevalidateFunction,
+  json,
+  unstable_useViewTransitionState,
+  useLoaderData,
+} from "@remix-run/react"
 import { ArrowUpRightIcon, DollarSignIcon, HashIcon, SparkleIcon } from "lucide-react"
 import { Button } from "~/components/Button"
 import { Favicon } from "~/components/Favicon"
@@ -18,6 +24,15 @@ import { slugify } from "@curiousleaf/utils"
 import { updateUrlWithSearchParams } from "~/utils/query-string"
 import { ToolCard } from "~/partials/cards/ToolCard"
 import { Grid } from "~/components/Grid"
+
+export const shouldRevalidate: ShouldRevalidateFunction = ({
+  currentParams,
+  currentUrl,
+  nextParams,
+  nextUrl,
+}) => {
+  return currentUrl.pathname !== nextUrl.pathname || currentParams.slug !== nextParams.slug
+}
 
 export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
   try {
@@ -81,11 +96,11 @@ export default function ToolPage() {
 
   return (
     <>
-      <Wrapper
-        className="flex flex-col gap-12 flex-1"
-        style={{ viewTransitionName: vt ? `tool-${tool.id}` : undefined }}
-      >
-        <div className="flex w-full flex-col items-start gap-y-4">
+      <Wrapper className="flex flex-col gap-12 flex-1">
+        <div
+          className="flex w-full flex-col items-start gap-y-4"
+          style={{ viewTransitionName: vt ? `tool-${tool.id}` : undefined }}
+        >
           <Series size="lg" className="relative w-full justify-between">
             <Series>
               {tool.faviconUrl && (
@@ -161,7 +176,7 @@ export default function ToolPage() {
       <Nav className="sticky bottom-4 z-30 mx-auto mt-auto" previous={previous} next={next} />
 
       {!!relatedTools.length && (
-        <Series size="lg" direction="column" className="items-center">
+        <div className="flex flex-col gap-6 items-center">
           <H4 as="h3" className="text-center">
             Other Alternatives to {tool.name}:
           </H4>
@@ -171,7 +186,7 @@ export default function ToolPage() {
               <ToolCard key={tool.id} tool={tool} isRelated />
             ))}
           </Grid>
-        </Series>
+        </div>
       )}
     </>
   )

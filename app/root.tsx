@@ -56,9 +56,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         >
           <Header />
 
-          <Container className="flex-1 flex flex-col gap-12 py-12 mt-[calc(var(--header-top)+var(--header-height))] md:pt-16 lg:pt-20">
+          <Container className="flex-1 flex flex-col gap-12 py-12 mt-[calc(var(--header-top)+var(--header-height))] md:pt-16 md:gap-16 lg:pt-20 lg:gap-20">
             {!noTopBlur && <GradientBlur position="top" />}
-            <Stars className="fixed left-1/2 -top-0 w-full min-w-[1000px] max-w-screen-2xl aspect-[10/5] mx-auto scale-y-flip -translate-x-1/2 -translate-y-1/3" />
+
+            <Stars className="fixed left-1/2 -top-0 -z-10 w-full min-w-[1000px] max-w-screen-2xl aspect-[10/5] mx-auto scale-y-flip -translate-x-1/2 -translate-y-1/3" />
 
             {children}
 
@@ -66,6 +67,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <Newsletter
                 title="Subscribe to our newsletter"
                 description="Stay updated with the newest additions to our digital assets library, upcoming promotions or discounts."
+                className="mt-auto"
               />
             )}
 

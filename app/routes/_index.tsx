@@ -41,7 +41,7 @@ export default function Index() {
 
   return (
     <>
-      <Intro alignment="center" className="max-w-2xl text-pretty md:mb-12">
+      <Intro alignment="center" className="max-w-2xl text-pretty">
         <IntroTitle>
           A suite of developer tools that help you{" "}
           <span className="underline decoration-from-font decoration-foreground/25">
