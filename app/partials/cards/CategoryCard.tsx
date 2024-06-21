@@ -1,5 +1,5 @@
 import { SerializeFrom } from "@remix-run/node"
-import { NavLink } from "@remix-run/react"
+import { Link, unstable_useViewTransitionState } from "@remix-run/react"
 import { ArrowRightIcon } from "lucide-react"
 import plur from "plur"
 import { HTMLAttributes } from "react"
@@ -11,10 +11,13 @@ type CategoryCardProps = HTMLAttributes<HTMLElement> & {
   category: SerializeFrom<CategoryMany>
 }
 
-export const CategoryCard = ({ category }: CategoryCardProps) => {
+export const CategoryCard = ({ category, ...props }: CategoryCardProps) => {
+  const to = `/category/${category.slug}`
+  const vt = unstable_useViewTransitionState(to)
+
   return (
-    <Card asChild>
-      <NavLink to={`/category/${category.slug}`} unstable_viewTransition>
+    <Card style={{ viewTransitionName: vt ? "category" : undefined }} asChild>
+      <Link to={to} prefetch="intent" unstable_viewTransition {...props}>
         {/* <div className="flex items-center gap-3 overflow-clip mix-blend-overlay">
           {category.tools.map((tool) => (
             <Fragment key={tool.id}>
@@ -25,9 +28,14 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
           ))}
         </div> */}
 
-        <div className="flex gap-3 items-start justify-between">
+        <div className="w-full flex gap-3 items-start justify-between">
           <div className="flex flex-col gap-2 min-w-0">
-            <H5 className="!leading-snug flex-1 truncate">{category.name}</H5>
+            <H5
+              className="!leading-snug flex-1 truncate"
+              style={{ viewTransitionName: vt ? "category-name" : undefined }}
+            >
+              {category.name}
+            </H5>
 
             <span className="text-xs text-foreground/50">
               {category._count.tools} {plur("tool", category._count.tools)}
@@ -38,8 +46,14 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
             <ArrowRightIcon />
           </span>
         </div>
-        <span className="text-sm text-foreground/60">{category.description}</span>
-      </NavLink>
+
+        <span
+          className="text-sm text-foreground/60"
+          style={{ viewTransitionName: vt ? "category-description" : undefined }}
+        >
+          {category.description}
+        </span>
+      </Link>
     </Card>
   )
 }

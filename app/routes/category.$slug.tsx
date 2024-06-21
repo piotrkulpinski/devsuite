@@ -39,9 +39,11 @@ export default function CategoryPage() {
   const { category, tools } = useLoaderData<typeof loader>()
 
   return (
-    <>
+    <div className="flex flex-col gap-12" style={{ viewTransitionName: "category" }}>
       <Intro alignment="center" className="max-w-2xl mx-auto text-pretty">
-        <IntroTitle style={{ viewTransitionName: "category-name" }}>{category.name}</IntroTitle>
+        <IntroTitle style={{ viewTransitionName: "category-name" }} className="!leading-none">
+          {category.name}
+        </IntroTitle>
 
         <IntroDescription style={{ viewTransitionName: "category-description" }}>
           {category.description}
@@ -53,6 +55,6 @@ export default function CategoryPage() {
           <ToolCard key={tool.id} tool={tool} />
         ))}
       </Grid>
-    </>
+    </div>
   )
 }

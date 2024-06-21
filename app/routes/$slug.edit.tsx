@@ -1,12 +1,4 @@
 import { Form, Link, json, useLoaderData, useNavigate } from "@remix-run/react"
-import {
-  MultiSelect,
-  MultiSelectContent,
-  MultiSelectInput,
-  MultiSelectItem,
-  MultiSelectList,
-  MultiSelectTrigger,
-} from "~/components/forms/MultiSelect"
 import { Favicon } from "~/components/Favicon"
 import { H2 } from "~/components/Heading"
 import { Series } from "~/components/Series"
@@ -29,6 +21,7 @@ import hotkeys from "hotkeys-js"
 import { z } from "zod"
 import { Input } from "~/components/forms/Input"
 import { Hint } from "~/components/forms/Hint"
+import { Checkbox } from "~/components/forms/Checkbox"
 
 export const handle = {
   newsletter: false,
@@ -58,7 +51,8 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
         include: toolOnePayload,
       }),
       prisma.category.findMany({
-        select: { id: true, name: true },
+        select: { name: true },
+        orderBy: { name: "asc" },
       }),
     ])
 
@@ -86,9 +80,7 @@ export const action = async ({ request, params: { slug } }: ActionFunctionArgs) 
     where: { slug },
     data: {
       ...toolData,
-      categories: {
-        set: categories?.map((name) => ({ name })),
-      },
+      categories: { set: categories?.map((name) => ({ name })) },
     },
   })
 
@@ -120,18 +112,24 @@ export default function ToolPageEdit() {
     <>
       <Wrapper className="flex flex-col gap-12 flex-1">
         <div className="flex w-full flex-col gap-y-4" style={{ viewTransitionName: "tool" }}>
-          <Series size="lg" className="relative w-full">
-            {tool.faviconUrl && (
-              <Favicon
-                src={tool.faviconUrl}
-                style={{ viewTransitionName: "tool-favicon" }}
-                className="size-10"
-              />
-            )}
+          <Series size="lg" className="relative w-full justify-between">
+            <Series>
+              {tool.faviconUrl && (
+                <Favicon
+                  src={tool.faviconUrl}
+                  style={{ viewTransitionName: "tool-favicon" }}
+                  className="size-10"
+                />
+              )}
 
-            <H2 as="h1" className="relative flex-1" style={{ viewTransitionName: "tool-name" }}>
-              {tool.name}
-            </H2>
+              <H2
+                as="h1"
+                className="!leading-snug -my-1.5"
+                style={{ viewTransitionName: "tool-name" }}
+              >
+                {tool.name}
+              </H2>
+            </Series>
 
             <Button
               size="md"
@@ -188,6 +186,40 @@ export default function ToolPageEdit() {
           </div>
 
           <div className="flex flex-col gap-1 col-span-full">
+            <Label htmlFor="categories">Categories:</Label>
+
+            <Controller
+              control={control}
+              name="categories"
+              render={({ field: { value, onChange } }) => (
+                <div className="grid grid-auto-fill-xs gap-x-4 gap-y-2 mt-2">
+                  {categories.map((category) => (
+                    <label
+                      key={category.id}
+                      className="flex items-center gap-2 text-foreground/70 cursor-pointer transition-colors hover:text-foreground"
+                    >
+                      <Checkbox
+                        value={category.name}
+                        checked={value?.includes(category.name)}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            onChange([...(value ?? []), category.name])
+                          } else {
+                            onChange(value?.filter((v) => v !== category.name))
+                          }
+                        }}
+                      />
+
+                      <span className="flex-1 truncate text-[13px]">{category.name}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
+            />
+            {errors.categories && <Hint>{errors.categories.message}</Hint>}
+          </div>
+
+          <div className="flex flex-col gap-1 col-span-full">
             <Label htmlFor="tagline">Tagline:</Label>
 
             <TextArea {...register("tagline")} placeholder="Enter a tagline" />
@@ -216,34 +248,8 @@ export default function ToolPageEdit() {
             {errors.content && <Hint>{errors.content.message}</Hint>}
           </div>
 
-          <div className="flex flex-col gap-1 col-span-full">
-            <Label htmlFor="categories">Categories:</Label>
-
-            <Controller
-              control={control}
-              name="categories"
-              render={({ field: { value, onChange } }) => (
-                <MultiSelect values={value ?? []} onValuesChange={onChange} loop>
-                  <MultiSelectTrigger>
-                    <MultiSelectInput placeholder="Select categories" />
-                  </MultiSelectTrigger>
-                  <MultiSelectContent>
-                    <MultiSelectList>
-                      {categories.map((category) => (
-                        <MultiSelectItem key={category.id} value={category.name}>
-                          {category.name}
-                        </MultiSelectItem>
-                      ))}
-                    </MultiSelectList>
-                  </MultiSelectContent>
-                </MultiSelect>
-              )}
-            />
-            {errors.categories && <Hint>{errors.categories.message}</Hint>}
-          </div>
-
-          <div className="col-span-full">
-            <Button variant="fancy" isPending={isSubmitting} className="flex ml-auto min-w-32">
+          <div>
+            <Button variant="fancy" isPending={isSubmitting} className="min-w-32">
               Update tool
             </Button>
           </div>
