@@ -1,5 +1,4 @@
-/** eslint-disable react/jsx-no-duplicate-props */
-import { NavLink } from "@remix-run/react"
+import { Link } from "@remix-run/react"
 import {
   BlocksIcon,
   BracesIcon,
@@ -132,9 +131,9 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             <ClientOnly>{() => <ThemeSwitcher size="md" variant="secondary" />}</ClientOnly>
 
             <Button size="md" variant="fancy" suffix={<SparkleIcon />} asChild>
-              <NavLink to="/submit" unstable_viewTransition>
+              <Link to="/submit" unstable_viewTransition>
                 Submit
-              </NavLink>
+              </Link>
             </Button>
           </Series>
 

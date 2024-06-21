@@ -21,8 +21,8 @@ export const planFeatureCheckVariants = cva({
   variants: {
     type: {
       positive: "bg-green-500",
-      neutral: "bg-border-dark",
-      negative: "bg-border-dark",
+      neutral: "bg-foreground/10",
+      negative: "bg-foreground/10",
     },
   },
 })

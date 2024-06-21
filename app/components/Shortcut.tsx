@@ -5,12 +5,12 @@ import { VariantProps, cva, cx } from "~/utils/cva"
 import { Heading } from "./Heading"
 
 export const shortcutVariants = cva({
-  base: "inline-flex whitespace-nowrap rounded border border-transparent px-[0.4em] py-[0.088em] text-xs/tight font-medium text-current opacity-40",
+  base: "inline-flex whitespace-nowrap rounded border border-transparent px-[0.4em] py-[0.088em] text-xs/tight font-medium text-foregroud/60",
 
   variants: {
     variant: {
-      soft: "bg-card",
-      outline: "border-border",
+      soft: "bg-foreground/10",
+      outline: "border-foreground/15",
     },
   },
 

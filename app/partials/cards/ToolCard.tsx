@@ -1,6 +1,5 @@
-/** eslint-disable @typescript-eslint/no-unused-vars */
 import { SerializeFrom } from "@remix-run/node"
-import { NavLink, unstable_useViewTransitionState } from "@remix-run/react"
+import { Link, unstable_useViewTransitionState } from "@remix-run/react"
 import { DollarSignIcon, SparkleIcon } from "lucide-react"
 import { HTMLAttributes } from "react"
 import { Badge } from "~/components/Badge"
@@ -20,8 +19,8 @@ export const ToolCard = ({ tool, ...props }: ToolCardProps) => {
 
   return (
     <Card style={{ viewTransitionName: vt ? "tool" : undefined }} asChild>
-      <NavLink to={to} prefetch="intent" unstable_viewTransition {...props}>
-        <div className="flex gap-3 items-start justify-between">
+      <Link to={to} prefetch="intent" unstable_viewTransition {...props}>
+        <div className="w-full flex gap-3 items-start justify-between">
           <div className="flex flex-col gap-2">
             <H4
               className="!leading-snug"
@@ -47,18 +46,18 @@ export const ToolCard = ({ tool, ...props }: ToolCardProps) => {
           )}
         </div>
 
-        <Series>
+        <Series size="sm" style={{ viewTransitionName: vt ? "tool-features" : undefined }}>
           {tool.isOpenSource && (
             <Badge>
-              <SparkleIcon className="inline-flex text-yellow-500" /> Open Source
+              <SparkleIcon className="text-yellow-500" /> Open Source
             </Badge>
           )}
 
-          <span className="flex items-center gap-1 text-xs">
-            <DollarSignIcon className="inline-flex text-green-500" /> free + from $9/mo
-          </span>
+          <Badge variant="ghost">
+            <DollarSignIcon className="text-green-500" /> free + from $9/mo
+          </Badge>
         </Series>
-      </NavLink>
+      </Link>
     </Card>
   )
 }

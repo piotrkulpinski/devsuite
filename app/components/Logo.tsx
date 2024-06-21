@@ -2,12 +2,12 @@ import type { HTMLAttributes } from "react"
 import { cx } from "~/utils/cva"
 import { SITE_NAME } from "~/utils/constants"
 import { Series } from "./Series"
-import { NavLink } from "@remix-run/react"
+import { Link } from "@remix-run/react"
 
 export const Logo = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
   return (
     <Series size="sm" className={cx("text-sm text-foreground", className)} asChild {...props}>
-      <NavLink to="/">
+      <Link to="/" unstable_viewTransition>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 327 309"
@@ -23,7 +23,7 @@ export const Logo = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) =>
           />
         </svg>
         <span className="font-medium">{SITE_NAME}</span>
-      </NavLink>
+      </Link>
     </Series>
   )
 }

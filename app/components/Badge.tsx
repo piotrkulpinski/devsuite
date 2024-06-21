@@ -3,9 +3,13 @@ import { type HTMLAttributes, isValidElement } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const badgeVariants = cva({
-  base: "rounded bg-background border border-foreground/15 hover:[&[href]]:bg-border/75",
+  base: "flex items-center gap-1 rounded bg-background border",
 
   variants: {
+    variant: {
+      outline: "border-foreground/15 hover:[&[href]]:bg-foreground/10",
+      ghost: "bg-transparent border-transparent !p-0",
+    },
     size: {
       sm: "px-1 py-px text-[10px]/tight",
       md: "px-1.5 py-[3px] text-xs/tight",
@@ -14,6 +18,7 @@ export const badgeVariants = cva({
   },
 
   defaultVariants: {
+    variant: "outline",
     size: "md",
   },
 })
@@ -27,9 +32,9 @@ type BadgeProps = HTMLAttributes<HTMLElement> &
     asChild?: boolean
   }
 
-export const Badge = ({ className, asChild, size, ...props }: BadgeProps) => {
+export const Badge = ({ className, asChild, variant, size, ...props }: BadgeProps) => {
   const useAsChild = asChild && isValidElement(props.children)
   const Component = useAsChild ? Slot : "span"
 
-  return <Component className={cx(badgeVariants({ size, className }))} {...props} />
+  return <Component className={cx(badgeVariants({ variant, size, className }))} {...props} />
 }

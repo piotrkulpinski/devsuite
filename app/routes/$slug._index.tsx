@@ -73,38 +73,36 @@ export default function ToolPage() {
 
   return (
     <>
-      <Wrapper className="flex flex-col gap-12 flex-1">
-        <div className="flex w-full flex-col gap-y-4" style={{ viewTransitionName: "tool" }}>
-          <Series size="lg" className="relative w-full">
-            {tool.faviconUrl && (
-              <Favicon
-                src={tool.faviconUrl}
-                style={{ viewTransitionName: "tool-favicon" }}
-                className="size-10"
-              />
-            )}
+      <Wrapper className="flex flex-col gap-12 flex-1" style={{ viewTransitionName: "tool" }}>
+        <div className="flex w-full flex-col items-start gap-y-4">
+          <Series size="lg" className="relative w-full justify-between">
+            <Series>
+              {tool.faviconUrl && (
+                <Favicon
+                  src={tool.faviconUrl}
+                  style={{ viewTransitionName: "tool-favicon" }}
+                  className="size-10"
+                />
+              )}
 
-            <H2 as="h1" className="relative flex-1" style={{ viewTransitionName: "tool-name" }}>
-              {tool.name}
-            </H2>
-
-            {websiteUrl && (
-              <Button
-                size="md"
-                variant="primary"
-                suffix={<ArrowUpRightIcon />}
-                className="ml-auto"
-                asChild
+              <H2
+                as="h1"
+                className="!leading-snug -my-1.5"
+                style={{ viewTransitionName: "tool-name" }}
               >
-                <a
-                  href={updateUrlWithSearchParams(websiteUrl, { ref: slugify(SITE_NAME) })}
-                  target="_blank"
-                  rel="nofollow noreferrer"
-                >
-                  {getUrlHostname(websiteUrl)}
-                </a>
-              </Button>
-            )}
+                {tool.name}
+              </H2>
+            </Series>
+
+            <Button size="md" variant="primary" suffix={<ArrowUpRightIcon />} asChild>
+              <a
+                href={updateUrlWithSearchParams(websiteUrl, { ref: slugify(SITE_NAME) })}
+                target="_blank"
+                rel="nofollow noreferrer"
+              >
+                {getUrlHostname(websiteUrl)}
+              </a>
+            </Button>
           </Series>
 
           <h2
@@ -114,16 +112,16 @@ export default function ToolPage() {
             {tool.description}
           </h2>
 
-          <Series className="mt-4">
+          <Series size="sm" className="mt-4" style={{ viewTransitionName: "tool-features" }}>
             {tool.isOpenSource && (
               <Badge>
-                <SparkleIcon className="inline-flex text-yellow-500" /> Open Source
+                <SparkleIcon className="text-yellow-500" /> Open Source
               </Badge>
             )}
 
-            <span className="flex items-center gap-1 text-xs">
-              <DollarSignIcon className="inline-flex text-green-500" /> free + from $9/mo
-            </span>
+            <Badge variant="ghost">
+              <DollarSignIcon className="text-green-500" /> free + from $9/mo
+            </Badge>
           </Series>
         </div>
 
