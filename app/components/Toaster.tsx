@@ -7,7 +7,7 @@ export const Toaster = (props: ComponentPropsWithoutRef<typeof Sonner>) => {
     <Sonner
       gap={10}
       offset="15px"
-      className="!z-[60] !w-64"
+      className="!z-50 !w-64"
       richColors
       toastOptions={{
         classNames: {

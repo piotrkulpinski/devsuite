@@ -8,7 +8,7 @@ import { Series } from "./Series"
 import { Card, cardVariants } from "./Card"
 
 export const planVariants = cva({
-  base: "gap-8 p-4 min-w-64 md:p-6",
+  base: "gap-8 p-4 min-w-64 overflow-clip md:p-6",
 })
 
 export const planFeatureVariants = cva({

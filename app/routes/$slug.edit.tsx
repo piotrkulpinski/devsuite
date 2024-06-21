@@ -34,7 +34,7 @@ const schema = z.object({
   websiteUrl: z.string().trim().url(),
   affiliateUrl: z.union([z.literal(""), z.string().trim().url()]).nullish(),
   tagline: z.string().max(100).nullish(),
-  description: z.string().max(200).nullish(),
+  description: z.string().max(500).nullish(),
   content: z.string().nullish(),
   categories: z.array(z.string()).nullish(),
 })
