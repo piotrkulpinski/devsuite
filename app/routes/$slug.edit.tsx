@@ -111,22 +111,12 @@ export default function ToolPageEdit() {
   return (
     <>
       <Wrapper className="flex flex-col gap-12 flex-1">
-        <div className="flex w-full flex-col gap-y-4" style={{ viewTransitionName: "tool" }}>
+        <div className="flex w-full flex-col gap-y-4">
           <Series size="lg" className="relative w-full justify-between">
             <Series>
-              {tool.faviconUrl && (
-                <Favicon
-                  src={tool.faviconUrl}
-                  style={{ viewTransitionName: "tool-favicon" }}
-                  className="size-10"
-                />
-              )}
+              {tool.faviconUrl && <Favicon src={tool.faviconUrl} className="size-10" />}
 
-              <H2
-                as="h1"
-                className="!leading-snug -my-1.5"
-                style={{ viewTransitionName: "tool-name" }}
-              >
+              <H2 as="h1" className="!leading-snug -my-1.5">
                 {tool.name}
               </H2>
             </Series>
@@ -156,7 +146,7 @@ export default function ToolPageEdit() {
               Name:
             </Label>
 
-            <Input {...register("name")} placeholder="Enter a name" data-1p-ignore />
+            <Input id="name" {...register("name")} placeholder="Enter a name" data-1p-ignore />
             {errors.name && <Hint>{errors.name.message}</Hint>}
           </div>
 
@@ -165,7 +155,7 @@ export default function ToolPageEdit() {
               Slug:
             </Label>
 
-            <Input {...register("slug")} placeholder="Enter a slug" />
+            <Input id="slug" {...register("slug")} placeholder="Enter a slug" />
             {errors.slug && <Hint>{errors.slug.message}</Hint>}
           </div>
 
@@ -174,19 +164,19 @@ export default function ToolPageEdit() {
               Website URL:
             </Label>
 
-            <Input type="url" {...register("websiteUrl")} />
+            <Input type="url" id="websiteUrl" {...register("websiteUrl")} />
             {errors.websiteUrl && <Hint>{errors.websiteUrl.message}</Hint>}
           </div>
 
           <div className="flex flex-col gap-1">
             <Label htmlFor="affiliateUrl">Affiliate URL:</Label>
 
-            <Input type="url" {...register("affiliateUrl")} />
+            <Input type="url" id="affiliateUrl" {...register("affiliateUrl")} />
             {errors.affiliateUrl && <Hint>{errors.affiliateUrl.message}</Hint>}
           </div>
 
           <div className="flex flex-col gap-1 col-span-full">
-            <Label htmlFor="categories">Categories:</Label>
+            <Label>Categories:</Label>
 
             <Controller
               control={control}
@@ -195,7 +185,7 @@ export default function ToolPageEdit() {
                 <div className="grid grid-auto-fill-xs gap-x-4 gap-y-2 mt-2">
                   {categories.map((category) => (
                     <label
-                      key={category.id}
+                      key={category.name}
                       className="flex items-center gap-2 text-foreground/70 cursor-pointer transition-colors hover:text-foreground"
                     >
                       <Checkbox
@@ -222,19 +212,23 @@ export default function ToolPageEdit() {
           <div className="flex flex-col gap-1 col-span-full">
             <Label htmlFor="tagline">Tagline:</Label>
 
-            <TextArea {...register("tagline")} placeholder="Enter a tagline" />
+            <TextArea id="tagline" {...register("tagline")} placeholder="Enter a tagline" />
             {errors.tagline && <Hint>{errors.tagline.message}</Hint>}
           </div>
 
           <div className="flex flex-col gap-1 col-span-full">
             <Label htmlFor="description">Description:</Label>
 
-            <TextArea {...register("description")} placeholder="Enter a description" />
+            <TextArea
+              id="description"
+              {...register("description")}
+              placeholder="Enter a description"
+            />
             {errors.description && <Hint>{errors.description.message}</Hint>}
           </div>
 
           <div className="flex flex-col gap-1 col-span-full">
-            <Label htmlFor="content">Content:</Label>
+            <Label>Content:</Label>
 
             <Controller
               control={control}
