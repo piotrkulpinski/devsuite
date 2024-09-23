@@ -3,7 +3,7 @@ import { Link, unstable_useViewTransitionState } from "@remix-run/react"
 import { ArrowRightIcon } from "lucide-react"
 import plur from "plur"
 import { HTMLAttributes } from "react"
-import { Card } from "~/components/Card"
+import { Card, CardDescription } from "~/components/Card"
 import { H5 } from "~/components/Heading"
 import { CategoryMany } from "~/services.server/api"
 
@@ -47,12 +47,9 @@ export const CategoryCard = ({ category, ...props }: CategoryCardProps) => {
           </span>
         </div>
 
-        <span
-          className="text-sm text-foreground/60"
-          style={{ viewTransitionName: vt ? "category-description" : undefined }}
-        >
+        <CardDescription style={{ viewTransitionName: vt ? "category-description" : undefined }}>
           {category.description}
-        </span>
+        </CardDescription>
       </Link>
     </Card>
   )

@@ -1,27 +1,27 @@
+import { zodResolver } from "@hookform/resolvers/zod"
+import { type ActionFunctionArgs, type LoaderFunctionArgs, redirect } from "@remix-run/node"
 import { Form, Link, json, useLoaderData, useNavigate } from "@remix-run/react"
-import { Favicon } from "~/components/Favicon"
+import hotkeys from "hotkeys-js"
+import { ArrowUpLeftIcon } from "lucide-react"
+import { useEffect } from "react"
+import { Controller } from "react-hook-form"
+import { getValidatedFormData, useRemixForm } from "remix-hook-form"
+import { z } from "zod"
+import { Button } from "~/components/Button"
+import { FaviconImage } from "~/components/Favicon"
 import { H2 } from "~/components/Heading"
+import { Prose } from "~/components/Prose"
 import { Series } from "~/components/Series"
 import { Wrapper } from "~/components/Wrapper"
-import { ActionFunctionArgs, LoaderFunctionArgs, redirect } from "@remix-run/node"
-import { prisma } from "~/services.server/prisma"
-import { toolOnePayload } from "~/services.server/api"
-import { JSON_HEADERS } from "~/utils/constants"
-import { TextArea } from "~/components/forms/TextArea"
-import { getValidatedFormData, useRemixForm } from "remix-hook-form"
-import { Controller } from "react-hook-form"
-import { Tiptap } from "~/components/forms/Editor"
-import { Prose } from "~/components/Prose"
-import { Button } from "~/components/Button"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { ArrowUpLeftIcon } from "lucide-react"
-import { Label } from "~/components/forms/Label"
-import { useEffect } from "react"
-import hotkeys from "hotkeys-js"
-import { z } from "zod"
-import { Input } from "~/components/forms/Input"
-import { Hint } from "~/components/forms/Hint"
 import { Checkbox } from "~/components/forms/Checkbox"
+import { Tiptap } from "~/components/forms/Editor"
+import { Hint } from "~/components/forms/Hint"
+import { Input } from "~/components/forms/Input"
+import { Label } from "~/components/forms/Label"
+import { TextArea } from "~/components/forms/TextArea"
+import { toolOnePayload } from "~/services.server/api"
+import { prisma } from "~/services.server/prisma"
+import { JSON_HEADERS } from "~/utils/constants"
 
 export const handle = {
   newsletter: false,
@@ -80,7 +80,7 @@ export const action = async ({ request, params: { slug } }: ActionFunctionArgs) 
     where: { slug },
     data: {
       ...toolData,
-      categories: { set: categories?.map((name) => ({ name })) },
+      categories: { set: categories?.map(name => ({ name })) },
     },
   })
 
@@ -114,7 +114,9 @@ export default function ToolPageEdit() {
         <div className="flex w-full flex-col gap-y-4">
           <Series size="lg" className="relative w-full justify-between">
             <Series>
-              {tool.faviconUrl && <Favicon src={tool.faviconUrl} className="size-10" />}
+              {tool.faviconUrl && (
+                <FaviconImage src={tool.faviconUrl} className="size-10 rounded-md" />
+              )}
 
               <H2 as="h1" className="!leading-snug -my-1.5">
                 {tool.name}
@@ -183,19 +185,21 @@ export default function ToolPageEdit() {
               name="categories"
               render={({ field: { value, onChange } }) => (
                 <div className="grid grid-auto-fill-xs gap-x-4 gap-y-2 mt-2">
-                  {categories.map((category) => (
+                  {categories.map(category => (
                     <label
                       key={category.name}
                       className="flex items-center gap-2 text-foreground/70 cursor-pointer transition-colors hover:text-foreground"
+                      htmlFor={`categories-${category.name}`}
                     >
                       <Checkbox
+                        id={`categories-${category.name}`}
                         value={category.name}
                         checked={value?.includes(category.name)}
-                        onCheckedChange={(checked) => {
+                        onCheckedChange={checked => {
                           if (checked) {
                             onChange([...(value ?? []), category.name])
                           } else {
-                            onChange(value?.filter((v) => v !== category.name))
+                            onChange(value?.filter(v => v !== category.name))
                           }
                         }}
                       />

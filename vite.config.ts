@@ -7,6 +7,6 @@ import tsconfigPaths from "vite-tsconfig-paths"
 installGlobals()
 
 export default defineConfig({
-  server: { port: 5174 },
+  server: { port: 5175 },
   plugins: [tsconfigPaths(), remix({ presets: [vercelPreset()] })],
 })

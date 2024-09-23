@@ -1,4 +1,5 @@
-import { HTMLAttributes } from "react"
+import { useLocation } from "@remix-run/react"
+import type { HTMLAttributes } from "react"
 import {
   Carousel,
   CarouselContent,
@@ -7,7 +8,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./Carousel"
-import { useLocation } from "@remix-run/react"
 
 type GalleryProps = HTMLAttributes<HTMLElement> & {
   images: string[]

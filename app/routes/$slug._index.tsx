@@ -1,29 +1,29 @@
+import { slugify } from "@curiousleaf/utils"
+import type { LoaderFunctionArgs } from "@remix-run/node"
 import {
   Link,
-  ShouldRevalidateFunction,
+  type ShouldRevalidateFunction,
   json,
   unstable_useViewTransitionState,
   useLoaderData,
 } from "@remix-run/react"
 import { ArrowUpRightIcon, DollarSignIcon, HashIcon, SparkleIcon } from "lucide-react"
+import { Badge } from "~/components/Badge"
 import { Button } from "~/components/Button"
-import { Favicon } from "~/components/Favicon"
+import { FaviconImage } from "~/components/Favicon"
 import { Gallery } from "~/components/Gallery"
+import { Grid } from "~/components/Grid"
 import { H2, H4 } from "~/components/Heading"
-import { Prose } from "~/components/Prose"
+import { Markdown } from "~/components/Markdown"
 import { Series } from "~/components/Series"
 import { Wrapper } from "~/components/Wrapper"
 import { Nav } from "~/partials/Nav"
-import { LoaderFunctionArgs } from "@remix-run/node"
-import { prisma } from "~/services.server/prisma"
+import { ToolCard } from "~/partials/cards/ToolCard"
 import { getRelatedTools, toolOnePayload } from "~/services.server/api"
+import { prisma } from "~/services.server/prisma"
 import { JSON_HEADERS, SITE_NAME } from "~/utils/constants"
 import { getUrlHostname } from "~/utils/helpers"
-import { Badge } from "~/components/Badge"
-import { slugify } from "@curiousleaf/utils"
 import { updateUrlWithSearchParams } from "~/utils/query-string"
-import { ToolCard } from "~/partials/cards/ToolCard"
-import { Grid } from "~/components/Grid"
 
 export const shouldRevalidate: ShouldRevalidateFunction = ({
   currentParams,
@@ -69,7 +69,7 @@ export const loader = async ({ params: { slug } }: LoaderFunctionArgs) => {
 
     return json(
       { tool, previous: prevTool?.slug, next: nextTool?.slug, relatedTools },
-      { headers: JSON_HEADERS }
+      { headers: JSON_HEADERS },
     )
   } catch (error) {
     console.error(error)
@@ -104,10 +104,10 @@ export default function ToolPage() {
           <Series size="lg" className="relative w-full justify-between">
             <Series>
               {tool.faviconUrl && (
-                <Favicon
+                <FaviconImage
                   src={tool.faviconUrl}
                   style={{ viewTransitionName: vt ? `tool-${tool.id}-favicon` : undefined }}
-                  className="size-10"
+                  className="size-10 rounded-md"
                 />
               )}
 
@@ -155,12 +155,12 @@ export default function ToolPage() {
           </Series>
         </div>
 
-        <Gallery images={tool.images} />
+        <Gallery images={[...tool.images, ...tool.images, ...tool.images, ...tool.images]} />
 
-        {tool.content && <Prose dangerouslySetInnerHTML={{ __html: tool.content }} />}
+        {tool.content && <Markdown>{tool.content}</Markdown>}
 
         <nav className="flex flex-wrap gap-y-2 gap-x-4">
-          {tags.map((tag) => (
+          {tags.map(tag => (
             <Link
               key={tag}
               to={`/tags/${tag}`}
@@ -182,7 +182,7 @@ export default function ToolPage() {
           </H4>
 
           <Grid className="w-full">
-            {relatedTools.map((tool) => (
+            {relatedTools.map(tool => (
               <ToolCard key={tool.id} tool={tool} isRelated />
             ))}
           </Grid>

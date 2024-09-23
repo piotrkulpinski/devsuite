@@ -5,6 +5,7 @@ import plugin from "tailwindcss/plugin"
 export default {
   content: ["./app/**/*.{js,ts,jsx,tsx,mdx}"],
   darkMode: "class",
+
   theme: {
     extend: {
       colors: {
@@ -18,8 +19,11 @@ export default {
         DEFAULT: "hsl(var(--color-border))",
       },
       fontFamily: {
-        sans: ["Inter", ...defaultTheme.fontFamily.sans],
-        display: ["Satoshi Variable", ...defaultTheme.fontFamily.sans],
+        sans: ["Geist", ...defaultTheme.fontFamily.sans],
+        display: ["Geist", ...defaultTheme.fontFamily.sans],
+      },
+      fontSize: {
+        "5xl": ["2.75rem", "1.05"],
       },
       gridColumns: {
         DEFAULT: "16rem",
@@ -71,14 +75,14 @@ export default {
     plugin(({ matchUtilities, theme }) => {
       matchUtilities(
         {
-          "grid-auto-fill": (value) => ({
+          "grid-auto-fill": value => ({
             gridTemplateColumns: `repeat(auto-fill, minmax(${value}, 1fr))`,
           }),
-          "grid-auto-fit": (value) => ({
+          "grid-auto-fit": value => ({
             gridTemplateColumns: `repeat(auto-fit, minmax(${value}, 1fr))`,
           }),
         },
-        { values: theme("gridColumns") }
+        { values: theme("gridColumns") },
       )
     }),
   ],

@@ -1,14 +1,11 @@
-/** eslint-disable react-hooks/exhaustive-deps */
 import { keepNumberInRange } from "@curiousleaf/utils"
-import { EmblaCarouselType, EmblaEventType } from "embla-carousel"
+import type { EmblaCarouselType, EmblaEventType } from "embla-carousel"
 import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react"
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
-import { Button } from "~/components/Button"
-import { VariantProps, cva, cx } from "~/utils/cva"
 import {
-  ComponentProps,
-  HTMLAttributes,
-  KeyboardEvent,
+  type ComponentProps,
+  type HTMLAttributes,
+  type KeyboardEvent,
   createContext,
   forwardRef,
   useCallback,
@@ -17,6 +14,8 @@ import {
   useRef,
   useState,
 } from "react"
+import { Button } from "~/components/Button"
+import { type VariantProps, cva, cx } from "~/utils/cva"
 
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
@@ -57,7 +56,7 @@ const Carousel = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement> & Car
   ({ orientation = "horizontal", opts, setApi, plugins, className, children, ...props }, ref) => {
     const [carouselRef, api] = useEmblaCarousel(
       { ...opts, axis: orientation === "horizontal" ? "x" : "y" },
-      plugins
+      plugins,
     )
     const [canScrollPrev, setCanScrollPrev] = useState(false)
     const [canScrollNext, setCanScrollNext] = useState(false)
@@ -90,7 +89,7 @@ const Carousel = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement> & Car
           scrollNext()
         }
       },
-      [scrollPrev, scrollNext]
+      [scrollPrev, scrollNext],
     )
 
     const setTweenFactor = useCallback((api: EmblaCarouselType) => {
@@ -107,11 +106,11 @@ const Carousel = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement> & Car
         let diffToTarget = scrollSnap - scrollProgress
         const slidesInSnap = engine.slideRegistry[snapIndex]
 
-        slidesInSnap.forEach((slideIndex) => {
+        slidesInSnap.forEach(slideIndex => {
           if (isScrollEvent && !slidesInView.includes(slideIndex)) return
 
           if (engine.options.loop) {
-            engine.slideLooper.loopPoints.forEach((loopItem) => {
+            engine.slideLooper.loopPoints.forEach(loopItem => {
               const target = loopItem.target()
 
               if (slideIndex === loopItem.index && target !== 0) {
@@ -166,7 +165,6 @@ const Carousel = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement> & Car
         .on("reInit", tweenOpacity)
         .on("scroll", tweenOpacity)
         .on("slideFocus", tweenOpacity)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [api, setTweenFactor, tweenOpacity])
 
     return (
@@ -194,7 +192,7 @@ const Carousel = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement> & Car
         </div>
       </CarouselContext.Provider>
     )
-  }
+  },
 )
 Carousel.displayName = "Carousel"
 
@@ -209,13 +207,13 @@ const CarouselContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement
           className={cx(
             "flex",
             orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
-            className
+            className,
           )}
           {...props}
         />
       </div>
     )
-  }
+  },
 )
 CarouselContent.displayName = "CarouselContent"
 
@@ -231,12 +229,12 @@ const CarouselItem = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
         className={cx(
           "min-w-0 shrink-0 grow-0 basis-full",
           orientation === "horizontal" ? "pl-4" : "pt-4",
-          className
+          className,
         )}
         {...props}
       />
     )
-  }
+  },
 )
 CarouselItem.displayName = "CarouselItem"
 
@@ -295,7 +293,7 @@ const CarouselPrevious = forwardRef<HTMLButtonElement, ComponentProps<typeof But
         {...props}
       />
     )
-  }
+  },
 )
 CarouselPrevious.displayName = "CarouselPrevious"
 
@@ -320,7 +318,7 @@ const CarouselDots = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => {
     const { api } = useCarousel()
     const [, setUpdateState] = useState(false)
-    const toggleUpdateState = useCallback(() => setUpdateState((prevState) => !prevState), [])
+    const toggleUpdateState = useCallback(() => setUpdateState(prevState => !prevState), [])
 
     useEffect(() => {
       if (api) {
@@ -353,7 +351,7 @@ const CarouselDots = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
             type="button"
             className={cx(
               "shrink-1 basis-5 p-1 h-3 text-foreground/25 hover:text-foreground/75 transition-all",
-              i === currentSlide && "basis-8 text-blue-500"
+              i === currentSlide && "basis-8 text-blue-500",
             )}
             aria-label={`Go to slide ${i + 1}`}
             onClick={() => api?.scrollTo(i)}
@@ -363,7 +361,7 @@ const CarouselDots = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
         ))}
       </div>
     )
-  }
+  },
 )
 CarouselDots.displayName = "CarouselDots"
 

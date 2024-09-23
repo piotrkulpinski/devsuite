@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 400 700;
+  src: url("/fonts/Geist-Variable.woff2") format("woff2");
+}
+
 :root {
   --header-height: 3.125rem;
   --header-top: 0.5rem;
@@ -14,6 +21,7 @@
 .dark {
   --color-background: 233 100% 4%;
   --color-foreground: 0 0% 95%;
+  /* hsl(60, 100%, 99%) */
   --color-accent: 217 91% 60%;
 }
 
@@ -25,27 +33,15 @@
 
 /* CSS */
 :root {
-  font-family: Inter, sans-serif;
   font-feature-settings:
-    "liga" 1,
-    /* Contextual Alternates */ "calt" 1,
-    /* Discretionary Ligatures */ "dlig" 1,
-    /* fSquare punctuation */ "ss07" 1,
-    /* Square quotes */ "ss08" 1,
-    /* Slashed zero */ "zero" 1,
-    /* Tabular numbers */ "tnum" 1,
-    /* Open six */ "cv03" 1,
-    /* Open nine */ "cv04" 1,
-    /* Alternate one */ "cv01" 1,
-    /* Flat-top three */ "cv09",
-    /* Open 4 */ "cv02" 1;
-}
-
-@supports (font-variation-settings: normal) {
-  /* Use variable font if supported */
-  :root {
-    font-family: InterVariable, sans-serif;
-  }
+    "ss01" on, /* Alternate R */
+    "ss02" on, /* Alternate Y and y */
+    "ss03" on, /* Alernative Q, Ø, and ø */
+    "ss04" off, /* Alernative a */
+    "ss05" on, /* Alernative 1, 2, and 4 */
+    "ss06" on, /* Alternate !, ?, and * */
+    "ss07" on, /* Round punctuation */
+    "ss08" off; /* Alternate arrows */
 }
 
 @layer utilities {
@@ -107,14 +103,4 @@ svg:not([class*="stroke"]) {
 
 svg.lucide:not([class*="size-"]):not([class*="h-"]) {
   @apply size-[1em];
-}
-
-/* Local fonts */
-@font-face {
-  font-family: "Satoshi Variable";
-  font-style: normal;
-  src:
-    local(""),
-    url("/fonts/Satoshi-Variable.woff2") format("woff2"),
-    url("/fonts/Satoshi-Variable.woff") format("woff");
 }

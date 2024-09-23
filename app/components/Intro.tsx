@@ -35,7 +35,7 @@ const IntroTitle = ({ size = "h1", ...props }: HTMLAttributes<HTMLElement> & Hea
 const IntroDescription = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
     <Prose className={cx("max-w-2xl", className)} {...props}>
-      <h2 className="text-base !font-normal !tracking-normal !text-foreground/70 md:text-lg">
+      <h2 className="!text-base !font-normal !tracking-normal !text-foreground/70 md:!text-lg">
         {children}
       </h2>
     </Prose>
