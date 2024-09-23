@@ -1681,7 +1681,7 @@ const tools = [
   },
   {
     name: "Shipped",
-    websiteUrl: "https://shipped.club/",
+    websiteUrl: "https://shipped.club",
     category: "Code Boilerplates",
     isOpenSource: false,
     tagline: "",
@@ -1699,7 +1699,7 @@ const tools = [
   },
   {
     name: "Engagespot",
-    websiteUrl: "https://engagespot.co/",
+    websiteUrl: "https://engagespot.co",
     category: "Messaging",
     isOpenSource: false,
     tagline: "",
@@ -1708,9 +1708,27 @@ const tools = [
   },
   {
     name: "Dragonfly",
-    websiteUrl: "https://www.dragonflydb.io/",
+    websiteUrl: "https://dragonflydb.io",
     category: "Databases & Spreadsheets",
     isOpenSource: true,
+    tagline: "",
+    description: "",
+    content: "",
+  },
+  {
+    name: "CodeRabbit",
+    websiteUrl: "https://coderabbit.ai",
+    category: "Repository Management",
+    isOpenSource: false,
+    tagline: "",
+    description: "",
+    content: "",
+  },
+  {
+    name: "Fern",
+    websiteUrl: "https://buildwithfern.com",
+    category: "Documentation",
+    isOpenSource: false,
     tagline: "",
     description: "",
     content: "",
@@ -1719,15 +1737,15 @@ const tools = [
 
 async function seed() {
   await Promise.all(
-    categories.map((category) =>
+    categories.map(category =>
       prisma.category.create({
         data: {
           name: category.name,
           slug: slugify(category.name),
           description: category.description,
         },
-      })
-    )
+      }),
+    ),
   )
 
   for (const tool of tools) {
@@ -1742,11 +1760,11 @@ async function seed() {
         description: tool.description || metadata.description,
         content: tool.content,
         isOpenSource: tool.isOpenSource,
-        images: metadata.image ? [metadata.image] : undefined,
+        images: metadata.imageUrl ? [metadata.imageUrl] : undefined,
         publishedAt: new Date(),
         faviconUrl: `https://www.google.com/s2/favicons?sz=128&domain_url=${tool.websiteUrl}`,
         categories: {
-          connect: tool.category.split(",").map((category) => ({
+          connect: tool.category.split(",").map(category => ({
             name: category,
           })),
         },
@@ -1759,7 +1777,7 @@ seed()
   .then(async () => {
     await prisma.$disconnect()
   })
-  .catch(async (e) => {
+  .catch(async e => {
     console.error(e)
     await prisma.$disconnect()
     process.exit(1)

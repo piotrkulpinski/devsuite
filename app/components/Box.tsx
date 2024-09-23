@@ -9,7 +9,7 @@ export const boxVariants = cva({
 
   variants: {
     hover: {
-      true: "hover:ring-[3px] hover:ring-foreground/10 hover:border-foreground/30",
+      true: "hover:ring-[3px] hover:ring-foreground/10 hover:border-foreground/25",
     },
     focus: {
       true: "focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-foreground/10 focus-visible:border-foreground/25 focus-visible:z-10",

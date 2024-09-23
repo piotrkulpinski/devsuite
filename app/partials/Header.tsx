@@ -48,7 +48,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           data-state={isNavOpen ? "open" : "close"}
           className={cx(
             "group/menu flex flex-wrap items-center gap-3 py-3.5 px-4 -mx-2 h-[var(--header-height)] bg-background/25 backdrop-blur-xl rounded-3xl isolate overflow-clip duration-300 md:-mx-4 md:gap-4 lg:gap-6",
-            "max-lg:data-[state=open]:h-[calc(100dvh-(var(--header-top)*2))] max-lg:data-[state=open]:bg-background/75"
+            "max-lg:data-[state=open]:h-[calc(100dvh-(var(--header-top)*2))] max-lg:data-[state=open]:bg-background/75",
           )}
         >
           <button
@@ -62,14 +62,6 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
               viewBox="0 0 100 100"
               role="img"
             >
-              <circle
-                cx="50"
-                cy="50"
-                r="45"
-                pathLength="100"
-                transform="rotate(-90 50 50)"
-                className="sm:hidden fill-none duration-300 stroke-[5] stroke-current group-data-[state=open]/menu:[stroke-linecap:round] [stroke-dasharray:0_100] group-data-[state=open]/menu:[stroke-dasharray:100_100]"
-              />
               <path
                 className="fill-none duration-300 stroke-current stroke-[5] [stroke-linecap:round] [stroke-dasharray:40_121] group-data-[state=open]/menu:[stroke-dashoffset:-68px]"
                 d="m 70,33 h -40 c 0,0 -8.5,-0.149796 -8.5,8.5 0,8.649796 8.5,8.5 8.5,8.5 h 20 v -20"
@@ -139,8 +131,8 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
           <nav
             className={cx(
-              "size-full mt-6 mb-4 grid grid-cols-2 place-content-start gap-x-4 gap-y-6 transition-opacity lg:hidden",
-              isNavOpen ? "opacity-100" : "opacity-0"
+              "size-full mt-6 mb-4 grid grid-cols-2 place-content-start gap-x-4 gap-y-6 px-2 text-lg transition-opacity lg:hidden",
+              isNavOpen ? "opacity-100" : "opacity-0",
             )}
           >
             <NavigationLink to="/latest">Latest</NavigationLink>

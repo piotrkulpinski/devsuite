@@ -3,7 +3,7 @@ import { Link, unstable_useViewTransitionState } from "@remix-run/react"
 import { DollarSignIcon, SparkleIcon } from "lucide-react"
 import { HTMLAttributes } from "react"
 import { Badge } from "~/components/Badge"
-import { Card } from "~/components/Card"
+import { Card, CardDescription } from "~/components/Card"
 import { Favicon } from "~/components/Favicon"
 import { H4 } from "~/components/Heading"
 import { Series } from "~/components/Series"
@@ -25,37 +25,36 @@ export const ToolCard = ({ tool, isRelated, ...props }: ToolCardProps) => {
     <Card style={{ viewTransitionName: vt ? `tool-${tool.id}` : undefined }} asChild>
       <Link to={to} prefetch="intent" unstable_viewTransition {...props}>
         <div className="w-full flex gap-3 items-start justify-between">
-          <div className="flex flex-col gap-2">
-            <H4
-              className="!leading-snug"
-              style={{ viewTransitionName: vt ? `tool-${tool.id}-name` : undefined }}
-            >
-              {tool.name}
-            </H4>
-
-            <span
-              className="text-sm text-foreground/60 text-pretty"
-              style={{ viewTransitionName: vt ? `tool-${tool.id}-description` : undefined }}
-            >
-              {tool.tagline}
-            </span>
-          </div>
+          <H4
+            className="!leading-snug"
+            style={{ viewTransitionName: vt ? `tool-${tool.id}-name` : undefined }}
+          >
+            {tool.name}
+          </H4>
 
           {tool.faviconUrl && (
             <Favicon
               src={tool.faviconUrl}
-              className="mt-1 rounded-full"
+              className="rounded-full"
               style={{ viewTransitionName: vt ? `tool-${tool.id}-favicon` : undefined }}
             />
           )}
         </div>
+
+        {tool.description && (
+          <CardDescription
+            style={{ viewTransitionName: vt ? `tool-${tool.id}-description` : undefined }}
+          >
+            {tool.description}
+          </CardDescription>
+        )}
 
         <Series
           size="sm"
           style={{ viewTransitionName: vt ? `tool-${tool.id}-features` : undefined }}
         >
           {tool.isOpenSource && (
-            <Badge>
+            <Badge variant="outline">
               <SparkleIcon className="text-yellow-500" /> Open Source
             </Badge>
           )}

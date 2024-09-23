@@ -1,6 +1,12 @@
 import { Slot } from "@radix-ui/react-slot"
-import { ComponentProps, ElementRef, HTMLAttributes, forwardRef, isValidElement } from "react"
-import { VariantProps, cva, cx } from "~/utils/cva"
+import {
+  type ComponentProps,
+  type ElementRef,
+  type HTMLAttributes,
+  forwardRef,
+  isValidElement,
+} from "react"
+import { type VariantProps, cva, cx } from "~/utils/cva"
 import { Box } from "./Box"
 
 const dockItemVariants = cva({
@@ -59,7 +65,7 @@ export const Dock = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
       <div
         className={cx(
           "flex items-center bg-background/25 backdrop-blur-xl rounded-full py-1.5 px-2 isolate",
-          className
+          className,
         )}
         {...props}
       />

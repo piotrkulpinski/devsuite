@@ -1,7 +1,7 @@
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 import type { ComponentPropsWithoutRef, ElementRef, ReactNode } from "react"
 import { forwardRef } from "react"
-import { VariantProps, cva, cx } from "~/utils/cva"
+import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const tooltipVariants = cva({
   base: [
@@ -80,24 +80,22 @@ export const TooltipArrow = forwardRef<
 TooltipArrow.displayName = TooltipPrimitive.Arrow.displayName
 
 export const TooltipBase = forwardRef<TooltipElement, TooltipProps>((props, ref) => {
-  const { children, className, delayDuration = 0, tooltip, ...rest } = props
+  const { children, className, delayDuration, tooltip, ...rest } = props
 
   if (!tooltip) {
     return children
   }
 
   return (
-    <TooltipPrimitive.Provider disableHoverableContent>
-      <TooltipPrimitive.Root delayDuration={delayDuration}>
-        <TooltipPrimitive.Trigger ref={ref} className={className} asChild>
-          {children}
-        </TooltipPrimitive.Trigger>
+    <TooltipPrimitive.Root delayDuration={delayDuration}>
+      <TooltipPrimitive.Trigger ref={ref} className={className} asChild>
+        {children}
+      </TooltipPrimitive.Trigger>
 
-        <TooltipPrimitive.Portal>
-          <TooltipContent {...rest}>{tooltip}</TooltipContent>
-        </TooltipPrimitive.Portal>
-      </TooltipPrimitive.Root>
-    </TooltipPrimitive.Provider>
+      <TooltipPrimitive.Portal>
+        <TooltipContent {...rest}>{tooltip}</TooltipContent>
+      </TooltipPrimitive.Portal>
+    </TooltipPrimitive.Root>
   )
 })
 TooltipBase.displayName = "Tooltip"

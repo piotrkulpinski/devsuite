@@ -1,11 +1,11 @@
 import he from "he"
-import { isValidUrl } from "./helpers"
 import { parse } from "node-html-parser"
+import { isValidUrl } from "./helpers"
 
 export function fetchWithTimeout(
   input: RequestInfo | URL,
   init?: RequestInit | undefined,
-  timeout: number = 5000
+  timeout = 5000,
 ) {
   return new Promise<Response>((resolve, reject) => {
     const controller = new AbortController()
@@ -14,11 +14,11 @@ export function fetchWithTimeout(
       reject(new Error("Request timed out"))
     }, timeout)
     fetch(input, { ...init, signal: controller.signal })
-      .then((response) => {
+      .then(response => {
         clearTimeout(timeoutId)
         resolve(response)
       })
-      .catch((error) => {
+      .catch(error => {
         clearTimeout(timeoutId)
         reject(error)
       })
@@ -31,7 +31,7 @@ export const getHtml = async (url: string) => {
       "User-Agent": "Dub.co Bot",
     },
   })
-    .then((r) => r.text())
+    .then(r => r.text())
     .catch(() => null)
 }
 

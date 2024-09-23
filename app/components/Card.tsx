@@ -3,7 +3,7 @@ import type { HTMLAttributes } from "react"
 import { forwardRef, isValidElement } from "react"
 
 import { type VariantProps, cva, cx } from "~/utils/cva"
-import { Box, BoxProps } from "./Box"
+import { Box, type BoxProps } from "./Box"
 
 export const cardVariants = cva({
   base: "group/card relative w-full flex flex-col items-start gap-4 rounded-lg p-6 transform-gpu",
@@ -50,3 +50,14 @@ export const Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
 })
 
 Card.displayName = "Card"
+
+export const CardDescription = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
+  return (
+    <p
+      className={cx("-tracking-0.5 line-clamp-2 text-sm/normal text-foreground/60", className)}
+      {...props}
+    />
+  )
+}
+
+CardDescription.displayName = "CardDescription"

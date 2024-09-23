@@ -1,4 +1,3 @@
-/** eslint-disable @typescript-eslint/no-unused-vars */
 import { json, type MetaFunction } from "@remix-run/node"
 import { Grid } from "~/components/Grid"
 import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
@@ -7,8 +6,10 @@ import { Input } from "~/components/forms/Input"
 import { SearchIcon } from "lucide-react"
 import { prisma } from "~/services.server/prisma"
 import { categoryManyPayload } from "~/services.server/api"
-import { useLoaderData } from "@remix-run/react"
+import { Link, useLoaderData } from "@remix-run/react"
 import { JSON_HEADERS, SITE_NAME } from "~/utils/constants"
+import { Badge } from "~/components/Badge"
+import { Ping } from "~/components/Ping"
 
 export const meta: MetaFunction = () => {
   return [
@@ -36,15 +37,14 @@ export const loader = async () => {
 }
 
 export default function Index() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { meta, categories } = useLoaderData<typeof loader>()
+  const { categories } = useLoaderData<typeof loader>()
 
   return (
     <>
-      <Intro alignment="center" className="max-w-2xl text-pretty">
+      <Intro alignment="center" className="max-w-2xl my-[2vh] text-pretty">
         <IntroTitle>
           A suite of developer tools that help you{" "}
-          <span className="underline decoration-from-font decoration-foreground/25">
+          <span className="underline underline-offset-[0.125em] decoration-from-font decoration-foreground/25">
             ship faster
           </span>{" "}
           🚀
@@ -65,6 +65,15 @@ export default function Index() {
 
           <SearchIcon className="absolute top-1/2 right-4 -translate-y-1/2 size-4 pointer-events-none" />
         </div>
+
+        <Badge
+          className="order-first inline-flex items-center gap-1.5 px-2 py-1 rounded-md"
+          asChild
+        >
+          <Link to="/latest">
+            <Ping /> {2} tools added this week
+          </Link>
+        </Badge>
       </Intro>
 
       <Grid>

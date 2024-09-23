@@ -1,22 +1,18 @@
-/** eslint-disable react-hooks/exhaustive-deps */
-/** eslint-disable react-hooks/exhaustive-deps */
-/** eslint-disable react-hooks/exhaustive-deps */
-/** eslint-disable @typescript-eslint/no-unused-vars */
 import { useNavigate } from "@remix-run/react"
 import hotkeys from "hotkeys-js"
 import {
-  HomeIcon,
-  TwitterIcon,
   ArrowLeftIcon,
   ArrowRightIcon,
   FacebookIcon,
+  HomeIcon,
   LinkIcon,
+  TwitterIcon,
 } from "lucide-react"
-import { Fragment, HTMLAttributes, useEffect } from "react"
+import { Fragment, type HTMLAttributes, useEffect } from "react"
 import { toast } from "sonner"
 import { Dock } from "~/components/Dock"
 import { Shortcut } from "~/components/Shortcut"
-import { Tooltip } from "~/components/Tooltip"
+import { Tooltip, TooltipProvider } from "~/components/Tooltip"
 
 type NavItemProps = {
   icon: React.ComponentType
@@ -43,7 +39,6 @@ const NavItem = ({ ...props }: NavItemProps) => {
         hotkeys.unbind(key)
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shortcut, onClick, hotkey, isDisabled])
 
   return (
@@ -130,19 +125,21 @@ export const Nav = ({ previous, next, ...props }: NavProps) => {
   ]
 
   useEffect(() => {
-    hotkeys("E", () => navigate(`edit`, { unstable_viewTransition: true }))
+    hotkeys("E", () => navigate("edit", { unstable_viewTransition: true }))
 
     return () => hotkeys.unbind("E")
   }, [navigate])
 
   return (
-    <Dock {...props}>
-      {actions.map((action, i) => (
-        <Fragment key={i}>
-          {!action && <Dock.Separator />}
-          {action && <NavItem {...action} />}
-        </Fragment>
-      ))}
-    </Dock>
+    <TooltipProvider delayDuration={250}>
+      <Dock {...props}>
+        {actions.map((action, i) => (
+          <Fragment key={i}>
+            {!action && <Dock.Separator />}
+            {action && <NavItem {...action} />}
+          </Fragment>
+        ))}
+      </Dock>
+    </TooltipProvider>
   )
 }
