@@ -1,0 +1,21 @@
+{
+  "node": {
+    "a220ae1f5e482837be568c9a7387b21b7c6d6690": {
+      "workers": {
+        "app/_not-found/page": "[project]/.next-internal/server/app/_not-found/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/subscribe.ts [app-rsc] (ecmascript, action, ecmascript)\" } [app-rsc] (ecmascript)"
+      },
+      "layer": {
+        "app/_not-found/page": "actionBrowser"
+      }
+    },
+    "849b78ad6b52bf6ab285a6ccef7f89c84393eca9": {
+      "workers": {
+        "app/_not-found/page": "[project]/.next-internal/server/app/_not-found/page/actions.js { ACTIONS_MODULE0 => \"[project]/actions/subscribe.ts [app-rsc] (ecmascript, action, ecmascript)\" } [app-rsc] (ecmascript)"
+      },
+      "layer": {
+        "app/_not-found/page": "actionBrowser"
+      }
+    }
+  },
+  "edge": {}
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["/turbopack/[project]/node_modules/next/src/pages/_app.tsx"],"sourcesContent":["unable to read source [project]/node_modules/next/src/pages/_app.tsx"],"names":["App","appGetInitialProps","Component","ctx","pageProps","loadGetInitialProps","React","render","props","origGetInitialProps","getInitialProps"],"mappings":";;;;;;;eAiCqBA;;;;;;;AAZrB;;;CAGC,GACD,eAAeC,mBAAmB,KAGrB;IAHqB,IAAA,EAChCC,SAAS,EACTC,GAAG,EACQ,GAHqB;IAIhC,MAAMC,YAAY,MAAMC,CAAAA,GAAAA,OAAAA,mBAAmB,EAACH,WAAWC;IACvD,OAAO;QAAEC;IAAU;AACrB;AAEe,MAAMJ,YAAsCM,OAAAA,OAAK,CAACJ,SAAS;IAOxEK,SAAS;QACP,MAAM,EAAEL,SAAS,EAAEE,SAAS,EAAE,GAAG,IAAI,CAACI,KAAK;QAE3C,OAAA,WAAA,GAAO,CAAA,GAAA,YAAA,GAAA,EAACN,WAAAA;YAAW,GAAGE,SAAS;;IACjC;AACF;AAZqBJ,IAIZS,mBAAAA,GAAsBR;AAJVD,IAKZU,eAAAA,GAAkBT"}},
+    {"offset": {"line": 45, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

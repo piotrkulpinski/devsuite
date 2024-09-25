@@ -1,5 +1,5 @@
 import { slugify } from "@curiousleaf/utils"
-import { prisma } from "~/services.server/prisma"
+import { prisma } from "~/services/prisma"
 import { getMetaTags } from "~/utils/metatags"
 
 const categories = [
