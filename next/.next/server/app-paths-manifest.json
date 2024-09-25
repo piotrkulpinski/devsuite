@@ -1,0 +1,8 @@
+{
+  "/category/[slug]/page": "app/category/[slug]/page.js",
+  "/[slug]/page": "app/[slug]/page.js",
+  "/page": "app/page.js",
+  "/submit/page": "app/submit/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/submit/[slug]/page": "app/submit/[slug]/page.js"
+}

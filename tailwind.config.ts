@@ -3,8 +3,11 @@ import defaultTheme from "tailwindcss/defaultTheme"
 import plugin from "tailwindcss/plugin"
 
 export default {
-  content: ["./app/**/*.{js,ts,jsx,tsx,mdx}"],
-  darkMode: "class",
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
 
   theme: {
     extend: {
@@ -19,8 +22,8 @@ export default {
         DEFAULT: "hsl(var(--color-border))",
       },
       fontFamily: {
-        sans: ["Geist", ...defaultTheme.fontFamily.sans],
-        display: ["Geist", ...defaultTheme.fontFamily.sans],
+        sans: ["var(--font-geist-sans)", ...defaultTheme.fontFamily.sans],
+        mono: ["var(--font-geist-mono)", ...defaultTheme.fontFamily.mono],
       },
       fontSize: {
         "5xl": ["2.75rem", "1.05"],
