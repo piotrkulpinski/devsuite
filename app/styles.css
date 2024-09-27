@@ -7,19 +7,9 @@
     --header-height: 3.125rem;
     --header-top: 0.5rem;
 
-    --color-background: 0 0% 100%;
-    --color-foreground: 0 0% 15%;
-    --color-accent: 217 91% 60%;
-  }
-
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --color-background: 233 100% 4%;
-      --color-foreground: 0 0% 95%;
-      /* hsl(60, 100%, 99%) */
-      --color-accent: 217 91% 60%;
-    }
+    --color-background: 233 100% 4%;
+    --color-foreground: 233 100% 97.5%;
+    --color-accent: 261 30% 70%;
   }
 
   @media (min-width: 768px) {
@@ -80,7 +70,7 @@ label[for],
 button [class*="group-hover"] {
   @apply transition;
   @apply ease-out;
-  @apply duration-200;
+  @apply duration-150;
   @apply cursor-pointer;
 }
 

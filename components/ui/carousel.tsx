@@ -353,7 +353,7 @@ const CarouselDots = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
             className={cx(
               "shrink-1 basis-5 p-1 h-3 transition-all",
               i === currentSlide
-                ? "basis-8 text-blue-500"
+                ? "basis-8 text-accent"
                 : "text-foreground/25 hover:text-foreground/50",
             )}
             aria-label={`Go to slide ${i + 1}`}

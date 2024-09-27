@@ -10,7 +10,7 @@ export const cardVariants = cva({
 
   variants: {
     isFeatured: {
-      true: "bg-foreground/10 border-foreground/25 ring-[3px] ring-foreground/10",
+      true: "border-foreground/25 ring-[3px] ring-foreground/10",
     },
     isRevealed: {
       true: "animate-reveal",
@@ -54,7 +54,7 @@ Card.displayName = "Card"
 export const CardDescription = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
     <p
-      className={cx("-tracking-0.5 line-clamp-2 text-sm/normal text-foreground/60", className)}
+      className={cx("-tracking-0.5 line-clamp-2 text-sm/normal text-foreground/65", className)}
       {...props}
     />
   )

@@ -1,4 +1,4 @@
-import { Intro, IntroDescription, IntroTitle } from "~/components/Intro"
+import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 
 export default function SubmitThanks() {
   return (
@@ -12,7 +12,7 @@ export default function SubmitThanks() {
         </IntroDescription>
       </Intro>
 
-      <img src="/3d-heart.png" alt="" className="max-w-64 w-2/3 h-auto mx-auto" />
+      <img src="/3d-heart.webp" alt="" className="max-w-64 w-2/3 h-auto mx-auto" />
     </>
   )
 }

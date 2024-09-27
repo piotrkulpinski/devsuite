@@ -20,11 +20,11 @@ export const Newsletter = ({ className, title, description, ...props }: Newslett
           <NewsletterForm />
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-br from-background to-foreground/5 rounded-lg pointer-events-none hidden dark:block" />
+        <div className="absolute inset-0 bg-gradient-to-br from-background to-foreground/[2.5%] rounded-lg pointer-events-none" />
 
         <div className="absolute -inset-y-px -right-px w-1/2 rounded-lg overflow-clip select-none pointer-events-none max-md:hidden">
           <img
-            src="/3d-panels.png"
+            src="/3d-panels.webp"
             alt="Newsletter"
             className="h-auto w-full mix-blend-exclusion"
           />

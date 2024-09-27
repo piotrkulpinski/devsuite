@@ -46,8 +46,7 @@ export const NewsletterForm = ({
           placeholder={placeholder}
           data-1p-ignore
           required
-          shape="rounded"
-          className="w-full pr-32"
+          className="w-full pr-32 rounded-xl"
         />
 
         <NewsletterButton

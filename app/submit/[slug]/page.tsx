@@ -23,11 +23,11 @@ export default function SubmitPackages() {
           features={[
             { text: "Basic description", type: "neutral" },
             { text: "Link to your website", type: "neutral" },
-            { text: "No featured spot", type: "neutral" },
-            { text: "No detailed description", type: "neutral" },
+            { text: "No featured spot", type: "negative" },
+            { text: "No detailed description", type: "negative" },
           ]}
         >
-          <Button variant="primary" className="mt-auto" asChild>
+          <Button variant="primary" className="mt-auto w-full opacity-75" asChild>
             <Link href="/submit/thanks">Submit</Link>
           </Button>
         </Plan>
@@ -45,7 +45,7 @@ export default function SubmitPackages() {
           ]}
           isFeatured
         >
-          <Button variant="fancy" className="mt-auto">
+          <Button variant="fancy" className="mt-auto w-full">
             Purchase
           </Button>
         </Plan>

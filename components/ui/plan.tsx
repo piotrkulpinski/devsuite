@@ -20,7 +20,7 @@ export const planFeatureCheckVariants = cva({
 
   variants: {
     type: {
-      positive: "bg-green-500",
+      positive: "bg-green-500/60",
       neutral: "bg-foreground/10",
       negative: "bg-foreground/10",
     },
@@ -103,11 +103,7 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
     <Card hover={false} isRevealed={false} isFeatured={isFeatured} asChild>
       <Component ref={ref} className={cx(planVariants({ className }))} {...rest}>
         {isFeatured && (
-          <img
-            src="/3d-coin.png"
-            alt=""
-            className="size-56 absolute -top-12 -right-12 -z-10 select-none pointer-events-none opacity-10"
-          />
+          <div className="absolute -top-12 -right-12 -z-10 w-full h-32 select-none pointer-events-none bg-violet-300/30 rotate-12 blur-3xl" />
         )}
 
         <div className="space-y-3">
@@ -125,11 +121,13 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
             {Math.round(finalPrice / 100)}
 
             {originalPrice && (
-              <span className="absolute ml-1 -mt-3 text-[0.5em] font-normal align-top text-foreground/70 line-through decoration-from-font">
+              <span className="absolute ml-1 -mt-3 text-[0.5em] font-normal align-top text-foreground/65 line-through decoration-from-font">
                 {Math.round(originalPrice / 100)}
               </span>
             )}
           </strong>
+
+          {finalPrice > 0 && <span className="text-sm text-foreground/50">/one-time</span>}
         </div>
 
         {!!features?.length && (
