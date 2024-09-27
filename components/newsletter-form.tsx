@@ -54,7 +54,7 @@ export const NewsletterForm = ({
           data-1p-ignore
           required
           size={size}
-          className="flex-1 min-w-0 border-0 placeholder:opacity-50 focus-visible:ring-0"
+          className="flex-1 min-w-0 border-0 focus-visible:ring-0"
         />
 
         <NewsletterButton
