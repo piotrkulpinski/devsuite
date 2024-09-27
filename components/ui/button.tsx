@@ -8,14 +8,14 @@ import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const buttonVariants = cva({
   base: [
-    "group/button relative inline-flex items-center justify-center font-medium -tracking-micro rounded-full",
+    "group/button relative inline-flex items-center justify-center font-medium -tracking-micro rounded-lg",
     "disabled:opacity-60 disabled:pointer-events-none",
   ],
 
   variants: {
     variant: {
       fancy:
-        "border-0 bg-gradient-to-br from-blue-500 to-blue-700 text-white hover:!ring-blue-500/25",
+        "border-0 bg-gradient-to-br from-[#6B5298]/75 to-[#31236F]/75 text-white hover:!ring-[#6B5298]/25",
       primary: "border-0 text-background bg-foreground hover:opacity-90",
       secondary: "",
     },

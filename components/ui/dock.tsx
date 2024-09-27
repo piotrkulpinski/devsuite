@@ -13,7 +13,7 @@ import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const dockItemVariants = cva({
   base: [
-    "relative p-1.5 rounded transition-all duration-200 ease-in-out",
+    "relative p-1.5 rounded transition-all duration-150 ease-in-out",
     "hover:pb-2.5 hover:-mt-1 hover:z-10",
     "disabled:opacity-50 disabled:pointer-events-none",
   ],
@@ -21,7 +21,7 @@ const dockItemVariants = cva({
   variants: {
     isActive: {
       true: "after:absolute after:mt-1 after:left-1/2 after:-translate-x-1/2 after:pointer-events-none after:bg-current after:w-2.5 after:h-px after:rounded-full",
-      false: "text-foreground/70",
+      false: "text-foreground/65",
     },
   },
 
@@ -66,7 +66,7 @@ export const Dock = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
     <Box>
       <div
         className={cx(
-          "flex items-center bg-background/25 backdrop-blur-xl rounded-full py-1.5 px-2 isolate",
+          "flex items-center bg-background/25 backdrop-blur-xl rounded-xl py-1.5 px-2 isolate",
           className,
         )}
         {...props}

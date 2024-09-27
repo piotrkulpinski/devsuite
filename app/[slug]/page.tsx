@@ -12,6 +12,7 @@ import { FaviconImage } from "~/components/ui/favicon"
 import { Gallery } from "~/components/ui/gallery"
 import { Grid } from "~/components/ui/grid"
 import { H2, H4 } from "~/components/ui/heading"
+import { IntroDescription } from "~/components/ui/intro"
 import { Markdown } from "~/components/ui/markdown"
 import { Stack } from "~/components/ui/stack"
 import { Wrapper } from "~/components/ui/wrapper"
@@ -86,7 +87,7 @@ export default async function ToolPage({ params }: { params: { slug: string } })
             </Button>
           </Stack>
 
-          <h2 className="text-foreground/70 md:text-lg">{tool.description}</h2>
+          <IntroDescription>{tool.description}</IntroDescription>
 
           <Stack size="sm" className="mt-4">
             {tool.isOpenSource && (
@@ -110,7 +111,7 @@ export default async function ToolPage({ params }: { params: { slug: string } })
             <Link
               key={tag}
               href={`/tags/${tag}`}
-              className="flex items-center gap-0.5 text-foreground/70 text-sm hover:text-foreground"
+              className="flex items-center gap-0.5 text-foreground/65 text-sm hover:text-foreground"
             >
               <HashIcon className="opacity-30" />
               {tag}

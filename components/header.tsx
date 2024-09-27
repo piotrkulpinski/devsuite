@@ -47,7 +47,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
         <div
           data-state={isNavOpen ? "open" : "close"}
           className={cx(
-            "group/menu flex flex-wrap items-center gap-3 py-3.5 px-4 -mx-2 h-[var(--header-height)] bg-background/25 backdrop-blur-xl rounded-3xl isolate overflow-clip duration-300 md:-mx-4 md:gap-4 lg:gap-6",
+            "group/menu flex flex-wrap items-center gap-3 py-3.5 px-4 -mx-2 h-[var(--header-height)] bg-background/25 backdrop-blur-xl rounded-xl isolate overflow-clip duration-300 md:-mx-4 md:gap-4 lg:gap-6",
             "max-lg:data-[state=open]:h-[calc(100dvh-(var(--header-top)*2))] max-lg:data-[state=open]:bg-background/75",
           )}
         >
@@ -80,11 +80,10 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
           <Logo />
 
-          <nav className="flex flex-wrap items-center gap-3 text-sm md:gap-4 max-lg:hidden">
+          <nav className="hidden lg:contents">
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger className={cx(navigationLinkVariants({ className: "gap-1" }))}>
-                Browse{" "}
-                <ChevronDownIcon className="group-data-[state=open]:-rotate-180 duration-200" />
+                Browse <ChevronDownIcon className="group-data-[state=open]:-rotate-180" />
               </DropdownMenuTrigger>
 
               <DropdownMenuContent align="start">
@@ -116,12 +115,13 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <NavigationLink href="/about">About</NavigationLink>
-            <NavigationLink href="/sponsor">Sponsor</NavigationLink>
+            <NavigationLink href="/tools">Tools</NavigationLink>
+            <NavigationLink href="/categories">Categories</NavigationLink>
+            <NavigationLink href="/advertise">Advertise</NavigationLink>
           </nav>
 
           <Stack size="sm" className="ml-auto -my-1.5 -mr-1.5">
-            <Button size="md" variant="fancy" suffix={<SparkleIcon />} asChild>
+            <Button size="md" variant="primary" suffix={<SparkleIcon />} asChild>
               <Link href="/submit">Submit</Link>
             </Button>
           </Stack>

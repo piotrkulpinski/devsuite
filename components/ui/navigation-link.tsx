@@ -5,8 +5,8 @@ import { cx } from "~/utils/cva"
 
 export const navigationLinkVariants = cva({
   base: [
-    "group flex items-center gap-2 px-1 py-0.5 -mx-1 -my-0.5 font-medium rounded-full -tracking-micro cursor-pointer text-foreground/60",
-    "disabled:opacity-50 hover:text-foreground",
+    "group flex items-center gap-2 p-0.5 -m-0.5 text-sm cursor-pointer",
+    "text-foreground/50 disabled:opacity-50 hover:text-foreground",
   ],
   variants: {
     isActive: {

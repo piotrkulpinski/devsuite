@@ -42,7 +42,7 @@ export default function Loading() {
 
       <div className="flex flex-wrap gap-y-2 gap-x-4">
         {[...Array(6)].map((_, index) => (
-          <div key={index} className="flex items-center gap-0.5 text-foreground/70 text-sm">
+          <div key={index} className="flex items-center gap-0.5 text-foreground/65 text-sm">
             <HashIcon className="opacity-30" />
             <Skeleton key={index} className="h-3 w-12" />
           </div>

@@ -8,6 +8,7 @@ import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { Ping } from "~/components/ui/ping"
 import { categoryManyPayload } from "~/lib/api"
 import { prisma } from "~/services/prisma"
+import { SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
 
 export default async function Home() {
   const categories = await prisma.category.findMany({
@@ -18,18 +19,8 @@ export default async function Home() {
   return (
     <>
       <Intro alignment="center" className="max-w-2xl my-[2vh] text-pretty">
-        <IntroTitle>
-          A suite of developer tools that help you{" "}
-          <span className="underline underline-offset-[0.125em] decoration-from-font decoration-foreground/25">
-            ship faster
-          </span>{" "}
-          🚀
-        </IntroTitle>
-
-        <IntroDescription>
-          Find the best tools to help you build faster and more efficiently. Stop wasting time and
-          money by developing tools that already exist.
-        </IntroDescription>
+        <IntroTitle>{SITE_TAGLINE}</IntroTitle>
+        <IntroDescription>{SITE_DESCRIPTION}</IntroDescription>
 
         <div className="mt-4 relative w-full max-w-md mx-auto">
           <Input
@@ -47,7 +38,7 @@ export default async function Home() {
           asChild
         >
           <Link href="/latest">
-            <Ping /> {2} tools added this week
+            <Ping /> {2} new tools added
           </Link>
         </Badge>
       </Intro>

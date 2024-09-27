@@ -15,7 +15,7 @@ import { BrandLinkedInIcon } from "~/components/ui/icons/brand-linkedin"
 import { BrandRedditIcon } from "~/components/ui/icons/brand-reddit"
 import { BrandWhatsAppIcon } from "~/components/ui/icons/brand-whatsapp"
 import { BrandXIcon } from "~/components/ui/icons/brand-x"
-import { Tooltip } from "~/components/ui/tooltip"
+import { Tooltip, TooltipProvider } from "~/components/ui/tooltip"
 import type { ToolOne } from "~/lib/api"
 import { SITE_NAME, SITE_URL } from "~/utils/constants"
 
@@ -123,25 +123,27 @@ export const Nav = ({ tool, previous, next, ...props }: NavProps) => {
   }, [])
 
   return (
-    <Dock {...props}>
-      {actions.map((action, i) => (
-        <Fragment key={i}>
-          {!action && <Dock.Separator />}
-          {action && <NavItem {...action} />}
-        </Fragment>
-      ))}
+    <TooltipProvider delayDuration={0} disableHoverableContent>
+      <Dock {...props}>
+        {actions.map((action, i) => (
+          <Fragment key={i}>
+            {!action && <Dock.Separator />}
+            {action && <NavItem {...action} />}
+          </Fragment>
+        ))}
 
-      <Dock.Separator />
+        <Dock.Separator />
 
-      {shareOptions.map(({ platform, url, icon }) => (
-        <Tooltip key={platform} tooltip={`Share on ${platform}`} sideOffset={0}>
-          <Dock.Item asChild>
-            <Link href={url} target="_blank" rel="noopener noreferrer nofollow">
-              <Slot className="size-4">{icon}</Slot>
-            </Link>
-          </Dock.Item>
-        </Tooltip>
-      ))}
-    </Dock>
+        {shareOptions.map(({ platform, url, icon }) => (
+          <Tooltip key={platform} tooltip={`Share on ${platform}`} sideOffset={0}>
+            <Dock.Item asChild>
+              <Link href={url} target="_blank" rel="noopener noreferrer nofollow">
+                <Slot className="size-4">{icon}</Slot>
+              </Link>
+            </Dock.Item>
+          </Tooltip>
+        ))}
+      </Dock>
+    </TooltipProvider>
   )
 }

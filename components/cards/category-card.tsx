@@ -25,7 +25,7 @@ export const CategoryCard = ({ category, ...props }: CategoryCardProps) => {
         </div> */}
 
         <div className="w-full flex gap-3 items-start justify-between">
-          <div className="flex flex-col gap-2 min-w-0">
+          <div className="flex flex-col gap-1 min-w-0">
             <H5 className="!leading-snug flex-1 truncate">{category.name}</H5>
 
             <span className="text-xs text-foreground/50">
@@ -33,7 +33,7 @@ export const CategoryCard = ({ category, ...props }: CategoryCardProps) => {
             </span>
           </div>
 
-          <span className="size-10 grid place-items-center mt-1 bg-foreground/5 rounded-full shrink-0 dark:bg-foreground/10">
+          <span className="size-10 grid place-items-center mt-1 bg-foreground/10 rounded-full shrink-0">
             <ArrowRightIcon />
           </span>
         </div>

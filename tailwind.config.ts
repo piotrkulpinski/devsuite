@@ -8,11 +8,13 @@ export default {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: "class",
 
   theme: {
     extend: {
       colors: {
         background: "hsl(var(--color-background) / <alpha-value>)",
+        accent: "hsl(var(--color-accent) / <alpha-value>)",
         foreground: "hsl(var(--color-foreground) / <alpha-value>)",
       },
       letterSpacing: {

@@ -3,9 +3,9 @@ import { env } from "~/env"
 export const SITE_URL = env.NEXT_PUBLIC_SITE_URL
 export const SITE_EMAIL = env.NEXT_PUBLIC_SITE_EMAIL
 export const SITE_NAME = "DevSuite"
-export const SITE_TAGLINE = "A Suite of Developer Tools that help you Ship Faster 🚀"
+export const SITE_TAGLINE = "A suite of developer tools that help you ship faster 🚀"
 export const SITE_DESCRIPTION =
-  "DevSuite is a collection of developer tools that help you ship faster. Stop wasting time and money by developing tools that already exist."
+  "Find the best tools to help you build faster and more efficiently. Stop wasting time and money by developing tools that already exist."
 
 export const RSS_URL = `${SITE_URL}/rss.xml`
 export const TWITTER_URL = "https://x.com/ossalternative"
@@ -15,7 +15,7 @@ export const GITHUB_URL = "https://github.com/piotrkulpinski/devsuite"
 export const FAMILY_LINKS = [
   {
     title: "OpenAlternative",
-    href: "https://openalternative.dev",
+    href: "https://openalternative.co",
     description: "Open Source Alternatives to Popular Software",
   },
   {
