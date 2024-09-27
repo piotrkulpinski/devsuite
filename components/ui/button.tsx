@@ -15,9 +15,9 @@ export const buttonVariants = cva({
   variants: {
     variant: {
       fancy:
-        "border-0 bg-gradient-to-br from-[#6B5298]/75 to-[#31236F]/75 text-white hover:!ring-[#6B5298]/25",
+        "border-0 bg-gradient-to-br from-[#6B5298]/75 to-[#31236F]/75 text-foreground/85 hover:!ring-[#6B5298]/25 hover:text-foreground",
       primary: "border-0 text-background bg-foreground hover:opacity-90",
-      secondary: "",
+      secondary: "text-foreground/65 hover:text-foreground",
     },
     size: {
       sm: "text-xs/none gap-[0.5ch] py-1.5 px-2.5",
@@ -46,7 +46,7 @@ export const buttonVariants = cva({
 })
 
 export const buttonAffixVariants = cva({
-  base: "shrink-0 size-[1.1em] group-hover/button:last:rotate-12",
+  base: "shrink-0 size-[1.1em] will-change-transform group-hover/button:last:rotate-12",
 })
 
 export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "size" | "prefix"> &

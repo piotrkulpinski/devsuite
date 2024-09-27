@@ -1,14 +1,15 @@
 import { Slot } from "@radix-ui/react-slot"
-import { CheckIcon, XIcon } from "lucide-react"
+import { CheckIcon, CoinsIcon, XIcon } from "lucide-react"
 import { type HTMLAttributes, type ReactNode, forwardRef, isValidElement } from "react"
-import { Card, type cardVariants } from "~/components/ui/card"
-import { H3 } from "~/components/ui/heading"
+import { Badge } from "~/components/ui/badge"
+import { Card, CardStars, type cardVariants } from "~/components/ui/card"
+import { H4 } from "~/components/ui/heading"
 import { Prose } from "~/components/ui/prose"
 import { Stack } from "~/components/ui/stack"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const planVariants = cva({
-  base: "gap-8 p-4 min-w-64 overflow-clip md:p-6",
+  base: "gap-8 p-4 min-w-64 md:p-6",
 })
 
 export const planFeatureVariants = cva({
@@ -103,11 +104,18 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
     <Card hover={false} isRevealed={false} isFeatured={isFeatured} asChild>
       <Component ref={ref} className={cx(planVariants({ className }))} {...rest}>
         {isFeatured && (
-          <div className="absolute -top-12 -right-12 -z-10 w-full h-32 select-none pointer-events-none bg-violet-300/30 rotate-12 blur-3xl" />
+          <Badge
+            variant="outline"
+            className="absolute top-0 right-6 z-10 -translate-y-1/2 -mr-0.5 bg-background"
+            prefix={<CoinsIcon className="text-yellow-500" />}
+          >
+            Best Value
+          </Badge>
         )}
+        {isFeatured && <CardStars />}
 
         <div className="space-y-3">
-          <H3>{name}</H3>
+          <H4>{name}</H4>
 
           {description && (
             <Prose className="text-foreground/50 text-sm text-pretty">{description}</Prose>

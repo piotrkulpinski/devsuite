@@ -11,6 +11,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { type HTMLAttributes, useEffect, useState } from "react"
+import { SearchForm } from "~/components/search-form"
 import { Box } from "~/components/ui/box"
 import { Button } from "~/components/ui/button"
 import { Container } from "~/components/ui/container"
@@ -120,7 +121,9 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             <NavigationLink href="/advertise">Advertise</NavigationLink>
           </nav>
 
-          <Stack size="sm" className="ml-auto -my-1.5 -mr-1.5">
+          <Stack size="sm" className="items-stretch ml-auto -my-1.5 -mr-1.5">
+            <SearchForm className="max-sm:hidden" />
+
             <Button size="md" variant="primary" suffix={<SparkleIcon />} asChild>
               <Link href="/submit">Submit</Link>
             </Button>

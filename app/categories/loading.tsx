@@ -2,10 +2,11 @@ import { ToolSkeleton } from "~/components/cards/tool-skeleton"
 import { Grid } from "~/components/ui/grid"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { Skeleton } from "~/components/ui/skeleton"
+import { Wrapper } from "~/components/ui/wrapper"
 
 export default function Loading() {
   return (
-    <div className="flex flex-col gap-12">
+    <Wrapper>
       <Intro alignment="center" className="max-w-2xl mx-auto text-pretty">
         <IntroTitle className="!leading-none">
           <Skeleton className="w-48">&nbsp;</Skeleton>
@@ -21,6 +22,6 @@ export default function Loading() {
           <ToolSkeleton key={index} />
         ))}
       </Grid>
-    </div>
+    </Wrapper>
   )
 }

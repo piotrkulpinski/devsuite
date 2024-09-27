@@ -1,9 +1,10 @@
 import { SubmitForm } from "~/app/submit/form"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
+import { Wrapper } from "~/components/ui/wrapper"
 
 export default function SubmitPage() {
   return (
-    <>
+    <Wrapper size="sm">
       <Intro alignment="center">
         <IntroTitle>Submit a Tool</IntroTitle>
 
@@ -14,6 +15,6 @@ export default function SubmitPage() {
       </Intro>
 
       <SubmitForm />
-    </>
+    </Wrapper>
   )
 }

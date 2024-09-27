@@ -2,7 +2,7 @@ import { DollarSignIcon, SparkleIcon } from "lucide-react"
 import Link from "next/link"
 import type { HTMLAttributes } from "react"
 import { Badge } from "~/components/ui/badge"
-import { Card, CardDescription } from "~/components/ui/card"
+import { Card, CardDescription, CardStars } from "~/components/ui/card"
 import { Favicon } from "~/components/ui/favicon"
 import { H4 } from "~/components/ui/heading"
 import { Stack } from "~/components/ui/stack"
@@ -14,8 +14,24 @@ type ToolCardProps = HTMLAttributes<HTMLElement> & {
 
 export const ToolCard = ({ tool, ...props }: ToolCardProps) => {
   return (
-    <Card asChild>
+    <Card isFeatured={tool.isFeatured} asChild>
       <Link href={`/${tool.slug}`} prefetch {...props}>
+        <Stack size="sm" className="absolute top-0 inset-x-6 z-10 -translate-y-1/2 -mx-0.5">
+          {tool.isFeatured && (
+            <Badge variant="outline" prefix={<SparkleIcon className="text-yellow-500" />}>
+              Featured
+            </Badge>
+          )}
+
+          {tool.isOpenSource && (
+            <Badge variant="outline" className="ml-auto">
+              Open Source
+            </Badge>
+          )}
+        </Stack>
+
+        {tool.isFeatured && <CardStars />}
+
         <div className="w-full flex gap-3 items-start justify-between">
           <H4>{tool.name}</H4>
 
@@ -25,12 +41,6 @@ export const ToolCard = ({ tool, ...props }: ToolCardProps) => {
         {tool.description && <CardDescription>{tool.description}</CardDescription>}
 
         <Stack size="sm">
-          {tool.isOpenSource && (
-            <Badge variant="outline">
-              <SparkleIcon className="text-yellow-500" /> Open Source
-            </Badge>
-          )}
-
           <Badge variant="ghost">
             <DollarSignIcon className="text-green-500" /> free + from $9/mo
           </Badge>
