@@ -14,15 +14,13 @@ export const buttonVariants = cva({
 
   variants: {
     variant: {
-      fancy:
-        "border-0 bg-gradient-to-br from-[#6B5298]/75 to-[#31236F]/75 text-foreground/85 hover:!ring-[#6B5298]/25 hover:text-foreground",
-      primary: "border-0 text-background bg-foreground hover:opacity-90",
+      primary: "border-transparent text-background bg-foreground hover:opacity-90",
       secondary: "text-foreground/65 hover:text-foreground",
     },
     size: {
-      sm: "text-xs/none gap-[0.5ch] py-1.5 px-2.5",
-      md: "text-sm/tight gap-[0.75ch] py-1.5 px-3",
-      lg: "text-base/tight gap-[1ch] py-2 px-5",
+      sm: "px-2 py-0.5 gap-[0.66ch] text-[13px]/normal",
+      md: "px-3 py-1 gap-[0.75ch] text-[13px]/normal",
+      lg: "px-4 py-2 gap-[1ch] text-[13px]/normal sm:text-sm/tight",
     },
     isAffixOnly: {
       true: "",

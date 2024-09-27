@@ -40,12 +40,12 @@ export default function SubmitPackages() {
           discount={27}
           features={[
             { text: "24h processing time", type: "positive" },
+            { text: "Do-follow link to your website", type: "positive" },
             { text: "Featured spot on homepage", type: "negative" },
             { text: "Featured badge", type: "negative" },
-            { text: "Do-follow link to your website", type: "negative" },
           ]}
         >
-          <Button variant="fancy" className="mt-auto w-full">
+          <Button variant="primary" className="mt-auto w-full">
             Purchase
           </Button>
         </Plan>
@@ -57,14 +57,14 @@ export default function SubmitPackages() {
           discount={27}
           features={[
             { text: "12h processing time", type: "positive" },
+            { text: "Do-follow link to your website", type: "positive" },
             { text: "Featured spot on homepage", type: "positive" },
             { text: "Featured badge", type: "positive" },
-            { text: "Do-follow link to your website", type: "positive" },
           ]}
           isFeatured
         >
-          <Button variant="fancy" className="mt-auto w-full">
-            Purchase
+          <Button variant="primary" className="mt-auto w-full">
+            Subscribe
           </Button>
         </Plan>
       </div>

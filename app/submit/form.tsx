@@ -35,7 +35,15 @@ export const SubmitForm = ({ className, ...props }: SubmitProps) => {
           Your Name:
         </Label>
 
-        <Input type="text" name="name" id="name" placeholder="John Doe" data-1p-ignore required />
+        <Input
+          type="text"
+          name="name"
+          id="name"
+          size="lg"
+          placeholder="John Doe"
+          data-1p-ignore
+          required
+        />
 
         {data?.error?.name && <p className="text-xs text-red-600">{data.error.name?._errors[0]}</p>}
       </div>
@@ -45,7 +53,14 @@ export const SubmitForm = ({ className, ...props }: SubmitProps) => {
           Your Email:
         </Label>
 
-        <Input type="url" name="email" id="email" placeholder="john@example.com" required />
+        <Input
+          type="url"
+          name="email"
+          id="email"
+          size="lg"
+          placeholder="john@example.com"
+          required
+        />
 
         {data?.error?.website && (
           <p className="text-xs text-red-600">{data.error.website?._errors[0]}</p>
@@ -57,7 +72,15 @@ export const SubmitForm = ({ className, ...props }: SubmitProps) => {
           Tool Name:
         </Label>
 
-        <Input type="text" name="name" id="name" placeholder="PostHog" data-1p-ignore required />
+        <Input
+          type="text"
+          name="name"
+          id="name"
+          size="lg"
+          placeholder="PostHog"
+          data-1p-ignore
+          required
+        />
 
         {data?.error?.name && <p className="text-xs text-red-600">{data.error.name?._errors[0]}</p>}
       </div>
@@ -67,7 +90,14 @@ export const SubmitForm = ({ className, ...props }: SubmitProps) => {
           Website:
         </Label>
 
-        <Input type="url" name="website" id="website" placeholder="https://posthog.com" required />
+        <Input
+          type="url"
+          name="website"
+          id="website"
+          size="lg"
+          placeholder="https://posthog.com"
+          required
+        />
 
         {data?.error?.website && (
           <p className="text-xs text-red-600">{data.error.website?._errors[0]}</p>
@@ -82,6 +112,7 @@ export const SubmitForm = ({ className, ...props }: SubmitProps) => {
         <TextArea
           name="description"
           id="description"
+          size="lg"
           rows={3}
           placeholder="A platform that helps engineers build better products"
           required
@@ -94,7 +125,7 @@ export const SubmitForm = ({ className, ...props }: SubmitProps) => {
 
       <div className="col-span-full">
         <SubmitFormButton
-          variant="fancy"
+          variant="primary"
           suffix={<SparkleIcon />}
           className="flex ml-auto min-w-32"
         >

@@ -1,10 +1,10 @@
 "use client"
 
-import type { ComponentProps, HTMLAttributes } from "react"
+import type { HTMLAttributes } from "react"
 import { useFormState, useFormStatus } from "react-dom"
 import { subscribe } from "~/actions/subscribe"
 import { Button, type ButtonProps } from "~/components/ui/button"
-import { Input } from "~/components/ui/forms/input"
+import { Input, type InputProps } from "~/components/ui/forms/input"
 import { cx } from "~/utils/cva"
 
 const NewsletterButton = ({ ...props }: ButtonProps) => {
@@ -14,19 +14,22 @@ const NewsletterButton = ({ ...props }: ButtonProps) => {
 }
 
 type NewsletterProps = HTMLAttributes<HTMLFormElement> & {
+  medium?: string
   placeholder?: string
-  buttonVariant?: ComponentProps<typeof Button>["variant"]
-  buttonLabel?: string
+  size?: InputProps["size"]
+  buttonProps?: ButtonProps
 }
 
 export const NewsletterForm = ({
   className,
-  placeholder = "Enter your email...",
-  buttonVariant = "primary",
-  buttonLabel = "Subscribe",
+  medium = "subscribe_form",
+  placeholder = "Your email here...",
+  size = "md",
+  buttonProps = { variant: "primary", children: "Subscribe" },
   ...props
 }: NewsletterProps) => {
   const [state, formAction] = useFormState(subscribe, null)
+  const isLargeSize = size === "lg"
 
   if (state?.message) {
     return <p className="text-sm text-green-600">{state.message}</p>
@@ -36,7 +39,11 @@ export const NewsletterForm = ({
     <>
       <form
         action={formAction}
-        className={cx("mt-2 relative w-full max-w-sm", className)}
+        className={cx(
+          "flex w-full border border-foreground/15 transition rounded-lg overflow-clip focus-within:ring-[3px] focus-within:ring-foreground/10 focus-within:border-foreground/25",
+          isLargeSize ? "max-w-96" : "max-w-64",
+          className,
+        )}
         noValidate
         {...props}
       >
@@ -46,17 +53,16 @@ export const NewsletterForm = ({
           placeholder={placeholder}
           data-1p-ignore
           required
-          className="w-full pr-32 rounded-xl"
+          size={size}
+          className="flex-1 min-w-0 border-0 placeholder:opacity-50 focus-visible:ring-0"
         />
 
         <NewsletterButton
           type="submit"
           size="md"
-          variant={buttonVariant}
-          className="absolute inset-y-1 right-1 px-5"
-        >
-          {buttonLabel}
-        </NewsletterButton>
+          className={cx("shrink-0", isLargeSize ? "text-sm/tight px-4 m-1" : "px-3 m-0.5")}
+          {...buttonProps}
+        />
       </form>
 
       {state?.error && <p className="text-xs text-red-600">{state.error}</p>}

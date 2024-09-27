@@ -23,11 +23,7 @@ export const ToolCard = ({ tool, ...props }: ToolCardProps) => {
             </Badge>
           )}
 
-          {tool.isOpenSource && (
-            <Badge variant="outline" className="ml-auto">
-              Open Source
-            </Badge>
-          )}
+          {tool.isOpenSource && <Badge variant="outline">Open Source</Badge>}
         </Stack>
 
         {tool.isFeatured && <CardStars />}

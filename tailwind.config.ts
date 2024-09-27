@@ -14,8 +14,8 @@ export default {
     extend: {
       colors: {
         background: "hsl(var(--color-background) / <alpha-value>)",
-        accent: "hsl(var(--color-accent) / <alpha-value>)",
         foreground: "hsl(var(--color-foreground) / <alpha-value>)",
+        accent: "hsl(var(--color-accent) / <alpha-value>)",
       },
       letterSpacing: {
         micro: "-0.0125em",
