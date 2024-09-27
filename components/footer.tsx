@@ -22,7 +22,7 @@ import { addUTMTracking } from "~/utils/helpers"
 
 export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
-    <footer className={cx("relative z-20 flex flex-col gap-y-8", className)} {...props}>
+    <footer className={cx("flex flex-col gap-y-8", className)} {...props}>
       <div
         className={cx(
           "grid grid-cols-3 gap-y-8 gap-x-4 md:gap-x-6 md:grid-cols-[repeat(16,minmax(0,1fr))]",

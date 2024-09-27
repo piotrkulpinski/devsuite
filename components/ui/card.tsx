@@ -3,14 +3,15 @@ import type { HTMLAttributes } from "react"
 import { forwardRef, isValidElement } from "react"
 
 import { Box, type BoxProps } from "~/components/ui/box"
+import { Stars } from "~/components/ui/stars"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const cardVariants = cva({
-  base: "group/card relative w-full flex flex-col items-start gap-4 rounded-lg p-6 transform-gpu",
+  base: "group/card relative w-full flex flex-col items-start gap-4 rounded-lg p-6 transform-gpu backdrop-blur-xl",
 
   variants: {
     isFeatured: {
-      true: "border-foreground/25 ring-[3px] ring-foreground/10",
+      true: "",
     },
     isRevealed: {
       true: "animate-reveal",
@@ -61,3 +62,8 @@ export const CardDescription = ({ className, ...props }: HTMLAttributes<HTMLElem
 }
 
 CardDescription.displayName = "CardDescription"
+
+export const CardStars = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
+  return <Stars className={cx("absolute inset-y-0 -inset-x-12 -z-10", className)} {...props} />
+}
+CardStars.displayName = "CardStars"

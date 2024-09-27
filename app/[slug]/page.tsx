@@ -63,7 +63,7 @@ export default async function ToolPage({ params }: { params: { slug: string } })
 
   return (
     <>
-      <Wrapper className="flex flex-col gap-12 flex-1">
+      <Wrapper size="sm">
         <div className="flex w-full flex-col items-start gap-y-4">
           <Stack size="lg" className="relative w-full justify-between">
             <Stack>

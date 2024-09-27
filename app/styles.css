@@ -9,6 +9,8 @@
 
     --color-background: 233 100% 4%;
     --color-foreground: 233 100% 97.5%;
+    /* --color-background: 0 0% 100%;
+    --color-foreground: 0 0% 15%; */
     --color-accent: 261 30% 70%;
   }
 
@@ -49,7 +51,7 @@
       content: "";
       position: absolute;
       inset: 0px;
-      background: radial-gradient(circle at bottom center, hsl(var(--color-accent)), transparent 70%);
+      background: radial-gradient(circle at top center, hsla(var(--color-accent) / 1), transparent 70%);
       opacity: 0.4;
     }
 
@@ -58,7 +60,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      mask-image: radial-gradient(circle at center bottom, black, transparent);
+      mask-image: radial-gradient(circle at center top, black, transparent);
     }
   }
 }

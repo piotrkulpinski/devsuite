@@ -1,6 +1,19 @@
 import type { HTMLAttributes } from "react"
-import { cx } from "~/utils/cva"
+import { type VariantProps, cva, cx } from "~/utils/cva"
 
-export const Wrapper = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
-  return <div className={cx("w-full max-w-screen-sm mx-auto", className)} {...props} />
+const wrapperVariants = cva({
+  base: "flex flex-col gap-12 w-full mx-auto",
+  variants: {
+    size: {
+      sm: "max-w-screen-sm",
+      md: "max-w-screen-md",
+      lg: "max-w-screen-lg",
+    },
+  },
+})
+
+type WrapperProps = HTMLAttributes<HTMLElement> & VariantProps<typeof wrapperVariants>
+
+export const Wrapper = ({ className, size, ...props }: WrapperProps) => {
+  return <div className={cx(wrapperVariants({ size, className }))} {...props} />
 }
