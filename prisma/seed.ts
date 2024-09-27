@@ -197,7 +197,7 @@ const tools = [
     name: "Inngest",
     websiteUrl: "https://inngest.com",
     category: "Background Jobs",
-    isOpenSource: false,
+    isOpenSource: true,
     tagline: "",
     description: "",
     content: "",

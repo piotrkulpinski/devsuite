@@ -9,12 +9,12 @@ export const Ping = ({ className, label, ...props }: PingProps) => {
   return (
     <div className={cx("flex items-center gap-1", className)} {...props}>
       <div className="relative size-3">
-        <div className="absolute inset-0 animate-ping rounded-full bg-violet-500/30" />
-        <div className="absolute inset-0 animate-pulse rounded-full bg-violet-500/30" />
-        <div className="absolute inset-[3px] rounded-full bg-violet-500" />
+        <div className="absolute inset-0 animate-ping rounded-full bg-accent/30" />
+        <div className="absolute inset-0 animate-pulse rounded-full bg-accent/30" />
+        <div className="absolute inset-[3px] rounded-full bg-accent" />
       </div>
 
-      {label && <div className="font-medium uppercase text-primary">{label}</div>}
+      {label && <div className="font-medium uppercase text-foreground">{label}</div>}
     </div>
   )
 }

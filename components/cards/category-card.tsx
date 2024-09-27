@@ -13,7 +13,7 @@ type CategoryCardProps = HTMLAttributes<HTMLElement> & {
 export const CategoryCard = ({ category, ...props }: CategoryCardProps) => {
   return (
     <Card asChild>
-      <Link href={`/category/${category.slug}`} prefetch {...props}>
+      <Link href={`/categories/${category.slug}`} prefetch {...props}>
         {/* <div className="flex items-center gap-3 overflow-clip mix-blend-overlay">
           {category.tools.map(tool => (
             <Fragment key={tool.id}>

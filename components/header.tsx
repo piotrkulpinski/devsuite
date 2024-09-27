@@ -79,7 +79,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             </svg>
           </button>
 
-          <Logo />
+          <Logo className="mr-auto" />
 
           <nav className="hidden lg:contents">
             <DropdownMenu modal={false}>
@@ -121,7 +121,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             <NavigationLink href="/advertise">Advertise</NavigationLink>
           </nav>
 
-          <Stack size="sm" className="items-stretch ml-auto -my-1.5 -mr-1.5">
+          <Stack className="-my-1.5 -mx-1.5">
             <SearchForm className="max-sm:hidden" />
 
             <Button size="md" variant="primary" suffix={<SparkleIcon />} asChild>
