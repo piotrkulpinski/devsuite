@@ -21,16 +21,16 @@ export const SearchForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
   return (
     <form
       method="get"
-      action="/"
+      action="/tools"
       className={cx("flex items-center shrink-0", className)}
       {...props}
     >
       <div className="relative flex items-center">
         <Input
           ref={inputRef}
-          name="query"
+          name="q"
           size="md"
-          placeholder="Search"
+          placeholder="Search tools..."
           className={cx(
             "transition-[width,opacity,transform] duration-200 ease-in-out w-32",
             isExpanded ? "w-32 opacity-100" : "w-0 opacity-0",
