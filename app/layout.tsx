@@ -4,7 +4,6 @@ import type { PropsWithChildren } from "react"
 import { Footer } from "~/components/footer"
 import { Header } from "~/components/header"
 import { Container } from "~/components/ui/container"
-import { GradientBlur } from "~/components/ui/gradient-blur"
 import { Stars } from "~/components/ui/stars"
 import { Toaster } from "~/components/ui/toaster"
 
@@ -86,8 +85,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <Header />
 
         <Container className="flex-1 flex flex-col gap-12 pb-8 pt-12 mt-[calc(var(--header-top)+var(--header-height))] md:pt-16 md:gap-16 lg:pt-20 lg:gap-20">
-          <GradientBlur position="top" />
-
           <Stars className="fixed left-1/2 -top-0 -z-10 w-full aspect-[10/5] mx-auto -translate-x-1/2 -translate-y-24" />
 
           {children}
