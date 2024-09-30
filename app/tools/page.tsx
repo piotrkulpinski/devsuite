@@ -61,7 +61,7 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
 
           {!tools.length && (
             <p className="col-span-full mt-2 text-center text-foreground/65">
-              No tools found {q ? `for "${q}"` : ""}
+              No tools found{q ? ` for "${q}"` : ""}.
             </p>
           )}
         </Grid>

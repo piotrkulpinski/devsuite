@@ -88,14 +88,14 @@ export default function RootLayout({ children }: PropsWithChildren) {
           {children}
 
           <Wrapper className="mt-auto">
-            {false && (
+            {true && (
               <Newsletter
                 title="Subscribe to our newsletter"
                 description="Stay updated with the newest additions to our digital assets library, upcoming promotions or discounts."
               />
             )}
 
-            <hr className="border-foreground/10 hidden first:block" />
+            <hr className="relative border-foreground/15 left-1/2 w-screen -translate-x-1/2 hidden first:block" />
 
             <Footer />
           </Wrapper>
