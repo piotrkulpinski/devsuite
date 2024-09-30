@@ -23,7 +23,11 @@ export const ToolCard = ({ tool, ...props }: ToolCardProps) => {
             </Badge>
           )}
 
-          {tool.isOpenSource && <Badge variant="outline">Open Source</Badge>}
+          {tool.collections.map(collection => (
+            <Badge key={collection.id} variant="outline">
+              {collection.name}
+            </Badge>
+          ))}
         </Stack>
 
         {tool.isFeatured && <CardStars />}

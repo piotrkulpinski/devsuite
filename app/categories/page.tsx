@@ -26,6 +26,10 @@ export default async function Categories() {
         {categories.map(category => (
           <CategoryCard key={category.id} category={category} />
         ))}
+
+        {!categories.length && (
+          <p className="col-span-full mt-2 text-center text-foreground/65">No categories found.</p>
+        )}
       </Grid>
     </Wrapper>
   )

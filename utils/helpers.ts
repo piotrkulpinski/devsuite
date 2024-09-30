@@ -1,20 +1,3 @@
-export const getUrlHostname = (url: string) => {
-  if (isValidUrl(url)) {
-    return new URL(url).hostname
-  }
-
-  return url
-}
-
-export const isValidUrl = (url: string) => {
-  try {
-    new URL(url)
-    return true
-  } catch (e) {
-    return false
-  }
-}
-
 /**
  * Adds UTM tracking to the provided link
  * It uses the search params and accepts source, medium and campaign which are optional

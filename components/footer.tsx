@@ -13,7 +13,6 @@ import {
   SITE_EMAIL,
   SITE_NAME,
   SITE_TAGLINE,
-  SITE_URL,
   TWITTER_AUTHOR_URL,
   TWITTER_URL,
 } from "~/utils/constants"
@@ -40,11 +39,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
           <Stack className="text-sm/normal">
             <TooltipProvider delayDuration={500} disableHoverableContent>
               <Tooltip tooltip="RSS Feed">
-                <NavigationLink
-                  href={`${SITE_URL}/rss.xml`}
-                  target="_blank"
-                  rel="nofollow noreferrer"
-                >
+                <NavigationLink href="/rss.xml" target="_blank" rel="noreferrer">
                   <RssIcon className="size-[1.44em]" />
                 </NavigationLink>
               </Tooltip>
@@ -60,13 +55,21 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
               </Tooltip>
 
               <Tooltip tooltip="X/Twitter">
-                <NavigationLink href={TWITTER_URL} target="_blank" rel="nofollow noreferrer">
+                <NavigationLink
+                  href={TWITTER_URL}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                >
                   <BrandXIcon className="size-[1.44em]" />
                 </NavigationLink>
               </Tooltip>
 
               <Tooltip tooltip="Source Code">
-                <NavigationLink href={GITHUB_URL} target="_blank" rel="nofollow noreferrer">
+                <NavigationLink
+                  href={GITHUB_URL}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                >
                   <BrandGitHubIcon className="size-[1.44em]" />
                 </NavigationLink>
               </Tooltip>
@@ -99,7 +102,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
               key={link.href}
               href={addUTMTracking(link.href, { source: SITE_NAME.toLowerCase() })}
               target="_blank"
-              rel="nofollow noreferrer"
+              rel="noopener noreferrer"
               title={link.description}
             >
               {link.title}
@@ -109,7 +112,12 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
       </div>
 
       <div className="flex flex-row flex-wrap items-end justify-between gap-x-4 gap-y-2 w-full">
-        <NavigationLink href={TWITTER_AUTHOR_URL} className="text-xs">
+        <NavigationLink
+          href={TWITTER_AUTHOR_URL}
+          className="text-xs"
+          target="_blank"
+          rel="noopener noreferrer nofollow"
+        >
           <img
             src="/authors/piotrkulpinski.jpg"
             alt="Piotr Kulpinski"

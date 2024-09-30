@@ -10,6 +10,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "allowUmdGlobalAccess": true,
     "jsx": "preserve",
     "incremental": true,
     "plugins": [

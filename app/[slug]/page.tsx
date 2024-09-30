@@ -1,5 +1,5 @@
-import { slugify } from "@curiousleaf/utils"
-import { ArrowUpRightIcon, DollarSignIcon, HashIcon, SparkleIcon } from "lucide-react"
+import { getUrlHostname, slugify } from "@curiousleaf/utils"
+import { ArrowUpRightIcon, DollarSignIcon, HashIcon } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
@@ -19,7 +19,6 @@ import { Wrapper } from "~/components/ui/wrapper"
 import { toolOnePayload } from "~/lib/api"
 import { prisma } from "~/services/prisma"
 import { SITE_NAME } from "~/utils/constants"
-import { getUrlHostname } from "~/utils/helpers"
 import { updateUrlWithSearchParams } from "~/utils/query-string"
 
 export default async function ToolPage({ params }: { params: { slug: string } }) {
@@ -90,11 +89,11 @@ export default async function ToolPage({ params }: { params: { slug: string } })
           <IntroDescription>{tool.description}</IntroDescription>
 
           <Stack size="sm" className="mt-4">
-            {tool.isOpenSource && (
-              <Badge>
-                <SparkleIcon className="text-yellow-500" /> Open Source
+            {tool.collections.map(collection => (
+              <Badge key={collection.id} variant="outline">
+                {collection.name}
               </Badge>
-            )}
+            ))}
 
             <Badge variant="ghost">
               <DollarSignIcon className="text-green-500" /> free + from $9/mo
