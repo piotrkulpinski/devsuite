@@ -6,7 +6,7 @@ import { Grid } from "~/components/ui/grid"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { Wrapper } from "~/components/ui/wrapper"
 import { toolManyPayload } from "~/lib/api"
-import { searchParamsCache } from "~/lib/search-params"
+import { toolSearchParamsCache } from "~/lib/search-params"
 import { prisma } from "~/services/prisma"
 
 type ToolsPageProps = {
@@ -14,10 +14,13 @@ type ToolsPageProps = {
 }
 
 export default async function ToolsPage({ searchParams }: ToolsPageProps) {
-  const { q, page, perPage } = searchParamsCache.parse(searchParams)
+  const { q, page, sort, perPage } = toolSearchParamsCache.parse(searchParams)
 
   const skip = (page - 1) * perPage
   const take = perPage
+  const sortArray = sort.split("_")
+  const sortBy = sortArray[0]
+  const sortOrder = sortArray[1]
 
   const where = {
     OR: [
@@ -28,7 +31,7 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
 
   const [tools, totalCount] = await Promise.all([
     prisma.tool.findMany({
-      orderBy: { name: "asc" },
+      orderBy: { [sortBy]: sortOrder },
       include: toolManyPayload,
       where,
       skip,

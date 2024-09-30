@@ -35,13 +35,8 @@ export default async function Home() {
           className="mt-4 mx-auto"
         />
 
-        <Badge
-          className="order-first inline-flex items-center gap-1.5 px-2 py-1 rounded-md"
-          asChild
-        >
-          <Link href="/latest">
-            <Ping /> {2} new tools added
-          </Link>
+        <Badge size="lg" prefix={<Ping />} className="order-first" asChild>
+          <Link href="/tools">{2} new tools added</Link>
         </Badge>
       </Intro>
 

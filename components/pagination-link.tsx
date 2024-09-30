@@ -25,7 +25,7 @@ export const PaginationLink = ({
     <Link
       className={cx(
         isDisabled && "pointer-events-none opacity-40",
-        isActive && "bg-card-dark rounded-sm",
+        isActive && "bg-foreground/10 rounded-sm",
         navigationLinkVariants({
           isActive,
           className,

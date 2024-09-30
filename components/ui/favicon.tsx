@@ -10,8 +10,8 @@ export const Favicon = ({ className, src, title, ...props }: FaviconProps) => {
   return (
     <div
       className={cx(
-        "flex size-9 items-center justify-center shrink-0 rounded-md border border-foreground/15 p-0.5",
-        className
+        "flex size-9 items-center justify-center shrink-0 rounded-md border border-foreground/15 bg-foreground/10 p-0.5",
+        className,
       )}
       {...props}
     >

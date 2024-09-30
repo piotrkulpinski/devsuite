@@ -22,10 +22,10 @@ export default function SubmitPackages() {
           description="Free listing with a basic description and a link to your website."
           price={0}
           features={[
-            { text: "Basic description", type: "neutral" },
+            { text: "2 weeks processing time", type: "neutral" },
             { text: "Link to your website", type: "neutral" },
             { text: "No featured spot", type: "negative" },
-            { text: "No detailed description", type: "negative" },
+            { text: "No featured badge", type: "negative" },
           ]}
         >
           <Button variant="secondary" className="mt-auto w-full" asChild>
@@ -41,8 +41,8 @@ export default function SubmitPackages() {
           features={[
             { text: "24h processing time", type: "positive" },
             { text: "Do-follow link to your website", type: "positive" },
-            { text: "Featured spot on homepage", type: "negative" },
-            { text: "Featured badge", type: "negative" },
+            { text: "No featured spot", type: "negative" },
+            { text: "No featured badge", type: "negative" },
           ]}
         >
           <Button variant="primary" className="mt-auto w-full">
@@ -61,6 +61,7 @@ export default function SubmitPackages() {
             { text: "Featured spot on homepage", type: "positive" },
             { text: "Featured badge", type: "positive" },
           ]}
+          isSubscription
           isFeatured
         >
           <Button variant="primary" className="mt-auto w-full">
