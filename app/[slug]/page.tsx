@@ -65,7 +65,7 @@ export default async function ToolPage({ params }: { params: { slug: string } })
       <Wrapper size="sm">
         <div className="flex w-full flex-col items-start gap-y-4">
           <Stack size="lg" className="relative w-full justify-between">
-            <Stack>
+            <Stack size="lg">
               {tool.faviconUrl && (
                 <FaviconImage src={tool.faviconUrl} className="size-10 rounded-md" />
               )}

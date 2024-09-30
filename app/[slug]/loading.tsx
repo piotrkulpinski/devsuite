@@ -10,7 +10,7 @@ export default function Loading() {
     <Wrapper size="sm">
       <div className="flex w-full flex-col items-start gap-y-4">
         <Stack size="lg" className="relative w-full justify-between">
-          <Stack>
+          <Stack size="lg">
             <Skeleton className="size-10 rounded-md" />
             <Skeleton className="h-8 w-48" />
           </Stack>

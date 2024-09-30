@@ -26,15 +26,25 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
   return (
     <Container
-      className={cx("fixed top-[var(--header-top)] z-40 left-1/2 -translate-x-1/2", className)}
+      className={cx(
+        "group/menu fixed top-[var(--header-top)] z-40 left-1/2 -translate-x-1/2",
+        className,
+      )}
+      data-state={isNavOpen ? "open" : "close"}
       {...props}
     >
+      <div
+        className={cx(
+          "absolute bottom-0 inset-x-0 h-[calc(var(--header-top)+var(--header-height))] backdrop-blur-xl duration-300",
+          "max-lg:group-data-[state=open]/menu:-bottom-[var(--header-top)] max-lg:group-data-[state=open]/menu:h-dvh",
+        )}
+      />
+
       <Box>
         <div
-          data-state={isNavOpen ? "open" : "close"}
           className={cx(
-            "group/menu flex flex-wrap items-center gap-3 py-2 px-4 -mx-2 h-[var(--header-height)] bg-background/25 backdrop-blur-xl rounded-xl isolate overflow-clip duration-300 md:-mx-4 md:gap-6",
-            "max-lg:data-[state=open]:h-[calc(100dvh-(var(--header-top)*2))] max-md:data-[state=open]:bg-background/75",
+            "flex flex-wrap items-center gap-3 py-2 px-4 -mx-2 h-[var(--header-height)] bg-background/50 rounded-xl isolate overflow-clip duration-300 md:-mx-4 md:gap-6",
+            "max-lg:group-data-[state=open]/menu:h-[calc(100dvh-(var(--header-top)*2))] max-md:group-data-[state=open]/menu:bg-background/75",
           )}
         >
           <button
@@ -73,7 +83,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             <NavigationLink href="/advertise">Advertise</NavigationLink>
           </nav>
 
-          <SearchForm className="-mx-2 max-sm:hidden" />
+          <SearchForm className="max-sm:hidden md:-mx-2" />
 
           <Button size="md" variant="primary" suffix={<SparkleIcon />} className="-mr-1.5" asChild>
             <Link href="/submit">Submit</Link>
