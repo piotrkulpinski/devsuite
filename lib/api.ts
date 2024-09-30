@@ -25,11 +25,6 @@ export const categoryOnePayload = Prisma.validator<Prisma.CategoryInclude>()({
 
 export const categoryManyPayload = Prisma.validator<Prisma.CategoryInclude>()({
   _count: { select: { tools: { where: { publishedAt: { lte: new Date() } } } } },
-  tools: {
-    where: { publishedAt: { lte: new Date() }, images: { isEmpty: false } },
-    select: { id: true, images: true },
-    take: 3,
-  },
 })
 
 export type CategoryOne = Prisma.CategoryGetPayload<{ include: typeof categoryOnePayload }>

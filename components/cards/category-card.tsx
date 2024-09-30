@@ -14,16 +14,6 @@ export const CategoryCard = ({ category, ...props }: CategoryCardProps) => {
   return (
     <Card asChild>
       <Link href={`/categories/${category.slug}`} prefetch {...props}>
-        {/* <div className="flex items-center gap-3 overflow-clip mix-blend-overlay">
-          {category.tools.map(tool => (
-            <Fragment key={tool.id}>
-              {tool.images[0] && (
-                <img src={tool.images[0]} alt="" className="size-20 object-cover" />
-              )}
-            </Fragment>
-          ))}
-        </div> */}
-
         <div className="w-full flex gap-3 items-start justify-between">
           <div className="flex flex-col gap-1 min-w-0">
             <H5 className="!leading-snug flex-1 truncate">{category.name}</H5>

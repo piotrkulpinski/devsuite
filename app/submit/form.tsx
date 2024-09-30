@@ -8,7 +8,6 @@ import { submit } from "~/actions/submit"
 import { Button, type ButtonProps } from "~/components/ui/button"
 import { Input } from "~/components/ui/forms/input"
 import { Label } from "~/components/ui/forms/label"
-import { TextArea } from "~/components/ui/forms/textarea"
 import { cx } from "~/utils/cva"
 
 const SubmitFormButton = ({ ...props }: ButtonProps) => {
@@ -109,11 +108,10 @@ export const SubmitForm = ({ className, ...props }: SubmitProps) => {
           Description:
         </Label>
 
-        <TextArea
+        <Input
           name="description"
           id="description"
           size="lg"
-          rows={3}
           placeholder="A platform that helps engineers build better products"
           required
         />

@@ -30,11 +30,10 @@ export const ToolCard = ({ tool, ...props }: ToolCardProps) => {
           ))}
         </Stack>
 
-        {tool.isFeatured && <CardStars />}
+        {tool.isFeatured && <CardStars className="brightness-150" />}
 
-        <div className="w-full flex gap-3 items-start justify-between">
+        <div className="w-full flex gap-3 items-center justify-between">
           <H4>{tool.name}</H4>
-
           {tool.faviconUrl && <Favicon src={tool.faviconUrl} className="rounded-full" />}
         </div>
 

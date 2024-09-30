@@ -60,6 +60,11 @@ export type PlanProps = Omit<HTMLAttributes<PlanElement>, "size"> &
     discount?: number
 
     /**
+     * If set to `true`, the plan will be rendered as a subscription.
+     */
+    isSubscription?: boolean
+
+    /**
      * The features of the plan.
      */
     features?: {
@@ -90,6 +95,7 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
     description,
     discount,
     features,
+    isSubscription,
     isFeatured,
     ...rest
   } = props
@@ -112,7 +118,8 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
             Best Value
           </Badge>
         )}
-        {isFeatured && <CardStars />}
+
+        {isFeatured && <CardStars className="brightness-150" />}
 
         <div className="space-y-3">
           <H4>{name}</H4>
@@ -135,7 +142,11 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
             )}
           </strong>
 
-          {finalPrice > 0 && <span className="text-sm text-foreground/50">/one-time</span>}
+          {finalPrice > 0 && (
+            <span className="text-sm text-foreground/50">
+              /{isSubscription ? "month" : "one-time"}
+            </span>
+          )}
         </div>
 
         {!!features?.length && (

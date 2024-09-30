@@ -1,29 +1,14 @@
 "use client"
 
-import {
-  BlocksIcon,
-  BracesIcon,
-  ChevronDownIcon,
-  GemIcon,
-  SmilePlusIcon,
-  SparkleIcon,
-  TagIcon,
-} from "lucide-react"
+import { SparkleIcon } from "lucide-react"
 import Link from "next/link"
 import { type HTMLAttributes, useEffect, useState } from "react"
 import { SearchForm } from "~/components/search-form"
 import { Box } from "~/components/ui/box"
 import { Button } from "~/components/ui/button"
 import { Container } from "~/components/ui/container"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu"
 import { Logo } from "~/components/ui/logo"
-import { NavigationLink, navigationLinkVariants } from "~/components/ui/navigation-link"
-import { Stack } from "~/components/ui/stack"
+import { NavigationLink } from "~/components/ui/navigation-link"
 import { cx } from "~/utils/cva"
 
 export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
@@ -48,14 +33,14 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
         <div
           data-state={isNavOpen ? "open" : "close"}
           className={cx(
-            "group/menu flex flex-wrap items-center gap-3 py-3.5 px-4 -mx-2 h-[var(--header-height)] bg-background/25 backdrop-blur-xl rounded-xl isolate overflow-clip duration-300 md:-mx-4 md:gap-4 lg:gap-6",
-            "max-lg:data-[state=open]:h-[calc(100dvh-(var(--header-top)*2))] max-lg:data-[state=open]:bg-background/75",
+            "group/menu flex flex-wrap items-center gap-3 py-2 px-4 -mx-2 h-[var(--header-height)] bg-background/25 backdrop-blur-xl rounded-xl isolate overflow-clip duration-300 md:-mx-4 md:gap-6",
+            "max-lg:data-[state=open]:h-[calc(100dvh-(var(--header-top)*2))] max-md:data-[state=open]:bg-background/75",
           )}
         >
           <button
             type="button"
             onClick={() => setNavOpen(!isNavOpen)}
-            className="block -m-1 lg:hidden"
+            className="block -m-1 md:hidden"
             aria-label="Toggle navigation"
           >
             <svg
@@ -81,57 +66,22 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
 
           <Logo className="mr-auto" />
 
-          <nav className="hidden lg:contents">
-            <DropdownMenu modal={false}>
-              <DropdownMenuTrigger className={cx(navigationLinkVariants({ className: "gap-1" }))}>
-                Browse <ChevronDownIcon className="group-data-[state=open]:-rotate-180" />
-              </DropdownMenuTrigger>
-
-              <DropdownMenuContent align="start">
-                <DropdownMenuItem asChild>
-                  <NavigationLink href="/latest">
-                    <GemIcon className="size-4 opacity-75" /> Latest
-                  </NavigationLink>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <NavigationLink href="/categories">
-                    <BlocksIcon className="size-4 opacity-75" /> Categories
-                  </NavigationLink>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <NavigationLink href="/alternatives">
-                    <SmilePlusIcon className="size-4 opacity-75" /> Alternatives
-                  </NavigationLink>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <NavigationLink href="/languages">
-                    <BracesIcon className="size-4 opacity-75" /> Languages
-                  </NavigationLink>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <NavigationLink href="/topics">
-                    <TagIcon className="size-4 opacity-75" /> Topics
-                  </NavigationLink>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <NavigationLink href="/tools">Tools</NavigationLink>
+          <nav className="hidden md:contents">
+            <NavigationLink href="/tools">All Tools</NavigationLink>
             <NavigationLink href="/categories">Categories</NavigationLink>
+            <NavigationLink href="/collections">Collections</NavigationLink>
             <NavigationLink href="/advertise">Advertise</NavigationLink>
           </nav>
 
-          <Stack className="-my-1.5 -mx-1.5">
-            <SearchForm className="max-sm:hidden" />
+          <SearchForm className="-mx-2 max-sm:hidden" />
 
-            <Button size="md" variant="primary" suffix={<SparkleIcon />} asChild>
-              <Link href="/submit">Submit</Link>
-            </Button>
-          </Stack>
+          <Button size="md" variant="primary" suffix={<SparkleIcon />} className="-mr-1.5" asChild>
+            <Link href="/submit">Submit</Link>
+          </Button>
 
           <nav
             className={cx(
-              "size-full mt-6 mb-4 grid grid-cols-2 place-content-start gap-x-4 gap-y-6 px-2 text-lg transition-opacity lg:hidden",
+              "size-full mt-6 mb-4 grid grid-cols-2 place-content-start gap-x-4 gap-y-6 px-2 text-lg transition-opacity md:hidden",
               isNavOpen ? "opacity-100" : "opacity-0",
             )}
           >

@@ -7,13 +7,12 @@ import { Container } from "~/components/ui/container"
 import { GradientBlur } from "~/components/ui/gradient-blur"
 import { Stars } from "~/components/ui/stars"
 import { Toaster } from "~/components/ui/toaster"
-import { env } from "~/env"
 
 import "./styles.css"
 import Script from "next/script"
 import { Newsletter } from "~/components/newsletter"
 import { Wrapper } from "~/components/ui/wrapper"
-import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE } from "~/utils/constants"
+import { RSS_URL, SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, SITE_URL } from "~/utils/constants"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,7 +27,7 @@ const geistMono = localFont({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(env.NEXT_PUBLIC_SITE_URL),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: `${SITE_TAGLINE} – ${SITE_NAME}`,
     template: `%s – ${SITE_NAME}`,
@@ -37,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${SITE_TAGLINE} – ${SITE_NAME}`,
     description: SITE_DESCRIPTION,
-    url: env.NEXT_PUBLIC_SITE_URL,
+    url: SITE_URL,
     siteName: SITE_NAME,
     locale: "en_US",
     type: "website",
@@ -46,7 +45,13 @@ export const metadata: Metadata = {
   twitter: {
     title: `${SITE_TAGLINE} – ${SITE_NAME}`,
     description: SITE_DESCRIPTION,
+    site: "@devsuite",
+    creator: "@piotrkulpinski",
     images: [{ url: "/opengraph.png", width: 1200, height: 630 }],
+  },
+  alternates: {
+    canonical: SITE_URL,
+    types: { "application/rss+xml": RSS_URL },
   },
   robots: {
     index: true,
