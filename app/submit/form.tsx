@@ -1,135 +1,167 @@
 "use client"
 
-import { SparkleIcon } from "lucide-react"
-import type { HTMLAttributes } from "react"
-import { useFormState, useFormStatus } from "react-dom"
-import { data } from "tailwindcss/defaultTheme"
-import { submit } from "~/actions/submit"
-import { Button, type ButtonProps } from "~/components/ui/button"
+import { slugify } from "@curiousleaf/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { redirect } from "next/navigation"
+import { type HTMLAttributes, useTransition } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import { z } from "zod"
+import { submitTool } from "~/actions/submit"
+import { Button } from "~/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "~/components/ui/form"
 import { Input } from "~/components/ui/forms/input"
-import { Label } from "~/components/ui/forms/label"
 import { cx } from "~/utils/cva"
-
-const SubmitFormButton = ({ ...props }: ButtonProps) => {
-  const { pending } = useFormStatus()
-
-  return <Button isPending={pending} {...props} />
-}
 
 type SubmitProps = HTMLAttributes<HTMLFormElement> & {
   placeholder?: string
 }
 export const SubmitForm = ({ className, ...props }: SubmitProps) => {
-  const [state, formAction] = useFormState(submit, null)
+  const [isSubmitPending, startSubmitTransition] = useTransition()
+
+  const schema = z.object({
+    name: z.string().min(1, "Name is required"),
+    websiteUrl: z.string().min(1, "Website is required").url("Invalid URL"),
+    description: z.string().optional(),
+    submitterName: z.string().min(1, "Your name is required"),
+    submitterEmail: z.string().min(1, "Your email is required").email(),
+  })
+
+  const form = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      name: "",
+      websiteUrl: "",
+      description: "",
+      submitterName: "",
+      submitterEmail: "",
+    },
+  })
+
+  function onSubmit(input: z.infer<typeof schema>) {
+    startSubmitTransition(async () => {
+      const { error, data } = await submitTool({
+        ...input,
+        slug: slugify(input.name),
+      })
+
+      if (error) {
+        toast.error(error)
+        return
+      }
+
+      if (data) {
+        redirect(`/submit/${data.id}`)
+      }
+    })
+  }
 
   return (
-    <form
-      action={formAction}
-      className={cx("grid w-full gap-6 md:grid-cols-2", className)}
-      noValidate
-      {...props}
-    >
-      <div className="flex flex-col gap-1">
-        <Label htmlFor="name" isRequired>
-          Your Name:
-        </Label>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={cx("grid w-full gap-6 md:grid-cols-2", className)}
+        noValidate
+        {...props}
+      >
+        <FormField
+          control={form.control}
+          name="submitterName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel isRequired>Your Name:</FormLabel>
+              <FormControl>
+                <Input size="lg" placeholder="John Doe" data-1p-ignore {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-        <Input
-          type="text"
+        <FormField
+          control={form.control}
+          name="submitterEmail"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel isRequired>Your Email:</FormLabel>
+              <FormControl>
+                <Input
+                  type="email"
+                  size="lg"
+                  placeholder="john@doe.com"
+                  data-1p-ignore
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="name"
-          id="name"
-          size="lg"
-          placeholder="John Doe"
-          data-1p-ignore
-          required
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel isRequired>Name:</FormLabel>
+              <FormControl>
+                <Input size="lg" placeholder="PostHog" data-1p-ignore {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
 
-        {data?.error?.name && <p className="text-xs text-red-600">{data.error.name?._errors[0]}</p>}
-      </div>
-
-      <div className="flex flex-col gap-1">
-        <Label htmlFor="email" isRequired>
-          Your Email:
-        </Label>
-
-        <Input
-          type="url"
-          name="email"
-          id="email"
-          size="lg"
-          placeholder="john@example.com"
-          required
+        <FormField
+          control={form.control}
+          name="websiteUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel isRequired>Website URL:</FormLabel>
+              <FormControl>
+                <Input type="url" size="lg" placeholder="https://posthog.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
 
-        {data?.error?.website && (
-          <p className="text-xs text-red-600">{data.error.website?._errors[0]}</p>
-        )}
-      </div>
-
-      <div className="flex flex-col gap-1">
-        <Label htmlFor="name" isRequired>
-          Tool Name:
-        </Label>
-
-        <Input
-          type="text"
-          name="name"
-          id="name"
-          size="lg"
-          placeholder="PostHog"
-          data-1p-ignore
-          required
-        />
-
-        {data?.error?.name && <p className="text-xs text-red-600">{data.error.name?._errors[0]}</p>}
-      </div>
-
-      <div className="flex flex-col gap-1">
-        <Label htmlFor="website" isRequired>
-          Website:
-        </Label>
-
-        <Input
-          type="url"
-          name="website"
-          id="website"
-          size="lg"
-          placeholder="https://posthog.com"
-          required
-        />
-
-        {data?.error?.website && (
-          <p className="text-xs text-red-600">{data.error.website?._errors[0]}</p>
-        )}
-      </div>
-
-      <div className="col-span-full flex flex-col gap-1">
-        <Label htmlFor="description" isRequired>
-          Description:
-        </Label>
-
-        <Input
+        <FormField
+          control={form.control}
           name="description"
-          id="description"
-          size="lg"
-          placeholder="A platform that helps engineers build better products"
-          required
+          render={({ field }) => (
+            <FormItem className="col-span-full">
+              <FormLabel>Description:</FormLabel>
+              <FormControl>
+                <Input
+                  size="lg"
+                  placeholder="A platform that helps engineers build better products"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
 
-        {data?.error?.description && (
-          <p className="text-xs text-red-600">{data.error.description?._errors[0]}</p>
-        )}
-      </div>
-
-      <div className="col-span-full">
-        <SubmitFormButton
-          variant="primary"
-          suffix={<SparkleIcon />}
-          className="flex ml-auto min-w-32"
-        >
-          Submit
-        </SubmitFormButton>
-      </div>
-    </form>
+        <div className="col-span-full">
+          <Button
+            variant="primary"
+            isPending={isSubmitPending}
+            disabled={isSubmitPending}
+            className="flex ml-auto min-w-32"
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
+    </Form>
   )
 }

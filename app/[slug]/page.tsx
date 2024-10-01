@@ -3,6 +3,7 @@ import { ArrowUpRightIcon, DollarSignIcon, HashIcon } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
+import { findToolSlugs, findUniqueTool } from "~/api/tools/queries"
 import { RelatedTools } from "~/app/[slug]/related-tools"
 import { ToolSkeleton } from "~/components/cards/tool-skeleton"
 import { Nav } from "~/components/nav"
@@ -16,16 +17,17 @@ import { IntroDescription } from "~/components/ui/intro"
 import { Markdown } from "~/components/ui/markdown"
 import { Stack } from "~/components/ui/stack"
 import { Wrapper } from "~/components/ui/wrapper"
-import { toolOnePayload } from "~/lib/api"
 import { prisma } from "~/services/prisma"
 import { SITE_NAME } from "~/utils/constants"
 import { updateUrlWithSearchParams } from "~/utils/query-string"
 
+export async function generateStaticParams() {
+  const tools = await findToolSlugs({})
+  return tools.map(({ slug }) => ({ slug }))
+}
+
 export default async function ToolPage({ params }: { params: { slug: string } }) {
-  const tool = await prisma.tool.findUnique({
-    where: { slug: params.slug, publishedAt: { lte: new Date() } },
-    include: toolOnePayload,
-  })
+  const tool = await findUniqueTool({ where: params })
 
   if (!tool) {
     notFound()

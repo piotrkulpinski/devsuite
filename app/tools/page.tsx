@@ -1,13 +1,13 @@
 import type { Prisma } from "@prisma/client"
+import { countTools, findTools } from "~/api/tools/queries"
 import { ToolFilters } from "~/app/tools/filters"
 import { ToolCard } from "~/components/cards/tool-card"
+import { EmptyList } from "~/components/empty-list"
 import { Pagination } from "~/components/pagination"
 import { Grid } from "~/components/ui/grid"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { Wrapper } from "~/components/ui/wrapper"
-import { toolManyPayload } from "~/lib/api"
 import { toolSearchParamsCache } from "~/lib/search-params"
-import { prisma } from "~/services/prisma"
 
 type ToolsPageProps = {
   searchParams: Record<string, string | string[] | undefined>
@@ -30,15 +30,14 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
   } as Prisma.ToolWhereInput
 
   const [tools, totalCount] = await Promise.all([
-    prisma.tool.findMany({
+    findTools({
       orderBy: { [sortBy]: sortOrder },
-      include: toolManyPayload,
       where,
       skip,
       take,
     }),
 
-    prisma.tool.count({
+    countTools({
       where,
     }),
   ])
@@ -62,11 +61,7 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
             <ToolCard key={tool.id} tool={tool} />
           ))}
 
-          {!tools.length && (
-            <p className="col-span-full mt-2 text-center text-foreground/65">
-              No tools found{q ? ` for "${q}"` : ""}.
-            </p>
-          )}
+          {!tools.length && <EmptyList>No tools found{q ? ` for "${q}"` : ""}.</EmptyList>}
         </Grid>
       </div>
 

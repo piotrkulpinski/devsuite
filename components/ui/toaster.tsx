@@ -14,7 +14,7 @@ export const Toaster = (props: ComponentPropsWithoutRef<typeof Sonner>) => {
       toastOptions={{
         classNames: {
           toast: cx(
-            "!rounded w-full !border !border-foreground/15 !bg-background/10 backdrop-blur-sm !py-2.5 !shadow-sm",
+            "!rounded w-full !border !border-foreground/15 !bg-background/50 backdrop-blur-sm !py-2.5 !shadow-sm",
             "data-[type=error]:!text-red data-[type=success]:!text-green",
           ),
         },
