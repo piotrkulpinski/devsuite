@@ -1,4 +1,6 @@
 import Link from "next/link"
+import { findCategories } from "~/api/categories/queries"
+import { findTools } from "~/api/tools/queries"
 import { CategoryCard } from "~/components/cards/category-card"
 import { ToolCard } from "~/components/cards/tool-card"
 import { NewsletterForm } from "~/components/newsletter-form"
@@ -7,21 +9,13 @@ import { Grid } from "~/components/ui/grid"
 import { H3, H4 } from "~/components/ui/heading"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { Ping } from "~/components/ui/ping"
-import { categoryManyPayload, toolManyPayload } from "~/lib/api"
-import { prisma } from "~/services/prisma"
 import { SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
 
 export default async function Home() {
-  const categories = await prisma.category.findMany({
-    orderBy: { name: "asc" },
-    include: categoryManyPayload,
-  })
-
-  const tools = await prisma.tool.findMany({
-    where: { isFeatured: true, publishedAt: { lte: new Date() } },
-    include: toolManyPayload,
-    take: 6,
-  })
+  const [categories, tools] = await Promise.all([
+    findCategories({}),
+    findTools({ where: { isFeatured: true }, take: 6 }),
+  ])
 
   return (
     <>
@@ -55,7 +49,7 @@ export default async function Home() {
 
         <Grid>
           {categories.map((category, i) => (
-            <CategoryCard key={i} category={category} />
+            <CategoryCard key={i} href={`/categories/${category.slug}`} category={category} />
           ))}
         </Grid>
       </div>

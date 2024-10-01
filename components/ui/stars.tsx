@@ -3,7 +3,7 @@ import { cx } from "~/utils/cva"
 
 export const Stars = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
-    <div className={cx("stars", className)} {...props}>
+    <div className={cx("stars blur-[0.5px]", className)} {...props}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="872"

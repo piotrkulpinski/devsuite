@@ -1,19 +1,20 @@
 import { ArrowRightIcon } from "lucide-react"
 import Link from "next/link"
 import plur from "plur"
-import type { HTMLAttributes } from "react"
+import type { ComponentProps } from "react"
+import type { CategoryMany } from "~/api/categories/payloads"
+import type { CollectionMany } from "~/api/collections/payloads"
 import { Card, CardDescription } from "~/components/ui/card"
 import { H5 } from "~/components/ui/heading"
-import type { CategoryMany } from "~/lib/api"
 
-type CategoryCardProps = HTMLAttributes<HTMLElement> & {
-  category: CategoryMany
+type CategoryCardProps = ComponentProps<typeof Link> & {
+  category: CategoryMany | CollectionMany
 }
 
 export const CategoryCard = ({ category, ...props }: CategoryCardProps) => {
   return (
     <Card asChild>
-      <Link href={`/categories/${category.slug}`} prefetch {...props}>
+      <Link prefetch {...props}>
         <div className="w-full flex gap-3 items-start justify-between">
           <div className="flex flex-col gap-1 min-w-0">
             <H5 className="!leading-snug flex-1 truncate">{category.name}</H5>

@@ -119,7 +119,7 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
           </Badge>
         )}
 
-        {isFeatured && <CardStars className="brightness-150" />}
+        {isFeatured && <CardStars className="brightness-200" />}
 
         <div className="space-y-3">
           <H4>{name}</H4>

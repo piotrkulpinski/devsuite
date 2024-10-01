@@ -1,14 +1,29 @@
 import Link from "next/link"
+import { notFound } from "next/navigation"
+import { findToolSlugs, findUniqueTool } from "~/api/tools/queries"
 import { Button } from "~/components/ui/button"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { Plan } from "~/components/ui/plan"
 import { Wrapper } from "~/components/ui/wrapper"
 
-export default function SubmitPackages() {
+export async function generateStaticParams() {
+  const tools = await findToolSlugs({ where: { publishedAt: null } })
+  return tools.map(({ slug }) => ({ slug }))
+}
+
+export default async function SubmitPackages({ params }: { params: { id: string } }) {
+  const tool = await findUniqueTool({
+    where: { id: params.id, publishedAt: null },
+  })
+
+  if (!tool) {
+    notFound()
+  }
+
   return (
     <Wrapper>
       <Intro alignment="center">
-        <IntroTitle>Choose a package</IntroTitle>
+        <IntroTitle>Choose a package for {tool.name}</IntroTitle>
 
         <IntroDescription>
           A high-quality website curation is the most important aspect for us. We can&apos;t list

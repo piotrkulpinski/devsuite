@@ -1,12 +1,12 @@
 import { DollarSignIcon, SparkleIcon } from "lucide-react"
 import Link from "next/link"
 import type { HTMLAttributes } from "react"
+import type { ToolMany } from "~/api/tools/payloads"
 import { Badge } from "~/components/ui/badge"
 import { Card, CardDescription, CardStars } from "~/components/ui/card"
 import { Favicon } from "~/components/ui/favicon"
 import { H4 } from "~/components/ui/heading"
 import { Stack } from "~/components/ui/stack"
-import type { ToolMany } from "~/lib/api"
 
 type ToolCardProps = HTMLAttributes<HTMLElement> & {
   tool: ToolMany
@@ -30,7 +30,7 @@ export const ToolCard = ({ tool, ...props }: ToolCardProps) => {
           ))}
         </Stack>
 
-        {tool.isFeatured && <CardStars className="brightness-150" />}
+        {tool.isFeatured && <CardStars className="brightness-125" />}
 
         <div className="w-full flex gap-3 items-center justify-between">
           <H4>{tool.name}</H4>

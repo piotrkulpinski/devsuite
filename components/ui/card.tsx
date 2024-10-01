@@ -7,7 +7,7 @@ import { Stars } from "~/components/ui/stars"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const cardVariants = cva({
-  base: "group/card relative w-full flex flex-col items-start gap-4 rounded-lg p-6 bg-background/25 backdrop-blur-xl transform-gpu",
+  base: "group/card relative w-full flex flex-col items-start gap-4 rounded-lg p-6 backdrop-blur-lg transform-gpu",
 
   variants: {
     isFeatured: {

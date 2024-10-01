@@ -1,28 +1,27 @@
 import { getRandomElement } from "@curiousleaf/utils"
 import type { Prisma } from "@prisma/client"
+import type { ToolOne } from "~/api/tools/payloads"
+import { findTools } from "~/api/tools/queries"
 import { ToolCard } from "~/components/cards/tool-card"
 import { Grid } from "~/components/ui/grid"
 import { H4 } from "~/components/ui/heading"
-import { type ToolOne, toolManyPayload } from "~/lib/api"
 import { prisma } from "~/services/prisma"
 
 export const RelatedTools = async ({ tool }: { tool: ToolOne }) => {
   const take = 3
-  const relatedWhereClause = {
+  const where = {
     categories: { some: { slug: { in: tool.categories.map(({ slug }) => slug) } } },
-    publishedAt: { lte: new Date() },
     NOT: { slug: tool.slug },
   } satisfies Prisma.ToolWhereInput
 
-  const itemCount = await prisma.tool.count({ where: relatedWhereClause })
+  const itemCount = await prisma.tool.count({ where })
   const skip = Math.max(0, Math.floor(Math.random() * itemCount) - take)
   const properties = ["id", "name"] satisfies (keyof Prisma.ToolOrderByWithRelationInput)[]
   const orderBy = getRandomElement(properties)
   const orderDir = getRandomElement(["asc", "desc"] as const)
 
-  const tools = await prisma.tool.findMany({
-    where: relatedWhereClause,
-    include: toolManyPayload,
+  const tools = await findTools({
+    where,
     take,
     skip,
     orderBy: { [orderBy]: orderDir },

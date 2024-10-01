@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { findCategorySlugs, findUniqueCategory } from "~/api/categories/queries"
+import { findCollectionSlugs, findUniqueCollection } from "~/api/collections/queries"
 import { findTools } from "~/api/tools/queries"
 import { ToolCard } from "~/components/cards/tool-card"
 import { EmptyList } from "~/components/empty-list"
@@ -8,26 +8,26 @@ import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { Wrapper } from "~/components/ui/wrapper"
 
 export async function generateStaticParams() {
-  const categories = await findCategorySlugs({})
-  return categories.map(({ slug }) => ({ slug }))
+  const collections = await findCollectionSlugs({})
+  return collections.map(({ slug }) => ({ slug }))
 }
 
-export default async function CategoryPage({ params }: { params: { slug: string } }) {
-  const [category, tools] = await Promise.all([
-    findUniqueCategory({ where: params }),
-    findTools({ where: { categories: { some: params } } }),
+export default async function CollectionPage({ params }: { params: { slug: string } }) {
+  const [collection, tools] = await Promise.all([
+    findUniqueCollection({ where: params }),
+    findTools({ where: { collections: { some: params } } }),
   ])
 
-  if (!category) {
+  if (!collection) {
     notFound()
   }
 
   return (
     <Wrapper>
       <Intro alignment="center" className="max-w-2xl mx-auto text-pretty">
-        <IntroTitle className="!leading-none">{category.name}</IntroTitle>
+        <IntroTitle className="!leading-none">{collection.name}</IntroTitle>
 
-        <IntroDescription>{category.description}</IntroDescription>
+        <IntroDescription>{collection.description}</IntroDescription>
       </Intro>
 
       <Grid>
@@ -35,7 +35,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
           <ToolCard key={tool.id} tool={tool} />
         ))}
 
-        {!tools.length && <EmptyList>No tools found in the category.</EmptyList>}
+        {!tools.length && <EmptyList>No tools found in the collection.</EmptyList>}
       </Grid>
     </Wrapper>
   )

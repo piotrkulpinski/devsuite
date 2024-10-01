@@ -1,4 +1,7 @@
-import { type LabelHTMLAttributes, forwardRef } from "react"
+"use client"
+
+import * as LabelPrimitive from "@radix-ui/react-label"
+import * as React from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const labelVariants = cva({
@@ -11,20 +14,19 @@ export const labelVariants = cva({
   },
 })
 
-export type LabelProps = LabelHTMLAttributes<HTMLLabelElement> & VariantProps<typeof labelVariants>
-
-export const Label = forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
-  const { className, htmlFor, isRequired, ...rest } = props
-
+const Label = React.forwardRef<
+  React.ElementRef<typeof LabelPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> & VariantProps<typeof labelVariants>
+>(({ className, isRequired, ...props }, ref) => {
   return (
-    <label
+    <LabelPrimitive.Root
       ref={ref}
-      htmlFor={htmlFor}
       className={cx(labelVariants({ isRequired, className }))}
       aria-label="Label"
-      {...rest}
+      {...props}
     />
   )
 })
+Label.displayName = LabelPrimitive.Root.displayName
 
-Label.displayName = "Label"
+export { Label }
