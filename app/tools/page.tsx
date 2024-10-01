@@ -22,12 +22,14 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
   const sortBy = sortArray[0]
   const sortOrder = sortArray[1]
 
-  const where = {
-    OR: [
-      { name: { contains: q, mode: "insensitive" } },
-      { description: { contains: q, mode: "insensitive" } },
-    ],
-  } as Prisma.ToolWhereInput
+  const where = q
+    ? ({
+        OR: [
+          { name: { contains: q, mode: "insensitive" } },
+          { description: { contains: q, mode: "insensitive" } },
+        ],
+      } as Prisma.ToolWhereInput)
+    : undefined
 
   const [tools, totalCount] = await Promise.all([
     findTools({

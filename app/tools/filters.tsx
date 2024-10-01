@@ -1,22 +1,28 @@
 "use client"
 
-import { useDebounce } from "@uidotdev/usehooks"
 import { LoaderIcon, SearchIcon } from "lucide-react"
-import { useQueryStates } from "nuqs"
+import { type Values, useQueryStates } from "nuqs"
 import { useEffect, useState } from "react"
 import { Input } from "~/components/ui/forms/input"
 import { Select } from "~/components/ui/forms/select"
 import { Stack } from "~/components/ui/stack"
+import { useDebounce } from "~/hooks/use-debounce"
 import { toolSearchParams } from "~/lib/search-params"
 
 export const ToolFilters = () => {
   const [filters, setFilters] = useQueryStates(toolSearchParams, { shallow: false })
   const [inputValue, setInputValue] = useState(filters.q || "")
-  const debouncedInputValue = useDebounce(inputValue, 300)
+  const q = useDebounce(inputValue, 300)
+
+  const updateFilters = (values: Partial<Values<typeof toolSearchParams>>) => {
+    setFilters({ ...values, page: null })
+  }
 
   useEffect(() => {
-    setFilters({ q: debouncedInputValue })
-  }, [debouncedInputValue, setFilters])
+    if (filters.q !== q) {
+      updateFilters({ q: q || null })
+    }
+  }, [q])
 
   const sortOptions = [
     { value: "publishedAt_desc", label: "Newest" },
@@ -37,10 +43,10 @@ export const ToolFilters = () => {
             value={inputValue}
             onChange={e => setInputValue(e.target.value)}
             placeholder="Search tools..."
-            className="w-full pl-10 pr-10"
+            className="w-full px-10"
           />
 
-          {inputValue !== debouncedInputValue && (
+          {inputValue !== q && (
             <div className="absolute right-4 top-1/2 -translate-y-1/2">
               <LoaderIcon className="opacity-50 animate-spin" />
             </div>
@@ -52,7 +58,7 @@ export const ToolFilters = () => {
           size="lg"
           className="min-w-36"
           value={filters.sort}
-          onChange={e => setFilters({ sort: e.target.value })}
+          onChange={e => updateFilters({ sort: e.target.value })}
         >
           <option value="" disabled>
             Order by
