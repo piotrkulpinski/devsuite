@@ -90,15 +90,15 @@ export default async function ToolPage({ params }: { params: { slug: string } })
 
           <IntroDescription>{tool.description}</IntroDescription>
 
-          <Stack size="sm" className="mt-4">
+          <Stack className="mt-4">
             {tool.collections.map(collection => (
-              <Badge key={collection.id} variant="outline">
-                {collection.name}
+              <Badge key={collection.id} variant="outline" asChild>
+                <Link href={`/collections/${collection.slug}`}>{collection.name}</Link>
               </Badge>
             ))}
 
-            <Badge variant="ghost">
-              <DollarSignIcon className="text-green-500" /> free + from $9/mo
+            <Badge variant="ghost" prefix={<DollarSignIcon className="text-green-500" />}>
+              free + from $9/mo
             </Badge>
           </Stack>
         </div>

@@ -66,7 +66,7 @@ export const Dock = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
     <Box>
       <div
         className={cx(
-          "flex items-center bg-background/25 backdrop-blur-xl rounded-xl py-1.5 px-2 isolate",
+          "flex items-center bg-background/50 backdrop-blur-xl rounded-xl py-1.5 px-2 isolate",
           className,
         )}
         {...props}

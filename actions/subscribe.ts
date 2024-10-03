@@ -1,50 +1,40 @@
 "use server"
 
-import { z } from "zod"
+import { unstable_noStore as noStore } from "next/cache"
+import type { z } from "zod"
+import { newsletterSchema } from "~/api/schemas"
 import { env } from "~/env"
+import { getErrorMessage } from "~/lib/errors"
 
 /**
- * Subscribes a user to a mailing list using provided form data.
- * @param _ Unused parameter.
- * @param formData The form data containing the email and optional groups.
- * @returns An object with either a success message or an error message.
+ * Subscribe to the newsletter
+ * @param input - The newsletter data to subscribe to
+ * @returns The newsletter that was subscribed to
  */
-export const subscribe = async (_: any, formData: FormData) => {
-  const subscriberSchema = z.object({
-    email: z.string().email().min(1),
-    groups: z.array(z.string()).optional(),
-  })
-
-  const parsed = subscriberSchema.safeParse({
-    email: formData.get("email"),
-    groups: formData.getAll("groups"),
-  })
-
-  if (!parsed.success) {
-    if (parsed.error.flatten().fieldErrors.email) {
-      return { error: "Please provide a valid email." }
-    }
-
-    return { error: "We had trouble signing you up. Please try again." }
-  }
+export const subscribeToNewsletter = async (input: z.infer<typeof newsletterSchema>) => {
+  noStore()
 
   try {
-    const response = await fetch("https://connect.mailerlite.com/api/subscribers", {
+    const data = await newsletterSchema.parseAsync(input)
+    const url = `https://api.beehiiv.com/v2/publications/${env.BEEHIIV_PUBLICATION_ID}/subscriptions`
+
+    await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${env.MAILERLITE_API_TOKEN}`,
+        Authorization: `Bearer ${env.BEEHIIV_API_KEY}`,
       },
-      body: JSON.stringify(parsed.data),
+      body: JSON.stringify(data),
     })
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`)
+    return {
+      message: "You've been subscribed to the newsletter!",
+      error: null,
     }
-  } catch (error) {
-    console.log("error", error)
-    return { error: "We had trouble signing you up. Please try again." }
+  } catch (err) {
+    return {
+      message: null,
+      error: getErrorMessage(err),
+    }
   }
-
-  return { message: "Thank you for subscribing!" }
 }

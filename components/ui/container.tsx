@@ -3,7 +3,7 @@ import { forwardRef } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const containerVariants = cva({
-  base: "relative w-full mx-auto px-4 md:px-6 lg:px-8",
+  base: "relative w-full mx-auto px-6 lg:px-8",
 
   variants: {
     size: {
