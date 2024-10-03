@@ -17,6 +17,7 @@ export const env = createEnv({
   server: {
     NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
     VERCEL_ENV: z.enum(["development", "preview", "production"]).default("development"),
+    ALLOWED_IPS: z.string().optional(),
     BEEHIIV_PUBLICATION_ID: z.string().min(1),
     BEEHIIV_API_KEY: z.string().min(1),
     PLAUSIBLE_API_KEY: z.string().min(1),

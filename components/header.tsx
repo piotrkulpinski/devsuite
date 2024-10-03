@@ -27,7 +27,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
   return (
     <Container
       className={cx(
-        "group/menu fixed top-[var(--header-top)] z-40 left-1/2 -translate-x-1/2",
+        "group/menu fixed z-40 top-[var(--header-top)] left-1/2 -translate-x-1/2",
         className,
       )}
       data-state={isNavOpen ? "open" : "close"}
@@ -91,7 +91,7 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
           <nav
             className={cx(
               "size-full mt-6 mb-4 grid grid-cols-2 place-content-start gap-x-4 gap-y-6 px-2 text-lg transition-opacity md:hidden",
-              isNavOpen ? "opacity-100" : "opacity-0",
+              "group-data-[state=open]/menu:opacity-100 group-data-[state=close]/menu:opacity-0",
             )}
           >
             <NavigationLink href="/latest">Latest</NavigationLink>
