@@ -9,6 +9,7 @@ export const submitToolSchema = z.object({
   description: z.string().optional(),
   submitterName: z.string().min(1, "Your name is required"),
   submitterEmail: z.string().min(1, "Your email is required").email(),
+  newsletterOptIn: z.boolean().optional().default(true),
 })
 
 export const newsletterSchema = z.object({

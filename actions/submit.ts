@@ -3,6 +3,7 @@
 import { slugify } from "@curiousleaf/utils"
 import { unstable_noStore as noStore } from "next/cache"
 import type { z } from "zod"
+import { subscribeToNewsletter } from "~/actions/subscribe"
 import { submitToolSchema } from "~/api/schemas"
 import { getErrorMessage } from "~/lib/errors"
 import { prisma } from "~/services/prisma"
@@ -16,7 +17,7 @@ export const submitTool = async (input: z.infer<typeof submitToolSchema>) => {
   noStore()
 
   try {
-    const data = submitToolSchema.parse(input)
+    const { newsletterOptIn, ...data } = submitToolSchema.parse(input)
 
     const tool = await prisma.tool.create({
       data: {
@@ -24,6 +25,15 @@ export const submitTool = async (input: z.infer<typeof submitToolSchema>) => {
         slug: slugify(data.name),
       },
     })
+
+    if (newsletterOptIn) {
+      try {
+        await subscribeToNewsletter({
+          email: data.submitterEmail,
+          utm_medium: "submit_form",
+        })
+      } catch {}
+    }
 
     return {
       data: tool,

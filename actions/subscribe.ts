@@ -11,7 +11,7 @@ import { getErrorMessage } from "~/lib/errors"
  * @param input - The newsletter data to subscribe to
  * @returns The newsletter that was subscribed to
  */
-export const subscribeToNewsletter = async (input: z.infer<typeof newsletterSchema>) => {
+export const subscribeToNewsletter = async (input: Partial<z.infer<typeof newsletterSchema>>) => {
   noStore()
 
   try {

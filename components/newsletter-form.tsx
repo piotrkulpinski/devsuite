@@ -10,13 +10,12 @@ import { newsletterSchema } from "~/api/schemas"
 import { Button, type ButtonProps } from "~/components/ui/button"
 import { Form, FormControl, FormField } from "~/components/ui/form"
 import { Hint } from "~/components/ui/forms/hint"
-import { Input, type InputProps } from "~/components/ui/forms/input"
+import { Input } from "~/components/ui/forms/input"
 import { cx } from "~/utils/cva"
 
 type NewsletterProps = HTMLAttributes<HTMLFormElement> & {
   medium?: string
   placeholder?: string
-  size?: InputProps["size"]
   buttonProps?: ButtonProps
 }
 
@@ -24,16 +23,14 @@ export const NewsletterForm = ({
   className,
   medium = "subscribe_form",
   placeholder = "Your email here...",
-  size = "md",
   buttonProps = { variant: "primary", children: "Subscribe" },
   ...props
 }: NewsletterProps) => {
   const [isPending, startTransition] = useTransition()
-  const isLarge = size === "lg"
 
   const form = useForm<z.infer<typeof newsletterSchema>>({
     resolver: zodResolver(newsletterSchema),
-    defaultValues: { email: "" },
+    defaultValues: { email: "", utm_medium: medium },
   })
 
   const onSubmit = (input: z.infer<typeof newsletterSchema>) => {
@@ -56,7 +53,7 @@ export const NewsletterForm = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={cx("flex flex-col gap-3 w-full", isLarge ? "max-w-sm" : "max-w-64", className)}
+        className={cx("flex flex-col gap-3 w-full max-w-sm", className)}
         noValidate
         {...props}
       >
@@ -69,7 +66,7 @@ export const NewsletterForm = ({
                 <Input
                   type="email"
                   placeholder={placeholder}
-                  size={size}
+                  size="lg"
                   className="flex-1 min-w-0 border-0 focus-visible:ring-0"
                   data-1p-ignore
                   {...field}
@@ -83,7 +80,7 @@ export const NewsletterForm = ({
             size="md"
             isPending={isPending}
             disabled={isPending}
-            className={cx("shrink-0", isLarge ? "text-sm/tight px-4 m-1" : "px-3 m-0.5")}
+            className="shrink-0 text-sm/tight px-4 m-1"
             {...buttonProps}
           />
         </div>
