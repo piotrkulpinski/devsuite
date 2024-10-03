@@ -91,6 +91,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
 
           <NavigationLink href="/tools">Tools</NavigationLink>
           <NavigationLink href="/categories">Categories</NavigationLink>
+          <NavigationLink href="/collections">Collections</NavigationLink>
           <NavigationLink href="/tags">Tags</NavigationLink>
         </Stack>
 
