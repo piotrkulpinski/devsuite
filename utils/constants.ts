@@ -8,7 +8,7 @@ export const SITE_DESCRIPTION =
   "Find the best tools to help you build faster and more efficiently. Stop wasting time and money by developing tools that already exist."
 
 export const RSS_URL = `${SITE_URL}/rss.xml`
-export const TWITTER_URL = "https://x.com/ossalternative"
+export const TWITTER_URL = "https://x.com/devsuiteco"
 export const TWITTER_AUTHOR_URL = "https://x.com/piotrkulpinski"
 export const GITHUB_URL = "https://github.com/piotrkulpinski/devsuite"
 
@@ -29,9 +29,3 @@ export const FAMILY_LINKS = [
     description: "Build directory websites in WordPress",
   },
 ]
-
-export const DAY_IN_MS = 1000 * 60 * 60 * 24
-
-export const JSON_HEADERS = {
-  "Cache-Control": "public, max-age=3600, s-maxage=7200 stale-while-revalidate=3.154e7",
-}
