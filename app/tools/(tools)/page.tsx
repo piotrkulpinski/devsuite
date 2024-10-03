@@ -1,6 +1,6 @@
 import type { Prisma } from "@prisma/client"
 import { countTools, findTools } from "~/api/tools/queries"
-import { ToolFilters } from "~/app/tools/filters"
+import { ToolFilters } from "~/app/tools/(tools)/filters"
 import { ToolCard } from "~/components/cards/tool-card"
 import { EmptyList } from "~/components/empty-list"
 import { Pagination } from "~/components/pagination"

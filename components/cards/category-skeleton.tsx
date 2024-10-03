@@ -7,7 +7,7 @@ export const CategorySkeleton = () => {
   return (
     <Card hover={false} className="items-stretch">
       <div className="w-full flex gap-3 items-start justify-between">
-        <div className="flex flex-col gap-1 min-w-0">
+        <div className="flex flex-col gap-1 w-full min-w-0">
           <H5 className="!leading-snug flex-1 truncate">
             <Skeleton>&nbsp;</Skeleton>
           </H5>

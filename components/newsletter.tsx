@@ -17,7 +17,11 @@ export const Newsletter = ({ className, title, description, ...props }: Newslett
           {title && <H3 as="strong">{title}</H3>}
           {description && <p className="text-foreground/50 text-pretty">{description}</p>}
 
-          <NewsletterForm />
+          <NewsletterForm
+            size="lg"
+            className="max-w-xs"
+            buttonProps={{ children: "Join DevSuite" }}
+          />
         </div>
 
         <div className="absolute inset-0 bg-gradient-to-br from-background to-foreground/[2.5%] rounded-lg pointer-events-none" />

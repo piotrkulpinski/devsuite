@@ -1,5 +1,5 @@
 import { getUrlHostname, slugify } from "@curiousleaf/utils"
-import { ArrowUpRightIcon, DollarSignIcon, HashIcon } from "lucide-react"
+import { ArrowUpRightIcon, DollarSignIcon, HashIcon, SparkleIcon } from "lucide-react"
 import { Link } from "next-view-transitions"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
@@ -91,6 +91,12 @@ export default async function ToolPage({ params }: { params: { slug: string } })
           <IntroDescription>{tool.description}</IntroDescription>
 
           <Stack className="mt-4">
+            {tool.isFeatured && (
+              <Badge variant="outline" prefix={<SparkleIcon className="text-yellow-500" />}>
+                Featured
+              </Badge>
+            )}
+
             {tool.collections.map(collection => (
               <Badge key={collection.id} variant="outline" asChild>
                 <Link href={`/collections/${collection.slug}`}>{collection.name}</Link>

@@ -1,4 +1,4 @@
-import { ToolSkeleton } from "~/components/cards/tool-skeleton"
+import { CategorySkeleton } from "~/components/cards/category-skeleton"
 import { Grid } from "~/components/ui/grid"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { Skeleton } from "~/components/ui/skeleton"
@@ -19,7 +19,7 @@ export default function Loading() {
 
       <Grid>
         {[...Array(6)].map((_, index) => (
-          <ToolSkeleton key={index} />
+          <CategorySkeleton key={index} />
         ))}
       </Grid>
     </Wrapper>
