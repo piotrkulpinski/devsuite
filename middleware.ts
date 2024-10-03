@@ -8,14 +8,10 @@ export function middleware(request: NextRequest) {
   }
 
   const allowedIps = env.ALLOWED_IPS.split(",")
-  const ip =
-    request.ip || request.headers.get("x-real-ip") || request.headers.get("x-forwarded-for")
-
-  console.log(ip)
+  const ip = request.ip || request.headers.get("x-forwarded-for")
 
   if (!ip || !allowedIps.includes(ip)) {
-    // return NextResponse.redirect(new URL("/home", request.url))
-    return NextResponse.next()
+    return NextResponse.redirect(new URL("/home", request.url))
   }
 
   return NextResponse.next()

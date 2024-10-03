@@ -17,15 +17,12 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/ui/form"
+import { Checkbox } from "~/components/ui/forms/checkbox"
 import { Input } from "~/components/ui/forms/input"
 import { cx } from "~/utils/cva"
 
-type SubmitProps = HTMLAttributes<HTMLFormElement> & {
-  placeholder?: string
-}
-
-export const SubmitForm = ({ className, ...props }: SubmitProps) => {
-  const [isSubmitPending, startSubmitTransition] = useTransition()
+export const SubmitForm = ({ className, ...props }: HTMLAttributes<HTMLFormElement>) => {
+  const [isPending, startTransition] = useTransition()
 
   const form = useForm<z.infer<typeof submitToolSchema>>({
     resolver: zodResolver(submitToolSchema),
@@ -35,11 +32,12 @@ export const SubmitForm = ({ className, ...props }: SubmitProps) => {
       description: "",
       submitterName: "",
       submitterEmail: "",
+      newsletterOptIn: true,
     },
   })
 
   function onSubmit(input: z.infer<typeof submitToolSchema>) {
-    startSubmitTransition(async () => {
+    startTransition(async () => {
       const { error, data } = await submitTool(input)
 
       if (error) {
@@ -58,7 +56,7 @@ export const SubmitForm = ({ className, ...props }: SubmitProps) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={cx("grid w-full gap-6 md:grid-cols-2", className)}
+        className={cx("grid w-full gap-6 sm:grid-cols-2", className)}
         noValidate
         {...props}
       >
@@ -142,12 +140,26 @@ export const SubmitForm = ({ className, ...props }: SubmitProps) => {
           )}
         />
 
+        <FormField
+          control={form.control}
+          name="newsletterOptIn"
+          render={({ field }) => (
+            <FormItem className="flex-row items-center col-span-full">
+              <FormControl>
+                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+              </FormControl>
+              <FormLabel className="font-normal">I'd like to receive free email updates</FormLabel>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <div className="col-span-full">
           <Button
             variant="primary"
-            isPending={isSubmitPending}
-            disabled={isSubmitPending}
-            className="flex ml-auto min-w-32"
+            isPending={isPending}
+            disabled={isPending}
+            className="flex min-w-32"
           >
             Submit
           </Button>

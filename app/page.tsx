@@ -29,7 +29,6 @@ export default async function Home() {
         <IntroDescription>{SITE_DESCRIPTION}</IntroDescription>
 
         <NewsletterForm
-          size="lg"
           buttonProps={{ children: "Join our community", size: "md" }}
           className="mt-4 mx-auto"
         />
