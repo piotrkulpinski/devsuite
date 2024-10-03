@@ -102,7 +102,7 @@ export const Nav = ({ tool, previous, next, ...props }: NavProps) => {
       shortcut: "←",
       hotkey: "left",
       isDisabled: !previous,
-      onClick: () => router.push(`/${previous}`),
+      onClick: () => router.push(`/tools/${previous}`),
     },
     {
       icon: <ArrowRightIcon />,
@@ -110,7 +110,7 @@ export const Nav = ({ tool, previous, next, ...props }: NavProps) => {
       shortcut: "→",
       hotkey: "right",
       isDisabled: !next,
-      onClick: () => router.push(`/${next}`),
+      onClick: () => router.push(`/tools/${next}`),
     },
   ]
 
