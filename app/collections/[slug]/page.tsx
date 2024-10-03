@@ -12,10 +12,10 @@ export async function generateStaticParams() {
   return collections.map(({ slug }) => ({ slug }))
 }
 
-export default async function CollectionPage({ params }: { params: { slug: string } }) {
+export default async function CollectionPage({ params: { slug } }: { params: { slug: string } }) {
   const [collection, tools] = await Promise.all([
-    findUniqueCollection({ where: params }),
-    findTools({ where: { collections: { some: params } } }),
+    findUniqueCollection({ where: { slug } }),
+    findTools({ where: { collections: { some: { slug } } } }),
   ])
 
   if (!collection) {
