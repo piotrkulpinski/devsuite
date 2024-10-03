@@ -8,7 +8,7 @@ import {
   FormProvider,
   useFormContext,
 } from "react-hook-form"
-
+import { Hint } from "~/components/ui/forms/hint"
 import { Label } from "~/components/ui/forms/label"
 import { cx } from "~/utils/cva"
 
@@ -116,7 +116,7 @@ const FormDescription = React.forwardRef<
     <p
       ref={ref}
       id={formDescriptionId}
-      className={cx("text-[0.8rem] text-muted-foreground", className)}
+      className={cx("text-[0.8rem] text-foreground/50", className)}
       {...props}
     />
   )
@@ -124,9 +124,9 @@ const FormDescription = React.forwardRef<
 FormDescription.displayName = "FormDescription"
 
 const FormMessage = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, children, ...props }, ref) => {
+  React.ElementRef<typeof Hint>,
+  React.ComponentPropsWithoutRef<typeof Hint>
+>(({ children, ...props }, ref) => {
   const { error, formMessageId } = useFormField()
   const body = error ? String(error?.message) : children
 
@@ -135,14 +135,9 @@ const FormMessage = React.forwardRef<
   }
 
   return (
-    <p
-      ref={ref}
-      id={formMessageId}
-      className={cx("-mt-1 text-[0.8rem] font-medium text-red-500/75", className)}
-      {...props}
-    >
+    <Hint ref={ref} id={formMessageId} {...props}>
       {body}
-    </p>
+    </Hint>
   )
 })
 FormMessage.displayName = "FormMessage"

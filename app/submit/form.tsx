@@ -1,13 +1,13 @@
 "use client"
 
-import { slugify } from "@curiousleaf/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { redirect } from "next/navigation"
 import { type HTMLAttributes, useTransition } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
-import { z } from "zod"
+import type { z } from "zod"
 import { submitTool } from "~/actions/submit"
+import { submitToolSchema } from "~/api/schemas"
 import { Button } from "~/components/ui/button"
 import {
   Form,
@@ -23,19 +23,12 @@ import { cx } from "~/utils/cva"
 type SubmitProps = HTMLAttributes<HTMLFormElement> & {
   placeholder?: string
 }
+
 export const SubmitForm = ({ className, ...props }: SubmitProps) => {
   const [isSubmitPending, startSubmitTransition] = useTransition()
 
-  const schema = z.object({
-    name: z.string().min(1, "Name is required"),
-    websiteUrl: z.string().min(1, "Website is required").url("Invalid URL"),
-    description: z.string().optional(),
-    submitterName: z.string().min(1, "Your name is required"),
-    submitterEmail: z.string().min(1, "Your email is required").email(),
-  })
-
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const form = useForm<z.infer<typeof submitToolSchema>>({
+    resolver: zodResolver(submitToolSchema),
     defaultValues: {
       name: "",
       websiteUrl: "",
@@ -45,12 +38,9 @@ export const SubmitForm = ({ className, ...props }: SubmitProps) => {
     },
   })
 
-  function onSubmit(input: z.infer<typeof schema>) {
+  function onSubmit(input: z.infer<typeof submitToolSchema>) {
     startSubmitTransition(async () => {
-      const { error, data } = await submitTool({
-        ...input,
-        slug: slugify(input.name),
-      })
+      const { error, data } = await submitTool(input)
 
       if (error) {
         toast.error(error)
@@ -58,6 +48,7 @@ export const SubmitForm = ({ className, ...props }: SubmitProps) => {
       }
 
       if (data) {
+        form.reset()
         redirect(`/submit/${data.id}`)
       }
     })

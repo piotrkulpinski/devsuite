@@ -64,6 +64,6 @@ export const CardDescription = ({ className, ...props }: HTMLAttributes<HTMLElem
 CardDescription.displayName = "CardDescription"
 
 export const CardStars = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
-  return <Stars className={cx("absolute inset-y-0 -inset-x-12 -z-10", className)} {...props} />
+  return <Stars className={cx("absolute inset-0 -z-10", className)} {...props} />
 }
 CardStars.displayName = "CardStars"

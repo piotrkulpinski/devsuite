@@ -4,7 +4,7 @@ import { Prose } from "~/components/ui/prose"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const introVariants = cva({
-  base: "flex flex-col gap-y-4 w-full max-w-[85%] mx-auto",
+  base: "flex flex-col gap-y-4 w-full",
 
   variants: {
     alignment: {

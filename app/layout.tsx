@@ -1,29 +1,19 @@
+import { getUrlHostname } from "@curiousleaf/utils"
+import { GeistSans } from "geist/font/sans"
 import type { Metadata } from "next"
-import localFont from "next/font/local"
+import Script from "next/script"
 import type { PropsWithChildren } from "react"
 import { Footer } from "~/components/footer"
 import { Header } from "~/components/header"
+import { Newsletter } from "~/components/newsletter"
 import { Container } from "~/components/ui/container"
 import { Stars } from "~/components/ui/stars"
 import { Toaster } from "~/components/ui/toaster"
-
-import "./styles.css"
-import Script from "next/script"
-import { Newsletter } from "~/components/newsletter"
 import { Wrapper } from "~/components/ui/wrapper"
+import { env } from "~/env"
 import { RSS_URL, SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, SITE_URL } from "~/utils/constants"
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-})
-
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-})
+import "./styles.css"
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -71,11 +61,11 @@ export const viewport = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${GeistSans.variable}`}>
       <head>
         <Script
-          src="https://plausible.kulpinski.dev/js/script.js"
-          data-domain="devsuite.co"
+          src={`${env.NEXT_PUBLIC_PLAUSIBLE_HOST}/js/script.js`}
+          data-domain={getUrlHostname(env.NEXT_PUBLIC_SITE_URL)}
           async
           defer
         />

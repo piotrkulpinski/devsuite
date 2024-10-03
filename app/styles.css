@@ -37,12 +37,12 @@
     .animate-reveal {
       animation-timeline: view();
       animation-range-start: cover;
-      animation-range-end: 10%;
+      animation-range-end: 15%;
     }
 
     .stars {
       overflow: hidden;
-      mask-image: radial-gradient(circle, black, transparent 80%);
+      mask-image: radial-gradient(circle, black, transparent);
       pointer-events: none;
       user-select: none;
     }
@@ -52,7 +52,7 @@
       position: absolute;
       inset: 0px;
       background: radial-gradient(circle at top center, hsla(var(--color-accent) / 1), transparent 70%);
-      opacity: 0.4;
+      opacity: 0.5;
     }
 
     .stars svg {

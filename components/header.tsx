@@ -80,7 +80,6 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
             <NavigationLink href="/tools">All Tools</NavigationLink>
             <NavigationLink href="/categories">Categories</NavigationLink>
             <NavigationLink href="/collections">Collections</NavigationLink>
-            <NavigationLink href="/advertise">Advertise</NavigationLink>
           </nav>
 
           <SearchForm className="max-sm:hidden md:-mx-2" />
