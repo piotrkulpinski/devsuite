@@ -12,10 +12,10 @@ export async function generateStaticParams() {
   return categories.map(({ slug }) => ({ slug }))
 }
 
-export default async function CategoryPage({ params }: { params: { slug: string } }) {
+export default async function CategoryPage({ params: { slug } }: { params: { slug: string } }) {
   const [category, tools] = await Promise.all([
-    findUniqueCategory({ where: params }),
-    findTools({ where: { categories: { some: params } } }),
+    findUniqueCategory({ where: { slug } }),
+    findTools({ where: { categories: { some: { slug } } } }),
   ])
 
   if (!category) {

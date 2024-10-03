@@ -26,8 +26,8 @@ export async function generateStaticParams() {
   return tools.map(({ slug }) => ({ slug }))
 }
 
-export default async function ToolPage({ params }: { params: { slug: string } }) {
-  const tool = await findUniqueTool({ where: params })
+export default async function ToolPage({ params: { slug } }: { params: { slug: string } }) {
+  const tool = await findUniqueTool({ where: { slug } })
 
   if (!tool) {
     notFound()

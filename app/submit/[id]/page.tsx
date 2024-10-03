@@ -11,9 +11,9 @@ export async function generateStaticParams() {
   return tools.map(({ slug }) => ({ slug }))
 }
 
-export default async function SubmitPackages({ params }: { params: { id: string } }) {
+export default async function SubmitPackages({ params: { id } }: { params: { id: string } }) {
   const tool = await findUniqueTool({
-    where: { id: params.id, publishedAt: null },
+    where: { id, publishedAt: null },
   })
 
   if (!tool) {
