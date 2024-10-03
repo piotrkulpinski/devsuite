@@ -1,3 +1,4 @@
+import Image from "next/image"
 import type { HTMLAttributes } from "react"
 import { NewsletterForm } from "~/components/newsletter-form"
 import { Card } from "~/components/ui/card"
@@ -27,9 +28,11 @@ export const Newsletter = ({ className, title, description, ...props }: Newslett
         <div className="absolute inset-0 bg-gradient-to-br from-background to-foreground/[2.5%] rounded-lg pointer-events-none" />
 
         <div className="absolute -inset-y-px -right-px w-1/2 rounded-lg overflow-clip select-none pointer-events-none max-md:hidden">
-          <img
+          <Image
             src="/3d-panels.webp"
             alt="Newsletter"
+            height={225}
+            width={480}
             className="h-auto w-full mix-blend-exclusion"
           />
         </div>

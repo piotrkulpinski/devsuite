@@ -4,13 +4,13 @@ import { Prose } from "~/components/ui/prose"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const introVariants = cva({
-  base: "flex flex-col gap-y-4 w-full",
+  base: "flex flex-col gap-y-4 w-full max-w-md sm:max-w-xl md:max-w-3xl",
 
   variants: {
     alignment: {
-      start: "items-start text-start",
-      center: "items-center text-center",
-      end: "items-end text-end",
+      start: "items-start text-start mr-auto",
+      center: "items-center text-center mx-auto",
+      end: "items-end text-end ml-auto",
     },
   },
 
