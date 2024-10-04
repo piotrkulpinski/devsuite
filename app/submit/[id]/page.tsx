@@ -4,7 +4,9 @@ import { findToolSlugs, findUniqueTool } from "~/api/tools/queries"
 import { Plan } from "~/components/plan"
 import { Button } from "~/components/ui/button"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
+import { Prose } from "~/components/ui/prose"
 import { Wrapper } from "~/components/ui/wrapper"
+import { SITE_EMAIL } from "~/utils/constants"
 
 export async function generateStaticParams() {
   const tools = await findToolSlugs({ where: { publishedAt: null } })
@@ -45,7 +47,7 @@ export default async function SubmitPackages({ params: { id } }: { params: { id:
           ]}
         >
           <Button variant="secondary" className="mt-auto w-full" asChild>
-            <Link href="/submit/thanks">Submit for free</Link>
+            <Link href="/submit/thanks">Submit for Free</Link>
           </Button>
         </Plan>
 
@@ -63,7 +65,7 @@ export default async function SubmitPackages({ params: { id } }: { params: { id:
           ]}
         >
           <Button variant="primary" className="mt-auto w-full">
-            Expedite submission
+            Expedite Submission
           </Button>
         </Plan>
 
@@ -86,10 +88,25 @@ export default async function SubmitPackages({ params: { id } }: { params: { id:
           isFeatured
         >
           <Button variant="primary" className="mt-auto w-full">
-            Feature your product
+            Feature Submission
           </Button>
         </Plan>
       </div>
+
+      <Intro alignment="center">
+        <IntroTitle size="h3">Frequently Asked Questions</IntroTitle>
+      </Intro>
+
+      <Intro alignment="center">
+        <IntroTitle size="h3">Have questions?</IntroTitle>
+
+        <Prose>
+          <p>
+            If you have any questions, please contact us at{" "}
+            <Link href={`mailto:${SITE_EMAIL}`}>{SITE_EMAIL}</Link>.
+          </p>
+        </Prose>
+      </Intro>
     </Wrapper>
   )
 }
