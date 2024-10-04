@@ -16,7 +16,7 @@ export const ToolCard = ({ tool, ...props }: ToolCardProps) => {
   return (
     <Card isFeatured={tool.isFeatured} asChild>
       <Link href={`/tools/${tool.slug}`} prefetch {...props}>
-        <Stack size="sm" className="absolute top-0 inset-x-6 z-10 -translate-y-1/2 -mx-0.5">
+        <Stack size="sm" className="absolute top-0 inset-x-6 z-10 -translate-y-1/2 mx-px">
           {tool.isFeatured && (
             <Badge variant="outline" prefix={<SparkleIcon className="text-yellow-500" />}>
               Featured
