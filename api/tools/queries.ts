@@ -33,3 +33,10 @@ export const findUniqueTool = async ({ where, ...args }: Prisma.ToolFindUniqueAr
     include: toolOnePayload,
   })
 }
+
+export const findFirstTool = async ({ where, ...args }: Prisma.ToolFindFirstArgs) => {
+  return await prisma.tool.findFirst({
+    ...args,
+    where: { publishedAt: { lte: new Date() }, ...where },
+  })
+}

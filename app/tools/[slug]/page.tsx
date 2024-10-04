@@ -3,7 +3,7 @@ import { ArrowUpRightIcon, DollarSignIcon, HashIcon, SparkleIcon } from "lucide-
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
-import { findToolSlugs, findUniqueTool } from "~/api/tools/queries"
+import { findFirstTool, findToolSlugs, findUniqueTool } from "~/api/tools/queries"
 import { RelatedTools } from "~/app/tools/[slug]/related-tools"
 import { ToolSkeleton } from "~/components/cards/tool-skeleton"
 import { Nav } from "~/components/nav"
@@ -17,7 +17,6 @@ import { IntroDescription } from "~/components/ui/intro"
 import { Markdown } from "~/components/ui/markdown"
 import { Stack } from "~/components/ui/stack"
 import { Wrapper } from "~/components/ui/wrapper"
-import { prisma } from "~/services/prisma"
 import { SITE_NAME } from "~/utils/constants"
 import { updateUrlWithSearchParams } from "~/utils/query-string"
 
@@ -34,18 +33,16 @@ export default async function ToolPage({ params: { slug } }: { params: { slug: s
   }
 
   const [previous, next] = await Promise.all([
-    prisma.tool.findFirst({
-      select: { slug: true },
+    findFirstTool({
       where: { id: { lt: tool.id } },
+      select: { slug: true },
       orderBy: { id: "desc" },
-      take: 1,
     }),
 
-    prisma.tool.findFirst({
-      select: { slug: true },
+    findFirstTool({
       where: { id: { gt: tool.id } },
+      select: { slug: true },
       orderBy: { id: "asc" },
-      take: 1,
     }),
   ])
 
