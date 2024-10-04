@@ -3,11 +3,11 @@ import { type ElementType, type HTMLAttributes, forwardRef, isValidElement } fro
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const headingVariants = cva({
-  base: "text-foreground font-semibold text-pretty",
+  base: "text-foreground font-display font-semibold text-pretty",
 
   variants: {
     size: {
-      h1: "text-3xl tracking-tight sm:text-4xl md:text-5xl",
+      h1: "text-3xl tracking-micro sm:text-4xl md:text-5xl",
       h2: "text-2xl tracking-micro md:text-3xl lg:text-4xl",
       h3: "text-2xl tracking-micro lg:text-3xl",
       h4: "text-xl tracking-micro md:text-2xl",

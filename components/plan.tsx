@@ -181,7 +181,6 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
               <motion.del
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 0.5, y: 0 }}
-                transition={{ delay: 0.2 }}
                 className="absolute ml-1 left-full top-0 -mt-3 text-[0.4em] font-normal align-top decoration-from-font"
               >
                 <MotionNumber

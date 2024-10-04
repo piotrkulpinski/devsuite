@@ -1,5 +1,4 @@
 import { getUrlHostname } from "@curiousleaf/utils"
-import { GeistSans } from "geist/font/sans"
 import type { Metadata } from "next"
 import Script from "next/script"
 import type { PropsWithChildren } from "react"
@@ -12,6 +11,7 @@ import { Stars } from "~/components/ui/stars"
 import { Toaster } from "~/components/ui/toaster"
 import { Wrapper } from "~/components/ui/wrapper"
 import { env } from "~/env"
+import { GeistSans, UncutSans } from "~/lib/fonts"
 import { RSS_URL, SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, SITE_URL } from "~/utils/constants"
 
 import "./styles.css"
@@ -62,7 +62,7 @@ export const viewport = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
+    <html lang="en" className={`${UncutSans.variable} ${GeistSans.variable}`}>
       <head>
         <Script
           src={`${env.NEXT_PUBLIC_PLAUSIBLE_HOST}/js/script.js`}

@@ -4,7 +4,7 @@ import { Slottable } from "~/components/ui/slottable"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const badgeVariants = cva({
-  base: "flex items-center gap-1 text-foreground/65 rounded",
+  base: "flex items-center gap-1 text-foreground/65 font-display rounded",
 
   variants: {
     variant: {
