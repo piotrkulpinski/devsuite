@@ -11,12 +11,8 @@ export function middleware(request: NextRequest) {
   const ip = request.ip || request.headers.get("x-forwarded-for")
 
   if (!ip || !allowedIps.includes(ip)) {
-    return NextResponse.redirect(new URL("/home", request.url))
+    return NextResponse.redirect(new URL("https://devsuite.beehiiv.com/subscribe"))
   }
 
   return NextResponse.next()
-}
-
-export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|home).*)"],
 }
