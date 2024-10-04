@@ -91,7 +91,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
                 />
               )}
 
-              <hr className="relative border-foreground/15 left-1/2 w-screen -translate-x-1/2 hidden first:block" />
+              <hr className="relative left-1/2 w-screen -translate-x-1/2 hidden first:block" />
 
               <Footer />
             </Wrapper>

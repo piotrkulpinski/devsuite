@@ -88,6 +88,11 @@ button [class*="group-hover"] {
   @apply cursor-pointer;
 }
 
+hr {
+  @apply border-foreground;
+  @apply opacity-15;
+}
+
 svg.lucide:not([class*="stroke"]) {
   @apply !stroke-[1.75];
 }
