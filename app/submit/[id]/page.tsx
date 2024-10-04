@@ -1,9 +1,9 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { findToolSlugs, findUniqueTool } from "~/api/tools/queries"
+import { Plan } from "~/components/plan"
 import { Button } from "~/components/ui/button"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
-import { Plan } from "~/components/ui/plan"
 import { Wrapper } from "~/components/ui/wrapper"
 
 export async function generateStaticParams() {
@@ -31,7 +31,7 @@ export default async function SubmitPackages({ params: { id } }: { params: { id:
         </IntroDescription>
       </Intro>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="flex flex-wrap justify-center gap-6">
         <Plan
           name="Free"
           description="Free listing with a basic description and a link to your website."
@@ -39,6 +39,7 @@ export default async function SubmitPackages({ params: { id } }: { params: { id:
           features={[
             { text: "2 weeks processing time", type: "neutral" },
             { text: "Link to your website", type: "neutral" },
+            { text: "No content updates", type: "negative" },
             { text: "No featured spot", type: "negative" },
             { text: "No featured badge", type: "negative" },
           ]}
@@ -51,28 +52,33 @@ export default async function SubmitPackages({ params: { id } }: { params: { id:
         <Plan
           name="Standard"
           description="Skips the queue and gets your site published on the site within 24 hours."
-          price={6700}
-          discount={27}
+          price={4700}
+          // discount={27}
           features={[
             { text: "24h processing time", type: "positive" },
             { text: "Do-follow link to your website", type: "positive" },
+            { text: "Unlimited content updates", type: "positive" },
             { text: "No featured spot", type: "negative" },
             { text: "No featured badge", type: "negative" },
           ]}
         >
           <Button variant="primary" className="mt-auto w-full">
-            Purchase
+            Expedite submission
           </Button>
         </Plan>
 
         <Plan
           name="Featured"
           description="Featured listing with a homepage spot and a featured badge."
-          price={20400}
-          discount={27}
+          price={[
+            { interval: "month", price: 9700, priceId: "" },
+            { interval: "year", price: 97000, priceId: "" },
+          ]}
+          // discount={27}
           features={[
             { text: "12h processing time", type: "positive" },
             { text: "Do-follow link to your website", type: "positive" },
+            { text: "Unlimited content updates", type: "positive" },
             { text: "Featured spot on homepage", type: "positive" },
             { text: "Featured badge", type: "positive" },
           ]}
@@ -80,7 +86,7 @@ export default async function SubmitPackages({ params: { id } }: { params: { id:
           isFeatured
         >
           <Button variant="primary" className="mt-auto w-full">
-            Subscribe
+            Feature your product
           </Button>
         </Plan>
       </div>

@@ -11,6 +11,8 @@ export const badgeVariants = cva({
       soft: "bg-foreground/5 hover:[&[href]]:bg-foreground/10",
       outline: "bg-background ring-1 ring-foreground/15 hover:[&[href]]:ring-foreground/25",
       ghost: "bg-transparent !p-0",
+      success: "bg-green-500/50 text-foreground",
+      error: "bg-red-500/50 text-foreground",
     },
     size: {
       sm: "px-1 py-px text-[10px]/tight",
