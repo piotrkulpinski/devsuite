@@ -21,7 +21,7 @@
   }
 
   /* CSS */
-  :root {
+  .font-sans {
     font-feature-settings:
       "ss01" on,
       "ss02" off,
@@ -31,6 +31,18 @@
       "ss06" off,
       "ss07" off,
       "ss08" on;
+  }
+
+  .font-display {
+    font-feature-settings:
+      "ss01" on, /* Alternate R */
+      "ss02" on, /* Alternate Y and y */
+      "ss03" on, /* Alernative Q, Ø, and ø */
+      "ss04" off, /* Alernative a */
+      "ss05" on, /* Alernative 1, 2, and 4 */
+      "ss06" on, /* Alternate !, ?, and * */
+      "ss07" on, /* Round punctuation */
+      "ss08" off; /* Alternate arrows */
   }
 
   @layer utilities {

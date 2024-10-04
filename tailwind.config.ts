@@ -25,6 +25,7 @@ export default {
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...defaultTheme.fontFamily.sans],
+        display: ["var(--font-uncut-sans)", ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
         "5xl": ["2.75rem", "1.05"],
