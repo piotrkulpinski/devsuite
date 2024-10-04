@@ -1,6 +1,6 @@
 "use client"
 
-import { Link } from "next-view-transitions"
+import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "~/components/ui/button"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"

@@ -1,6 +1,6 @@
 import { getUrlHostname, slugify } from "@curiousleaf/utils"
 import { ArrowUpRightIcon, DollarSignIcon, HashIcon, SparkleIcon } from "lucide-react"
-import { Link } from "next-view-transitions"
+import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { findToolSlugs, findUniqueTool } from "~/api/tools/queries"
