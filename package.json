@@ -38,6 +38,7 @@
     "next-sitemap": "^4.2.3",
     "nuqs": "^1.19.3",
     "plur": "^5.1.0",
+    "posthog-js": "^1.166.1",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
