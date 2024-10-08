@@ -12,7 +12,7 @@ import { Grid } from "~/components/ui/grid"
 import { H3, H4 } from "~/components/ui/heading"
 import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
 import { Ping } from "~/components/ui/ping"
-import { SITE_DESCRIPTION, SITE_TAGLINE } from "~/utils/constants"
+import { config } from "~/config"
 
 export default async function Home() {
   const [categories, tools, toolsCount, newToolsCount] = await Promise.all([
@@ -25,8 +25,8 @@ export default async function Home() {
   return (
     <>
       <Intro alignment="center" className="mb-[2.5vh] text-pretty">
-        <IntroTitle className="max-w-2xl">{SITE_TAGLINE}</IntroTitle>
-        <IntroDescription>{SITE_DESCRIPTION}</IntroDescription>
+        <IntroTitle className="max-w-2xl">{config.site.tagline}</IntroTitle>
+        <IntroDescription>{config.site.description}</IntroDescription>
 
         <NewsletterForm
           buttonProps={{ children: "Join our community", size: "md" }}

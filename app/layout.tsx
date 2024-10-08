@@ -10,38 +10,38 @@ import { Container } from "~/components/ui/container"
 import { Stars } from "~/components/ui/stars"
 import { Toaster } from "~/components/ui/toaster"
 import { Wrapper } from "~/components/ui/wrapper"
+import { config } from "~/config"
 import { env } from "~/env"
 import { GeistSans, UncutSans } from "~/lib/fonts"
-import { RSS_URL, SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, SITE_URL } from "~/utils/constants"
 
 import "./styles.css"
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(config.site.url),
   title: {
-    default: `${SITE_TAGLINE} – ${SITE_NAME}`,
-    template: `%s – ${SITE_NAME}`,
+    default: `${config.site.tagline} – ${config.site.name}`,
+    template: `%s – ${config.site.name}`,
   },
-  description: SITE_DESCRIPTION,
+  description: config.site.description,
   openGraph: {
-    title: `${SITE_TAGLINE} – ${SITE_NAME}`,
-    description: SITE_DESCRIPTION,
-    url: SITE_URL,
-    siteName: SITE_NAME,
+    title: `${config.site.tagline} – ${config.site.name}`,
+    description: config.site.description,
+    url: config.site.url,
+    siteName: config.site.name,
     locale: "en_US",
     type: "website",
     images: [{ url: "/opengraph.png", width: 1200, height: 630 }],
   },
   twitter: {
-    title: `${SITE_TAGLINE} – ${SITE_NAME}`,
-    description: SITE_DESCRIPTION,
+    title: `${config.site.tagline} – ${config.site.name}`,
+    description: config.site.description,
     site: "@devsuite",
     creator: "@piotrkulpinski",
     images: [{ url: "/opengraph.png", width: 1200, height: 630 }],
   },
   alternates: {
-    canonical: SITE_URL,
-    types: { "application/rss+xml": RSS_URL },
+    canonical: config.site.url,
+    types: { "application/rss+xml": config.links.feed },
   },
   robots: {
     index: true,
@@ -66,7 +66,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <head>
         <Script
           src={`${env.NEXT_PUBLIC_PLAUSIBLE_HOST}/js/script.js`}
-          data-domain={getUrlHostname(env.NEXT_PUBLIC_SITE_URL)}
+          data-domain={getUrlHostname(config.site.url)}
           async
           defer
         />

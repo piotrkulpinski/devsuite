@@ -17,7 +17,7 @@ import { BrandRedditIcon } from "~/components/ui/icons/brand-reddit"
 import { BrandWhatsAppIcon } from "~/components/ui/icons/brand-whatsapp"
 import { BrandXIcon } from "~/components/ui/icons/brand-x"
 import { Tooltip, TooltipProvider } from "~/components/ui/tooltip"
-import { SITE_NAME, SITE_URL } from "~/utils/constants"
+import { config } from "~/config"
 
 type NavProps = HTMLAttributes<HTMLElement> & {
   tool: ToolOne
@@ -29,10 +29,10 @@ export const Nav = ({ tool, previous, next, ...props }: NavProps) => {
   // const [isFavorite, setIsFavorite] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
-  const currentUrl = `${SITE_URL}${pathname}`
+  const currentUrl = `${config.site.url}${pathname}`
 
   const shareUrl = encodeURIComponent(currentUrl)
-  const shareTitle = encodeURIComponent(`${tool.name} — ${SITE_NAME}`)
+  const shareTitle = encodeURIComponent(`${tool.name} — ${config.site.name}`)
 
   const shareOptions = [
     {

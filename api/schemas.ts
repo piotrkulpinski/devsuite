@@ -1,7 +1,6 @@
 import { z } from "zod"
-import { env } from "~/env"
+import { config } from "~/config"
 import { isRealEmail } from "~/lib/email"
-import { SITE_NAME } from "~/utils/constants"
 
 export const submitToolSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -17,8 +16,8 @@ export const newsletterSchema = z.object({
     .string()
     .email("Please enter a valid email address")
     .refine(isRealEmail, "Invalid email address, please use a real one"),
-  referring_site: z.string().optional().default(env.NEXT_PUBLIC_SITE_URL),
-  utm_source: z.string().optional().default(SITE_NAME),
+  referring_site: z.string().optional().default(config.site.url),
+  utm_source: z.string().optional().default(config.site.name),
   utm_medium: z.string().optional().default("subscribe_form"),
   utm_campaign: z.string().optional().default("organic"),
   double_opt_override: z.string().optional().default("off"),

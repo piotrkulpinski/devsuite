@@ -2,11 +2,14 @@
 
 import { Slot } from "@radix-ui/react-slot"
 import { motion } from "framer-motion"
-import { CheckIcon, CoinsIcon, XIcon } from "lucide-react"
+import { CheckIcon, XIcon } from "lucide-react"
 import MotionNumber from "motion-number"
+import { useParams, useRouter } from "next/navigation"
 import { type HTMLAttributes, type ReactNode, forwardRef, isValidElement, useState } from "react"
+import { createStripeCheckout } from "~/actions/stripe"
 import { PlanIntervalSwitch } from "~/components/plan-interval-switch"
 import { Badge } from "~/components/ui/badge"
+import { Button, type ButtonProps } from "~/components/ui/button"
 import { Card, CardStars, type cardVariants } from "~/components/ui/card"
 import { H5 } from "~/components/ui/heading"
 import { Prose } from "~/components/ui/prose"
@@ -45,9 +48,14 @@ export type PlanProps = Omit<HTMLAttributes<PlanElement>, "size"> &
     asChild?: boolean
 
     /**
-     * The price of the plan.
+     * The props of the button.
      */
-    price: number | { interval: ProductInterval; price: number; priceId: string }[]
+    buttonProps?: ButtonProps
+
+    /**
+     * The prices of the plan. If empty, the plan is free.
+     */
+    prices: { interval?: ProductInterval; price: number; priceId: string }[]
 
     /**
      * The name of the plan.
@@ -63,11 +71,6 @@ export type PlanProps = Omit<HTMLAttributes<PlanElement>, "size"> &
      * The amount of discount applied to the plan.
      */
     discount?: number
-
-    /**
-     * If set to `true`, the plan will be rendered as a subscription.
-     */
-    isSubscription?: boolean
 
     /**
      * The features of the plan.
@@ -89,6 +92,7 @@ export type PlanProps = Omit<HTMLAttributes<PlanElement>, "size"> &
       type?: "positive" | "neutral" | "negative"
     }[]
   }
+
 const intervals = [
   { label: "Monthly", value: "month" },
   { label: "Yearly", value: "year" },
@@ -101,35 +105,40 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
     children,
     className,
     asChild,
-    price,
+    buttonProps,
+    prices,
     name,
     description,
     features,
-    isSubscription,
     isFeatured,
     ...rest
   } = props
+
+  const { slug } = useParams<{ slug: string }>()
+  const router = useRouter()
   const [interval, setInterval] = useState<ProductInterval>("month")
+  const [isPending, setIsPending] = useState(false)
 
   const useAsChild = asChild && isValidElement(children)
   const Component = useAsChild ? Slot : "div"
 
-  const getPriceForInterval = (interval: ProductInterval) => {
-    if (Array.isArray(price)) {
-      const selectedPrice = price.find(p => p.interval === interval)
-      return selectedPrice ? selectedPrice.price : 0
+  const getPriceForInterval = (interval: ProductInterval | undefined) => {
+    if (prices.length === 0) {
+      return { price: 0, priceId: undefined, interval: undefined }
     }
-    return price
+    const selectedPrice = prices.find(p => p.interval === interval)
+    return selectedPrice ?? prices[0]
   }
 
-  const currentPrice = getPriceForInterval(interval)
-  const monthlyPrice = Array.isArray(price) ? getPriceForInterval("month") : currentPrice
+  const isSubscription = prices.length > 0 && prices.some(p => p.interval)
+  const currentPrice = getPriceForInterval(isSubscription ? interval : undefined)
+  const monthlyPrice = isSubscription ? getPriceForInterval("month") : currentPrice
 
   const priceValue = isSubscription
-    ? currentPrice / (interval === "month" ? 100 : 1200)
-    : currentPrice / 100
+    ? currentPrice.price / (interval === "month" ? 100 : 1200)
+    : currentPrice.price / 100
 
-  const monthlyPriceValue = monthlyPrice / 100
+  const monthlyPriceValue = monthlyPrice.price / 100
 
   const originalPrice = isSubscription && interval === "year" ? monthlyPriceValue : null
   const discount =
@@ -137,26 +146,32 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
       ? Math.round((1 - priceValue / monthlyPriceValue) * 100)
       : null
 
+  const onSubmit = async () => {
+    const priceId = currentPrice.priceId
+
+    if (!priceId) {
+      return router.push("/submit/thanks")
+    }
+
+    setIsPending(true)
+
+    try {
+      await createStripeCheckout(priceId, slug, isSubscription ? "subscription" : "payment")
+    } finally {
+      setIsPending(false)
+    }
+  }
+
   return (
     <Card hover={false} isRevealed={false} isFeatured={isFeatured} asChild>
       <Component ref={ref} className={cx(planVariants({ className }))} {...rest}>
-        {isFeatured && (
-          <Badge
-            variant="outline"
-            className="absolute top-0 right-6 z-10 -translate-y-1/2 mx-px bg-background"
-            prefix={<CoinsIcon className="text-yellow-500" />}
-          >
-            Best Value
-          </Badge>
-        )}
-
         {isFeatured && <CardStars className="brightness-200" />}
 
         <div className="space-y-3">
           <div className="flex items-center justify-between gap-2">
             <H5>{name}</H5>
 
-            {isSubscription && Array.isArray(price) && (
+            {isSubscription && prices.length > 1 && (
               <PlanIntervalSwitch intervals={intervals} value={interval} onChange={setInterval} />
             )}
           </div>
@@ -181,7 +196,7 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
               <motion.del
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 0.5, y: 0 }}
-                className="absolute ml-1 left-full top-0 -mt-3 text-[0.4em] font-normal align-top decoration-from-font"
+                className="absolute ml-1 left-full -top-3 text-[0.4em] font-normal align-top decoration-from-font"
               >
                 <MotionNumber
                   value={Math.round(originalPrice)}
@@ -200,7 +215,7 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
           )}
 
           {discount && (
-            <Badge variant="success" className="absolute top-0 right-0" asChild>
+            <Badge variant="success" className="absolute -top-3.5 right-0" asChild>
               <motion.span initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }}>
                 {discount}% off
               </motion.span>
@@ -222,7 +237,13 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
           </Stack>
         )}
 
-        {children}
+        <Button
+          type="button"
+          onClick={onSubmit}
+          className="mt-auto w-full"
+          isPending={isPending}
+          {...buttonProps}
+        />
       </Component>
     </Card>
   )

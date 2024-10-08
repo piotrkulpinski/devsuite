@@ -7,15 +7,7 @@ import { Logo } from "~/components/ui/logo"
 import { NavigationLink } from "~/components/ui/navigation-link"
 import { Stack } from "~/components/ui/stack"
 import { Tooltip, TooltipProvider } from "~/components/ui/tooltip"
-import {
-  FAMILY_LINKS,
-  GITHUB_URL,
-  SITE_EMAIL,
-  SITE_NAME,
-  SITE_TAGLINE,
-  TWITTER_AUTHOR_URL,
-  TWITTER_URL,
-} from "~/utils/constants"
+import { config } from "~/config"
 import { cx } from "~/utils/cva"
 import { addUTMTracking } from "~/utils/helpers"
 
@@ -33,7 +25,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
           <Stack direction="column" className="text-sm/normal">
             <Logo />
 
-            <p className="text-foreground/65 text-pretty max-w-60">{SITE_TAGLINE}</p>
+            <p className="text-foreground/65 text-pretty max-w-60">{config.site.tagline}</p>
           </Stack>
 
           <Stack className="text-sm/normal">
@@ -46,7 +38,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
 
               <Tooltip tooltip="Contact Us">
                 <NavigationLink
-                  href={`mailto:${SITE_EMAIL}`}
+                  href={`mailto:${config.site.email}`}
                   target="_blank"
                   rel="nofollow noreferrer"
                 >
@@ -56,7 +48,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
 
               <Tooltip tooltip="X/Twitter">
                 <NavigationLink
-                  href={TWITTER_URL}
+                  href={config.links.twitter}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                 >
@@ -66,7 +58,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
 
               <Tooltip tooltip="Source Code">
                 <NavigationLink
-                  href={GITHUB_URL}
+                  href={config.links.github}
                   target="_blank"
                   rel="noopener noreferrer nofollow"
                 >
@@ -83,7 +75,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
           <NavigationLink href="/about">About</NavigationLink>
           <NavigationLink href="/sponsor">Sponsor</NavigationLink>
           <NavigationLink href="/submit">Submit</NavigationLink>
-          <NavigationLink href={`mailto:${SITE_EMAIL}`}>Contact</NavigationLink>
+          <NavigationLink href={`mailto:${config.site.email}`}>Contact</NavigationLink>
         </Stack>
 
         <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3">
@@ -98,10 +90,10 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
         <Stack className="gap-x-4 text-sm/normal flex-col items-start md:col-span-3">
           <H6 as="strong">Other Products:</H6>
 
-          {FAMILY_LINKS.map(link => (
+          {config.links.family.map(link => (
             <NavigationLink
               key={link.href}
-              href={addUTMTracking(link.href, { source: SITE_NAME.toLowerCase() })}
+              href={addUTMTracking(link.href, { source: config.site.name.toLowerCase() })}
               target="_blank"
               rel="noopener noreferrer"
               title={link.description}
@@ -114,7 +106,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
 
       <div className="flex flex-row flex-wrap items-end justify-between gap-x-4 gap-y-2 w-full">
         <NavigationLink
-          href={TWITTER_AUTHOR_URL}
+          href={config.links.author}
           className="text-xs"
           target="_blank"
           rel="noopener noreferrer nofollow"

@@ -17,7 +17,7 @@ import { IntroDescription } from "~/components/ui/intro"
 import { Markdown } from "~/components/ui/markdown"
 import { Stack } from "~/components/ui/stack"
 import { Wrapper } from "~/components/ui/wrapper"
-import { SITE_NAME } from "~/utils/constants"
+import { config } from "~/config"
 import { updateUrlWithSearchParams } from "~/utils/query-string"
 
 export async function generateStaticParams() {
@@ -76,7 +76,7 @@ export default async function ToolPage({ params: { slug } }: { params: { slug: s
 
             <Button size="md" variant="primary" suffix={<ArrowUpRightIcon />} asChild>
               <a
-                href={updateUrlWithSearchParams(websiteUrl, { ref: slugify(SITE_NAME) })}
+                href={updateUrlWithSearchParams(websiteUrl, { ref: slugify(config.site.name) })}
                 target="_blank"
                 rel="nofollow noreferrer"
               >

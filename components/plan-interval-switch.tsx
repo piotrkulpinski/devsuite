@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
 } from "react"
+import { Ping } from "~/components/ui/ping"
 import { cx } from "~/utils/cva"
 
 type Interval = {
@@ -69,12 +70,16 @@ export const PlanIntervalSwitch = ({
             value={interval.value}
             checked={interval.value === value}
             onChange={() => onChange(interval.value)}
-            className="sr-only"
+            className="peer sr-only"
           />
 
           {interval.label}
 
           {interval.note && <div className="ml-2 text-xs text-green-500">{interval.note}</div>}
+
+          {interval.value === "year" && (
+            <Ping className="absolute right-0 top-0 size-2.5 text-green-500/75 transition-opacity peer-checked:opacity-0" />
+          )}
         </label>
       ))}
     </div>

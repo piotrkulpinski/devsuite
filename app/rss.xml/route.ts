@@ -1,6 +1,6 @@
 import RSS from "rss"
+import { config } from "~/config"
 import { prisma } from "~/services/prisma"
-import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "~/utils/constants"
 import { addUTMTracking } from "~/utils/helpers"
 
 export async function GET() {
@@ -12,11 +12,11 @@ export async function GET() {
   })
 
   const feed = new RSS({
-    title: SITE_NAME,
-    description: SITE_TAGLINE,
-    site_url: addUTMTracking(SITE_URL, { source: "rss" }),
-    feed_url: `${SITE_URL}/rss.xml`,
-    copyright: `${new Date().getFullYear()} ${SITE_NAME}`,
+    title: config.site.name,
+    description: config.site.tagline,
+    site_url: addUTMTracking(config.site.url, { source: "rss" }),
+    feed_url: `${config.site.url}/rss.xml`,
+    copyright: `${new Date().getFullYear()} ${config.site.name}`,
     language: "en",
     ttl: 14400,
     pubDate: new Date(),
@@ -26,7 +26,7 @@ export async function GET() {
     feed.item({
       title: tool.name,
       guid: tool.slug,
-      url: addUTMTracking(`${SITE_URL}/${tool.slug}`, { source: "rss" }),
+      url: addUTMTracking(`${config.site.url}/${tool.slug}`, { source: "rss" }),
       date: tool.publishedAt?.toUTCString() ?? new Date().toUTCString(),
       description: tool.description ?? "",
       categories: tool.categories?.map(c => c.name) || [],

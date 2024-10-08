@@ -25,6 +25,9 @@ export const env = createEnv({
     GROQ_API_KEY: z.string().min(1),
     FIRECRAWL_API_KEY: z.string().min(1),
     PINECONE_API_KEY: z.string().min(1),
+    RESEND_API_KEY: z.string().min(1),
+    STRIPE_SECRET_KEY: z.string().min(1),
+    STRIPE_WEBHOOK_SECRET: z.string().min(1),
   },
 
   /**

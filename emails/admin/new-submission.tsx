@@ -1,0 +1,28 @@
+import type { Tool } from "@prisma/client"
+import { Text } from "@react-email/components"
+import { config } from "~/config"
+import { EmailButton } from "~/emails/_components/button"
+import { EmailWrapper, type EmailWrapperProps } from "~/emails/_components/wrapper"
+
+export type EmailAdminNewSubmissionProps = EmailWrapperProps & {
+  tool?: Tool
+}
+
+const EmailAdminNewSubmission = ({ tool, ...props }: EmailAdminNewSubmissionProps) => {
+  return (
+    <EmailWrapper {...props}>
+      <Text>Hi!</Text>
+
+      <Text>
+        {tool?.submitterName} has opted to expedite the submission of {tool?.name}. You should
+        review and approve it as soon as possible.
+      </Text>
+
+      <EmailButton href={`${config.site.url}/tools/${tool?.slug}`}>
+        Review {tool?.name}'s submission
+      </EmailButton>
+    </EmailWrapper>
+  )
+}
+
+export default EmailAdminNewSubmission

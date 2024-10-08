@@ -1,3 +1,5 @@
+import { type FormatDistanceOptions, formatDistance } from "date-fns/formatDistance"
+
 /**
  * Adds UTM tracking to the provided link
  * It uses the search params and accepts source, medium and campaign which are optional
@@ -16,4 +18,16 @@ export const addUTMTracking = (
 
   urlObj.search = searchParams.toString()
   return urlObj.toString()
+}
+
+/**
+ * Formats a date using the `formatDistance` function from `date-fns`,
+ * removing the "about", "over", and "almost" prefixes.
+ *
+ * @param date - The date to be formatted.
+ * @param options - Additional formatting options.
+ * @returns The formatted date string.
+ */
+export const formatRelativeDate = (date: Date | string, options?: FormatDistanceOptions) => {
+  return formatDistance(new Date(date), new Date(), options).replace(/about |over |almost /, "")
 }
