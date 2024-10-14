@@ -1,23 +1,30 @@
 "use client"
 
+import NumberFlow from "@number-flow/react"
 import { Slot } from "@radix-ui/react-slot"
-import { motion } from "framer-motion"
-import { CheckIcon, XIcon } from "lucide-react"
-import MotionNumber from "motion-number"
-import { useParams, useRouter } from "next/navigation"
-import { type HTMLAttributes, type ReactNode, forwardRef, isValidElement, useState } from "react"
+import { ArrowUpRightIcon, CheckIcon, XIcon } from "lucide-react"
+import { type HTMLAttributes, forwardRef } from "react"
+import { toast } from "sonner"
+import type Stripe from "stripe"
+import { useServerAction } from "zsa-react"
 import { createStripeCheckout } from "~/actions/stripe"
+import type { ToolOne } from "~/api/tools/payloads"
 import { PlanIntervalSwitch } from "~/components/plan-interval-switch"
 import { Badge } from "~/components/ui/badge"
-import { Button, type ButtonProps } from "~/components/ui/button"
+import { Button } from "~/components/ui/button"
 import { Card, CardStars, type cardVariants } from "~/components/ui/card"
 import { H5 } from "~/components/ui/heading"
-import { Prose } from "~/components/ui/prose"
+import { Ping } from "~/components/ui/ping"
+import { Skeleton } from "~/components/ui/skeleton"
 import { Stack } from "~/components/ui/stack"
+import { Tooltip } from "~/components/ui/tooltip"
+import { TooltipProvider } from "~/components/ui/tooltip"
+import { usePlanPrices } from "~/hooks/use-plan-prices"
+import { isToolPublished } from "~/lib/tools"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 const planVariants = cva({
-  base: "gap-8 p-4 basis-72 grow max-w-96 md:p-6",
+  base: "items-stretch gap-8 basis-72 grow max-w-80",
 })
 
 const planFeatureVariants = cva({
@@ -36,217 +43,208 @@ const planFeatureCheckVariants = cva({
   },
 })
 
+export type PlanFeature = {
+  /**
+   * The text of the feature.
+   */
+  name?: string
+
+  /**
+   * The footnote of the feature.
+   */
+  footnote?: string
+
+  /**
+   * The type of the feature.
+   */
+  type?: "positive" | "neutral" | "negative"
+}
+
 export type PlanElement = HTMLDivElement
 
 export type PlanProps = Omit<HTMLAttributes<PlanElement>, "size"> &
   VariantProps<typeof cardVariants> &
   VariantProps<typeof planVariants> & {
     /**
-     * If set to `true`, the button will be rendered as a child within the component.
-     * This child component must be a valid React component.
+     * The plan.
      */
-    asChild?: boolean
-
-    /**
-     * The props of the button.
-     */
-    buttonProps?: ButtonProps
-
-    /**
-     * The prices of the plan. If empty, the plan is free.
-     */
-    prices: { interval?: ProductInterval; price: number; priceId: string }[]
-
-    /**
-     * The name of the plan.
-     */
-    name: string
-
-    /**
-     * The description of the plan.
-     */
-    description?: string
-
-    /**
-     * The amount of discount applied to the plan.
-     */
-    discount?: number
+    plan: Stripe.Product
 
     /**
      * The features of the plan.
      */
-    features?: {
-      /**
-       * The text of the feature.
-       */
-      text: string
+    features: PlanFeature[]
 
-      /**
-       * The footnote of the feature.
-       */
-      footnote?: ReactNode | string
+    /**
+     * The prices of the plan.
+     */
+    prices: Stripe.Price[]
 
-      /**
-       * The type of the feature.
-       */
-      type?: "positive" | "neutral" | "negative"
-    }[]
+    /**
+     * The slug of the tool.
+     */
+    tool: ToolOne
   }
-
-const intervals = [
-  { label: "Monthly", value: "month" },
-  { label: "Yearly", value: "year" },
-]
-
-export type ProductInterval = (typeof intervals)[number]["value"]
 
 export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
-  const {
-    children,
-    className,
-    asChild,
-    buttonProps,
-    prices,
-    name,
-    description,
-    features,
-    isFeatured,
-    ...rest
-  } = props
+  const { className, plan, features, prices, tool, isFeatured, ...rest } = props
 
-  const { slug } = useParams<{ slug: string }>()
-  const router = useRouter()
-  const [interval, setInterval] = useState<ProductInterval>("month")
-  const [isPending, setIsPending] = useState(false)
+  const { isSubscription, currentPrice, price, fullPrice, discount, interval, setInterval } =
+    usePlanPrices(prices ?? [])
 
-  const useAsChild = asChild && isValidElement(children)
-  const Component = useAsChild ? Slot : "div"
+  const { execute, isPending } = useServerAction(createStripeCheckout, {
+    onSuccess: ({ data }) => {
+      window.open(data, "_blank")?.focus()
+    },
 
-  const getPriceForInterval = (interval: ProductInterval | undefined) => {
-    if (prices.length === 0) {
-      return { price: 0, priceId: undefined, interval: undefined }
-    }
-    const selectedPrice = prices.find(p => p.interval === interval)
-    return selectedPrice ?? prices[0]
-  }
+    onError: ({ err }) => {
+      toast.error(err.message)
+    },
+  })
 
-  const isSubscription = prices.length > 0 && prices.some(p => p.interval)
-  const currentPrice = getPriceForInterval(isSubscription ? interval : undefined)
-  const monthlyPrice = isSubscription ? getPriceForInterval("month") : currentPrice
-
-  const priceValue = isSubscription
-    ? currentPrice.price / (interval === "month" ? 100 : 1200)
-    : currentPrice.price / 100
-
-  const monthlyPriceValue = monthlyPrice.price / 100
-
-  const originalPrice = isSubscription && interval === "year" ? monthlyPriceValue : null
-  const discount =
-    isSubscription && interval === "year"
-      ? Math.round((1 - priceValue / monthlyPriceValue) * 100)
-      : null
-
-  const onSubmit = async () => {
-    const priceId = currentPrice.priceId
-
-    if (!priceId) {
-      return router.push("/submit/thanks")
-    }
-
-    setIsPending(true)
-
-    try {
-      await createStripeCheckout(priceId, slug, isSubscription ? "subscription" : "payment")
-    } finally {
-      setIsPending(false)
-    }
+  const onSubmit = () => {
+    // Execute the action
+    execute({
+      priceId: currentPrice.id,
+      tool: tool.slug,
+      mode: isSubscription ? "subscription" : "payment",
+    })
   }
 
   return (
-    <Card hover={false} isRevealed={false} isFeatured={isFeatured} asChild>
-      <Component ref={ref} className={cx(planVariants({ className }))} {...rest}>
-        {isFeatured && <CardStars className="brightness-200" />}
+    <Card
+      ref={ref}
+      hover={false}
+      isRevealed={false}
+      isFeatured={isFeatured}
+      className={cx(planVariants({ className }))}
+      {...rest}
+    >
+      {isFeatured && <CardStars className="brightness-200" />}
 
-        <div className="space-y-3">
-          <div className="flex items-center justify-between gap-2">
-            <H5>{name}</H5>
+      <div className="space-y-3">
+        <div className="flex items-center justify-between gap-2">
+          <H5>{plan.name}</H5>
 
-            {isSubscription && prices.length > 1 && (
-              <PlanIntervalSwitch intervals={intervals} value={interval} onChange={setInterval} />
-            )}
-          </div>
-
-          {description && (
-            <Prose className="text-foreground/50 text-sm text-pretty">{description}</Prose>
-          )}
-        </div>
-
-        <div className="relative flex items-end w-full">
-          <span className="self-start mt-1 mr-1 text-xl/none font-display">$</span>
-
-          <strong className="relative font-display font-semibold -tracking-wide text-4xl/[0.9] sm:text-5xl/[0.9]">
-            <MotionNumber
-              value={priceValue}
-              format={{ notation: "compact" }}
-              locales="en-US"
-              className="!flex items-center h-[0.9em] tabular-nums"
+          {isSubscription && prices.length > 1 && (
+            <PlanIntervalSwitch
+              intervals={[
+                { label: "Monthly", value: "month" },
+                { label: "Yearly", value: "year" },
+              ]}
+              value={interval}
+              onChange={setInterval}
+              className="-my-0.5"
             />
-
-            {!!originalPrice && (
-              <motion.del
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 0.5, y: 0 }}
-                className="absolute ml-1 left-full -top-3 text-[0.4em] font-normal align-top decoration-from-font"
-              >
-                <MotionNumber
-                  value={Math.round(originalPrice)}
-                  format={{ notation: "compact" }}
-                  locales="en-US"
-                  className="!flex items-center h-[0.9em] tabular-nums"
-                />
-              </motion.del>
-            )}
-          </strong>
-
-          {priceValue > 0 && (
-            <div className="m-0.5 opacity-50 text-base/none md:text-lg/none">
-              /{isSubscription ? "month" : "one-time"}
-            </div>
-          )}
-
-          {discount && (
-            <Badge variant="success" className="absolute -top-3.5 right-0" asChild>
-              <motion.span initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }}>
-                {discount}% off
-              </motion.span>
-            </Badge>
           )}
         </div>
 
-        {!!features?.length && (
-          <Stack direction="column" className="mb-auto">
-            {features.map(({ type, text }) => (
-              <div key={text} className={cx(planFeatureVariants())}>
+        {plan.description && (
+          <p className="text-foreground/50 text-sm text-pretty">{plan.description}</p>
+        )}
+      </div>
+
+      <div className="relative flex items-end font-display">
+        <span className="self-start mt-1 mr-1 text-xl/none">$</span>
+
+        <div className="relative -tracking-wide text-4xl/[0.9] sm:text-5xl/[0.9]">
+          <NumberFlow
+            value={price}
+            format={{ notation: "compact" }}
+            locales="en-US"
+            className="!flex items-center h-[0.9em] font-semibold tabular-nums"
+          />
+
+          {!!fullPrice && (
+            <del className="absolute ml-1 left-full -top-3 text-[0.4em] text-foreground/50">
+              <span className="tabular-nums">{Math.round(fullPrice)}</span>
+            </del>
+          )}
+        </div>
+
+        {price > 0 && (
+          <div className="m-1 text-foreground/50 text-base/none md:text-lg/none">
+            /{isSubscription ? "month" : "one-time"}
+          </div>
+        )}
+
+        {discount && (
+          <Badge variant="success" className="absolute -top-3.5 right-0">
+            {discount}% off
+          </Badge>
+        )}
+      </div>
+
+      {!!features && (
+        <TooltipProvider delayDuration={0} disableHoverableContent>
+          <Stack direction="column" className="items-stretch">
+            {features.map(({ type, name, footnote }) => (
+              <div key={name} className={cx(planFeatureVariants())}>
                 <Slot className={cx(planFeatureCheckVariants({ type }))}>
                   {type === "negative" ? <XIcon /> : <CheckIcon />}
                 </Slot>
 
-                <span className={cx(type === "negative" && "text-foreground/50")}>{text}</span>
+                <span className={cx("truncate", type === "negative" && "opacity-50")}>{name}</span>
+
+                {footnote && (
+                  <Tooltip tooltip={footnote}>
+                    <Ping className="-ml-1 mt-1" />
+                  </Tooltip>
+                )}
               </div>
             ))}
           </Stack>
-        )}
+        </TooltipProvider>
+      )}
 
-        <Button
-          type="button"
-          onClick={onSubmit}
-          className="mt-auto w-full"
-          isPending={isPending}
-          {...buttonProps}
-        />
-      </Component>
+      <Button
+        type="button"
+        className="mt-auto"
+        variant={!price ? "secondary" : "primary"}
+        isPending={isPending}
+        disabled={!price || isPending}
+        suffix={<ArrowUpRightIcon />}
+        onClick={onSubmit}
+      >
+        {!price
+          ? "Current Package"
+          : isToolPublished(tool)
+            ? "Upgrade Listing"
+            : (plan.metadata.label ?? `Choose ${plan.name}`)}
+      </Button>
     </Card>
   )
 })
 
-Plan.displayName = "Plan"
+export const PlanSkeleton = () => {
+  return (
+    <Card hover={false} isRevealed={false} className={cx(planVariants())}>
+      <div className="space-y-3">
+        <H5 asChild>
+          <Skeleton className="w-24">&nbsp;</Skeleton>
+        </H5>
+
+        <div className="flex flex-col gap-2">
+          <Skeleton className="w-full h-4">&nbsp;</Skeleton>
+          <Skeleton className="w-3/4 h-4">&nbsp;</Skeleton>
+        </div>
+      </div>
+
+      <Skeleton className="w-1/4 text-4xl/[0.9] sm:text-5xl/[0.9]">&nbsp;</Skeleton>
+
+      <Stack direction="column" className="items-stretch">
+        {[...Array(6)].map((_, index) => (
+          <div key={index} className={cx(planFeatureVariants())}>
+            <div className={cx(planFeatureCheckVariants({ type: "neutral" }))}>&nbsp;</div>
+
+            <Skeleton className="w-3/4">&nbsp;</Skeleton>
+          </div>
+        ))}
+      </Stack>
+
+      <Button variant="secondary" className="mt-auto" disabled>
+        &nbsp;
+      </Button>
+    </Card>
+  )
+}

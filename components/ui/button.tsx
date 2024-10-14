@@ -8,7 +8,7 @@ import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const buttonVariants = cva({
   base: [
-    "group/button relative inline-flex items-center justify-center font-display font-semibold -tracking-micro rounded-md",
+    "group/button relative max-w-80 inline-flex items-center justify-center font-display font-semibold text-left -tracking-micro rounded-md",
     "disabled:opacity-60 disabled:pointer-events-none",
   ],
 
@@ -107,7 +107,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
           {child => (
             <>
               <Slot className={buttonAffixVariants()}>{prefix}</Slot>
-              {!isChildrenEmpty(child) && <span className="truncate">{child}</span>}
+              {!isChildrenEmpty(child) && (
+                <span className="flex-1 truncate only:text-center">{child}</span>
+              )}
               <Slot className={buttonAffixVariants()}>{suffix}</Slot>
 
               {!!isPending && <LoaderIcon className="absolute size-[1.25em] animate-spin" />}

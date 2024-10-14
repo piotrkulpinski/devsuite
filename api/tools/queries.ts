@@ -26,6 +26,13 @@ export const countTools = async ({ where, ...args }: Prisma.ToolCountArgs) => {
   })
 }
 
+export const countUpcomingTools = async ({ where, ...args }: Prisma.ToolCountArgs) => {
+  return await prisma.tool.count({
+    ...args,
+    where: { OR: [{ publishedAt: { gt: new Date() } }, { publishedAt: null }], ...where },
+  })
+}
+
 export const findUniqueTool = async ({ where, ...args }: Prisma.ToolFindUniqueArgs) => {
   return await prisma.tool.findUnique({
     ...args,

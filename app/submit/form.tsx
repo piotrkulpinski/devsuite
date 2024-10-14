@@ -2,10 +2,11 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { redirect } from "next/navigation"
-import { type HTMLAttributes, useTransition } from "react"
+import type { HTMLAttributes } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import type { z } from "zod"
+import { useServerAction } from "zsa-react"
 import { submitTool } from "~/actions/submit"
 import { submitToolSchema } from "~/api/schemas"
 import { Button } from "~/components/ui/button"
@@ -22,8 +23,6 @@ import { Input } from "~/components/ui/forms/input"
 import { cx } from "~/utils/cva"
 
 export const SubmitForm = ({ className, ...props }: HTMLAttributes<HTMLFormElement>) => {
-  const [isPending, startTransition] = useTransition()
-
   const form = useForm<z.infer<typeof submitToolSchema>>({
     resolver: zodResolver(submitToolSchema),
     defaultValues: {
@@ -36,26 +35,21 @@ export const SubmitForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
     },
   })
 
-  function onSubmit(input: z.infer<typeof submitToolSchema>) {
-    startTransition(async () => {
-      const { error, data } = await submitTool(input)
+  const { execute, isPending } = useServerAction(submitTool, {
+    onSuccess: ({ data }) => {
+      form.reset()
+      redirect(`/submit/${data.slug}`)
+    },
 
-      if (error) {
-        toast.error(error)
-        return
-      }
-
-      if (data) {
-        form.reset()
-        redirect(`/submit/${data.id}`)
-      }
-    })
-  }
+    onError: ({ err }) => {
+      toast.error(err.message)
+    },
+  })
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(data => execute(data))}
         className={cx("grid w-full gap-6 sm:grid-cols-2", className)}
         noValidate
         {...props}

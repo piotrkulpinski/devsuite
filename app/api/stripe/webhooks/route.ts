@@ -3,15 +3,9 @@ import { config } from "~/config"
 import EmailAdminNewSubmission from "~/emails/admin/new-submission"
 import EmailSubmissionExpedited from "~/emails/submission-expedited"
 import { env } from "~/env"
-import { sendEmails } from "~/services/email"
+import { sendEmail } from "~/lib/email"
 import { prisma } from "~/services/prisma"
 import { stripe } from "~/services/stripe"
-
-const relevantEvents = new Set([
-  "payment_intent.created",
-  "customer.subscription.created",
-  "customer.subscription.deleted",
-])
 
 export async function POST(request: Request) {
   const body = await request.text()
@@ -20,100 +14,85 @@ export async function POST(request: Request) {
   let event: Stripe.Event
 
   try {
-    if (!signature || !webhookSecret)
+    if (!signature || !webhookSecret) {
       return new Response("Webhook secret not found.", { status: 400 })
+    }
+
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
-    console.log(`🔔  Webhook received: ${event.type}`)
   } catch (err: any) {
     console.log(`❌ Error message: ${err.message}`)
     return new Response(`Webhook Error: ${err.message}`, { status: 400 })
   }
 
-  if (relevantEvents.has(event.type)) {
-    try {
-      switch (event.type) {
-        case "payment_intent.created": {
-          const paymentIntent = event.data.object as Stripe.PaymentIntent
-          const { slug } = paymentIntent.metadata as Stripe.Metadata
+  try {
+    switch (event.type) {
+      case "checkout.session.completed": {
+        const checkoutSession = event.data.object
+        const metadata = checkoutSession.metadata
 
-          try {
-            const tool = await prisma.tool.findUniqueOrThrow({ where: { slug } })
-
-            const to = tool.submitterEmail ?? ""
-            const subject = `🙌 Thanks for submitting ${tool.name}!`
-
-            const adminTo = config.site.email
-            const adminSubject = "New Expedited Listing Request"
-
-            console.log(`💌 Sending submission emails about tool: ${tool.name}`)
-
-            await sendEmails([
-              {
-                to,
-                subject,
-                react: EmailSubmissionExpedited({ tool, to, subject }),
-              },
-              {
-                to: adminTo,
-                subject: adminSubject,
-                react: EmailAdminNewSubmission({ tool, to: adminTo, subject: adminSubject }),
-              },
-            ])
-          } catch (error: any) {
-            console.log(error)
-            throw new Error(`Payment intent insert/update failed: ${error.message}`)
-          }
-
+        if (!metadata?.tool || checkoutSession.mode !== "payment") {
           break
         }
 
-        case "customer.subscription.created": {
-          const subscription = event.data.object as Stripe.Subscription
-          const { slug } = subscription.metadata as Stripe.Metadata
+        const tool = await prisma.tool.findUniqueOrThrow({
+          where: { slug: metadata.tool },
+        })
 
-          try {
-            const tool = await prisma.tool.update({
-              where: { slug },
-              data: { isFeatured: true },
-            })
+        const to = config.site.email // TODO: Update when out of sandbox: tool.submitterEmail ?? ""
+        const subject = `🙌 Thanks for submitting ${tool.name}!`
 
-            // TODO: Send admin email about new featured listing
-          } catch (error: any) {
-            console.log(error)
-            throw new Error(`Subscription insert/update failed: ${error.message}`)
-          }
+        const adminTo = config.site.email
+        const adminSubject = "New Expedited Listing Request"
 
-          break
-        }
+        await Promise.all([
+          // Send submission email to user
+          sendEmail({
+            to,
+            subject,
+            template: EmailSubmissionExpedited({ tool, to, subject }),
+          }),
 
-        case "customer.subscription.deleted": {
-          const subscription = event.data.object as Stripe.Subscription
-          const { slug } = subscription.metadata as Stripe.Metadata
+          // Send admin email about new expedited listing
+          sendEmail({
+            to: adminTo,
+            subject: adminSubject,
+            template: EmailAdminNewSubmission({ tool, to: adminTo, subject: adminSubject }),
+          }),
+        ])
 
-          try {
-            const tool = await prisma.tool.update({
-              where: { slug },
-              data: { isFeatured: false },
-            })
-
-            // TODO: Send admin email about deleted featured listing
-          } catch (error: any) {
-            console.log(error)
-            throw new Error(`Subscription insert/update failed: ${error.message}`)
-          }
-
-          break
-        }
-
-        default:
-          throw new Error("Unhandled relevant event!")
+        break
       }
-    } catch (error) {
-      console.log(error)
-      return new Response("Webhook handler failed. View your Next.js function logs.", {
-        status: 400,
-      })
+
+      case "customer.subscription.created":
+      case "customer.subscription.updated":
+      case "customer.subscription.deleted": {
+        const subscription = event.data.object
+        const metadata = subscription.metadata
+
+        if (!metadata?.tool) {
+          break
+        }
+
+        await prisma.tool.update({
+          where: { slug: metadata?.tool },
+          data: { isFeatured: subscription.status === "active" },
+        })
+
+        if (event.type === "customer.subscription.created") {
+          // TODO: Send admin email about new featured listing
+        }
+
+        if (event.type === "customer.subscription.deleted") {
+          // TODO: Send admin email about deleted featured listing
+        }
+
+        break
+      }
     }
+  } catch (error) {
+    console.log(error)
+
+    return new Response("Webhook handler failed", { status: 400 })
   }
 
   return new Response(JSON.stringify({ received: true }))

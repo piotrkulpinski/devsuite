@@ -1,10 +1,11 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { type HTMLAttributes, useTransition } from "react"
+import type { HTMLAttributes } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import type { z } from "zod"
+import { useServerAction } from "zsa-react"
 import { subscribeToNewsletter } from "~/actions/subscribe"
 import { newsletterSchema } from "~/api/schemas"
 import { Button, type ButtonProps } from "~/components/ui/button"
@@ -26,33 +27,26 @@ export const NewsletterForm = ({
   buttonProps = { variant: "primary", children: "Subscribe" },
   ...props
 }: NewsletterProps) => {
-  const [isPending, startTransition] = useTransition()
-
   const form = useForm<z.infer<typeof newsletterSchema>>({
     resolver: zodResolver(newsletterSchema),
     defaultValues: { email: "", utm_medium: medium },
   })
 
-  const onSubmit = (input: z.infer<typeof newsletterSchema>) => {
-    startTransition(async () => {
-      const { error, message } = await subscribeToNewsletter(input)
+  const { execute, isPending } = useServerAction(subscribeToNewsletter, {
+    onSuccess: ({ data }) => {
+      form.reset()
+      toast.success(data)
+    },
 
-      if (error) {
-        toast.error(error)
-        return
-      }
-
-      if (message) {
-        toast.success(message)
-        form.reset()
-      }
-    })
-  }
+    onError: ({ err }) => {
+      toast.error(err.message)
+    },
+  })
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(data => execute(data))}
         className={cx("flex flex-col gap-3 w-full max-w-sm", className)}
         noValidate
         {...props}
