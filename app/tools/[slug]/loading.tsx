@@ -31,7 +31,7 @@ export default function Loading() {
         </Stack>
       </div>
 
-      <Gallery images={["", "", "", ""]} />
+      <Gallery images={[""]} />
 
       <div className="space-y-2">
         <Skeleton className="h-4 w-3/4" />

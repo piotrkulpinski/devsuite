@@ -44,7 +44,7 @@ export const buttonVariants = cva({
 })
 
 export const buttonAffixVariants = cva({
-  base: "shrink-0 size-[1.1em] will-change-transform group-hover/button:last:rotate-12",
+  base: "shrink-0 size-[1.1em] my-[0.2em] will-change-transform group-hover/button:last:[&:not(:only-child)]:rotate-12",
 })
 
 export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "size" | "prefix"> &

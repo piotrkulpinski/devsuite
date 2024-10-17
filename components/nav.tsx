@@ -1,12 +1,20 @@
 "use client"
 
 import { Slot } from "@radix-ui/react-slot"
-import hotkeys from "hotkeys-js"
-import { ArrowLeftIcon, ArrowRightIcon, HomeIcon, LinkIcon } from "lucide-react"
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  CalendarIcon,
+  HomeIcon,
+  LinkIcon,
+  LoaderIcon,
+} from "lucide-react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Fragment, type HTMLAttributes, useEffect } from "react"
+import { Fragment, type HTMLAttributes } from "react"
 import { toast } from "sonner"
+import { useServerAction } from "zsa-react"
+import { publishTool } from "~/actions/ai"
 import type { ToolOne } from "~/api/tools/payloads"
 import { NavItem, type NavItemProps } from "~/components/nav-item"
 import { Dock } from "~/components/ui/dock"
@@ -67,12 +75,29 @@ export const Nav = ({ tool, previous, next, ...props }: NavProps) => {
     },
   ]
 
+  const { execute, isPending } = useServerAction(publishTool, {
+    onSuccess: ({ data }) => {
+      console.log(data)
+    },
+
+    onError: ({ err }) => {
+      console.error(err.message)
+      toast.error(err.message)
+    },
+  })
+
   const actions: (null | NavItemProps)[] = [
     {
       icon: <HomeIcon />,
       tooltip: "Go Home",
       shortcut: "H",
       onClick: () => router.push("/"),
+    },
+    {
+      icon: isPending ? <LoaderIcon className="animate-spin" /> : <CalendarIcon />,
+      tooltip: "Publish Tool",
+      shortcut: "P",
+      onClick: () => execute({ slug: tool.slug }),
     },
     // {
     //   icon: <EraserIcon />,
@@ -113,14 +138,6 @@ export const Nav = ({ tool, previous, next, ...props }: NavProps) => {
       onClick: () => router.push(`/tools/${next}`),
     },
   ]
-
-  useEffect(() => {
-    hotkeys("E", () => {
-      router.push("edit")
-    })
-
-    return () => hotkeys.unbind("E")
-  }, [])
 
   return (
     <TooltipProvider delayDuration={0} disableHoverableContent>

@@ -17,7 +17,7 @@ type GalleryProps = HTMLAttributes<HTMLElement> & {
 }
 
 const galleryImageVariants = cva({
-  base: "border border-foreground/10 bg-foreground/5 rounded aspect-[1200/630] object-cover md:rounded-lg",
+  base: "border border-foreground/10 bg-foreground/5 rounded aspect-video object-cover md:rounded-lg",
 })
 
 export const Gallery = ({ images, ...props }: GalleryProps) => {
@@ -28,13 +28,17 @@ export const Gallery = ({ images, ...props }: GalleryProps) => {
   }
 
   if (images.length === 1) {
+    if (!images[0]) {
+      return <div className={cx(galleryImageVariants())} />
+    }
+
     return (
       <img
         key={pathname}
         src={images[0]}
         alt=""
-        height={630}
-        width={1200}
+        height={720}
+        width={1280}
         className={cx(galleryImageVariants({ className: "w-full h-auto" }))}
       />
     )

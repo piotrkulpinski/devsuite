@@ -1,5 +1,59 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
+import { z } from "zod"
+import { createServerAction } from "zsa"
+import { generateContent } from "~/lib/generate-content"
+import { getSocialsFromUrl } from "~/lib/socials"
+import { inngest } from "~/services/inngest"
+import { prisma } from "~/services/prisma"
+
+export const publishTool = createServerAction()
+  .input(z.object({ slug: z.string() }))
+  .handler(async ({ input }) => {
+    const tool = await prisma.tool.findUniqueOrThrow({
+      where: { slug: input.slug },
+    })
+
+    await prisma.tool.update({
+      where: { id: tool.id },
+      data: { publishedAt: new Date() },
+    })
+
+    await inngest.send({ name: "tool.scheduled", data: { slug: tool.slug } })
+
+    revalidatePath(`/tools/${tool.slug}`)
+  })
+
+// TODO: remove later
+export const generateToolContent = createServerAction()
+  .input(z.object({ slug: z.string() }))
+  .handler(async ({ input }) => {
+    const tool = await prisma.tool.findUniqueOrThrow({
+      where: { slug: input.slug },
+    })
+
+    const [{ categories, tags, ...content }, socials] = await Promise.all([
+      generateContent(tool),
+      getSocialsFromUrl(tool.websiteUrl),
+    ])
+
+    await prisma.tool.update({
+      where: { id: tool.id },
+      data: {
+        ...content,
+        xHandle: socials.X?.[0]?.user,
+        socials: Object.entries(socials).map(([name, links]) => ({ name, url: links[0].url })),
+        categories: { set: categories.map(({ slug }) => ({ slug })) },
+        tags: { connectOrCreate: tags.map(slug => ({ where: { slug }, create: { slug } })) },
+      },
+    })
+
+    revalidatePath(`/tools/${tool.slug}`)
+
+    return content
+  })
+
 // import Firecrawl from "@mendable/firecrawl-js"
 // import type { Tool } from "@prisma/client"
 // import { generateObject } from "ai"

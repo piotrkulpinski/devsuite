@@ -18,9 +18,10 @@ model Tool {
   websiteUrl     String    @unique
   affiliateUrl   String?
   faviconUrl     String?
-  images         String[]
-  links          String[]
+  screenshotUrl  String?
+  socials        Json?
   isFeatured     Boolean   @default(false)
+  xHandle        String?
   submitterName  String?
   submitterEmail String?
   publishedAt    DateTime?
@@ -61,7 +62,6 @@ model Collection {
 
 model Tag {
   id        String   @id @default(cuid())
-  name      String   @unique
   slug      String   @unique
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())

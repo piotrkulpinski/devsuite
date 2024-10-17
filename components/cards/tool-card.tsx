@@ -37,7 +37,7 @@ export const ToolCard = ({ tool, ...props }: ToolCardProps) => {
           {tool.faviconUrl && <Favicon src={tool.faviconUrl} className="rounded-full" />}
         </div>
 
-        {tool.description && <CardDescription>{tool.description}</CardDescription>}
+        {tool.tagline && <CardDescription>{tool.tagline}</CardDescription>}
 
         <Stack size="sm">
           <Badge variant="ghost">
