@@ -3,6 +3,7 @@ import type { HTMLAttributes } from "react"
 import { forwardRef, isValidElement } from "react"
 
 import { Box, type BoxProps } from "~/components/ui/box"
+import { H3 } from "~/components/ui/heading"
 import { Stars } from "~/components/ui/stars"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
@@ -52,6 +53,18 @@ export const Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
 
 Card.displayName = "Card"
 
+export const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div ref={ref} className={cx("flex flex-col space-y-1.5 p-4 md:p-6", className)} {...props} />
+  ),
+)
+CardHeader.displayName = "CardHeader"
+
+export const CardTitle = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLHeadingElement>>(
+  ({ ...props }, ref) => <H3 ref={ref} {...props} />,
+)
+CardTitle.displayName = "CardTitle"
+
 export const CardDescription = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   return (
     <p
@@ -62,6 +75,24 @@ export const CardDescription = ({ className, ...props }: HTMLAttributes<HTMLElem
 }
 
 CardDescription.displayName = "CardDescription"
+
+export const CardContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div ref={ref} className={cx("p-4 pt-0 md:p-6 md:pt-0", className)} {...props} />
+  ),
+)
+CardContent.displayName = "CardContent"
+
+export const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cx("flex items-center p-4 pt-0 md:p-6 md:pt-0", className)}
+      {...props}
+    />
+  ),
+)
+CardFooter.displayName = "CardFooter"
 
 export const CardStars = ({ className, ...props }: HTMLAttributes<HTMLElement>) => {
   return <Stars className={cx("absolute inset-0 -z-10", className)} {...props} />
