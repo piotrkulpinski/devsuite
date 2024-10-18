@@ -40,7 +40,7 @@ export const toolScheduled = inngest.createFunction(
           screenshotUrl,
           xHandle: socials.X?.[0]?.user,
           socials: Object.entries(socials).map(([name, links]) => ({ name, url: links[0].url })),
-          categories: { set: categories.map(({ slug }) => ({ slug })) },
+          categories: { set: categories.map(({ id }) => ({ id })) },
           tags: { connectOrCreate: tags.map(slug => ({ where: { slug }, create: { slug } })) },
         },
       })

@@ -1,16 +1,17 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [citext]
 }
 
 model Tool {
   id             String    @id @default(cuid())
-  name           String
+  name           String    @db.Citext
   slug           String    @unique
   tagline        String?
   description    String?
@@ -38,7 +39,7 @@ model Tool {
 
 model Category {
   id          String   @id @default(cuid())
-  name        String   @unique
+  name        String   @db.Citext
   slug        String   @unique
   description String?
   updatedAt   DateTime @updatedAt
@@ -50,7 +51,7 @@ model Category {
 
 model Collection {
   id          String   @id @default(cuid())
-  name        String   @unique
+  name        String   @db.Citext
   slug        String   @unique
   description String?
   updatedAt   DateTime @updatedAt

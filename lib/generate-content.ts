@@ -1,6 +1,6 @@
 import { createAnthropic } from "@ai-sdk/anthropic"
 import { openai } from "@ai-sdk/openai"
-import { slugify } from "@curiousleaf/utils"
+import { isTruthy, slugify } from "@curiousleaf/utils"
 import type { Tool } from "@prisma/client"
 import { generateObject } from "ai"
 import type { Jsonify } from "inngest/helpers/jsonify"
@@ -17,7 +17,7 @@ import { prisma } from "~/services/prisma"
  */
 export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
   const model = createAnthropic()("claude-3-5-sonnet-20240620")
-  const allCategories = await prisma.category.findMany()
+  const categories = await prisma.category.findMany()
 
   try {
     const scrapedData = await firecrawlClient.scrapeUrl(tool.websiteUrl, {
@@ -44,7 +44,11 @@ export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
         .describe(
           "A detailed and engaging longer description with key benefits (up to 1000 characters). Can be Markdown formatted, but should start with paragraph and not use headings. Make sure the lists use correct Markdown syntax.",
         ),
-      categories: z.array(z.string()).max(2).describe("A list of categories for the tool."),
+      categories: z
+        .array(z.string())
+        .max(2)
+        .transform(a => a.map(slug => categories.find(c => c.slug === slug)).filter(isTruthy))
+        .describe("A list of categories for the tool."),
       tags: z
         .array(z.string().transform(tag => slugify(tag)))
         .max(10)
@@ -71,21 +75,12 @@ export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
         content: ${scrapedData.markdown}
 
         Here is the list of categories to assign to the tool:
-        ${allCategories.map(cat => cat.name).join("\n")}
+        ${categories.map(({ name }) => name).join("\n")}
       `,
       temperature: 0.3,
     })
 
-    const { categories, ...content } = object
-
-    return {
-      ...content,
-
-      // Relations
-      categories: await prisma.category.findMany({
-        where: { name: { in: categories } },
-      }),
-    }
+    return object
   } catch (error) {
     throw new Error(getErrorMessage(error))
   }
