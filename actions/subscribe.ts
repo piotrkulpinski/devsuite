@@ -1,5 +1,6 @@
 "use server"
 
+import ky from "ky"
 import { createServerAction } from "zsa"
 import { newsletterSchema } from "~/api/schemas"
 import { env } from "~/env"
@@ -11,19 +12,12 @@ import { env } from "~/env"
  */
 export const subscribeToNewsletter = createServerAction()
   .input(newsletterSchema)
-  .handler(async ({ input }) => {
+  .handler(async ({ input: json }) => {
     const url = `https://api.beehiiv.com/v2/publications/${env.BEEHIIV_PUBLICATION_ID}/subscriptions`
 
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${env.BEEHIIV_API_KEY}`,
-      },
-      body: JSON.stringify(input),
-    })
-
-    const { data } = await response.json()
+    const { data } = await ky
+      .post(url, { json, headers: { Authorization: `Bearer ${env.BEEHIIV_API_KEY}` } })
+      .json<{ data: { status: string } }>()
 
     if (data?.status !== "active") {
       throw new Error("Failed to subscribe to newsletter")

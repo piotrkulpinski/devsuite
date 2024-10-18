@@ -11,7 +11,7 @@ datasource db {
 
 model Tool {
   id             String    @id @default(cuid())
-  name           String    @db.Citext
+  name           String
   slug           String    @unique
   tagline        String?
   description    String?
@@ -34,12 +34,15 @@ model Tool {
   collections Collection[]
   tags        Tag[]
 
+  // Indexes
   @@index([id, slug])
+  @@index([name])
+  @@index([description])
 }
 
 model Category {
   id          String   @id @default(cuid())
-  name        String   @db.Citext
+  name        String
   slug        String   @unique
   description String?
   updatedAt   DateTime @updatedAt
@@ -47,11 +50,14 @@ model Category {
 
   // Relations
   tools Tool[]
+
+  // Indexes
+  @@index([name])
 }
 
 model Collection {
   id          String   @id @default(cuid())
-  name        String   @db.Citext
+  name        String
   slug        String   @unique
   description String?
   updatedAt   DateTime @updatedAt
@@ -59,6 +65,9 @@ model Collection {
 
   // Relations
   tools Tool[]
+
+  // Indexes
+  @@index([name])
 }
 
 model Tag {
@@ -69,4 +78,7 @@ model Tag {
 
   // Relations
   tools Tool[]
+
+  // Indexes
+  @@index([slug])
 }

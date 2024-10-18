@@ -1,5 +1,6 @@
 import { SendEmailCommand } from "@aws-sdk/client-sesv2"
 import { render } from "@react-email/components"
+import ky from "ky"
 import type { ReactElement } from "react"
 import { config } from "~/config"
 import { sesClient } from "~/services/aws-ses"
@@ -31,8 +32,8 @@ export const sendEmail = async ({ to, subject, template }: EmailParams) => {
 export const isRealEmail = async (email: string) => {
   const disposableJsonURL =
     "https://rawcdn.githack.com/disposable/disposable-email-domains/master/domains.json"
-  const response = await fetch(disposableJsonURL)
-  const disposableDomains: string[] = await response.json()
+
+  const disposableDomains = await ky.get(disposableJsonURL).json<string[]>()
   const domain = email.split("@")[1]
 
   return !disposableDomains.includes(domain)

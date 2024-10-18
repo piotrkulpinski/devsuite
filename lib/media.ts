@@ -1,6 +1,7 @@
 import { DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3"
 import { Upload } from "@aws-sdk/lib-storage"
 import { stripURLSubpath } from "@curiousleaf/utils"
+import ky from "ky"
 import { env } from "~/env"
 import { s3Client } from "~/services/aws-s3"
 
@@ -70,20 +71,29 @@ export const removeS3Directory = async (directory: string) => {
 export const uploadFavicon = async (url: string, s3Key: string): Promise<string> => {
   const cleanedUrl = encodeURIComponent(stripURLSubpath(url) ?? "")
   const faviconUrl = `https://www.google.com/s2/favicons?sz=128&domain_url=${cleanedUrl}`
-  const response = await fetch(faviconUrl)
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch favicon: ${response.statusText}`)
+  try {
+    const response = await ky.get(faviconUrl, {
+      throwHttpErrors: false,
+      retry: 3,
+    })
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch favicon: ${response.statusText}`)
+    }
+
+    // Convert response to Buffer
+    const arrayBuffer = await response.arrayBuffer()
+    const buffer = Buffer.from(arrayBuffer)
+
+    // Upload to S3
+    const s3Location = await uploadToS3Storage(buffer, `${s3Key}.png`)
+
+    return s3Location
+  } catch (error) {
+    console.error("Error fetching or uploading favicon:", error)
+    throw error
   }
-
-  // Convert response to Buffer
-  const arrayBuffer = await response.arrayBuffer()
-  const buffer = Buffer.from(arrayBuffer)
-
-  // Upload to S3
-  const s3Location = await uploadToS3Storage(buffer, `${s3Key}.png`)
-
-  return s3Location
 }
 
 /**
@@ -123,14 +133,13 @@ export const uploadScreenshot = async (url: string, s3Key: string): Promise<stri
     storage_return_location: "true",
   })
 
-  const endpointUrl = `https://api.screenshotone.com/take?${screenshotParams.toString()}`
-  const response = await fetch(endpointUrl)
+  try {
+    const endpointUrl = `https://api.screenshotone.com/take?${screenshotParams.toString()}`
+    const { store } = await ky.get(endpointUrl).json<{ store: { location: string } }>()
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch screenshot: ${response.statusText}`)
+    return store.location
+  } catch (error) {
+    console.error("Error fetching screenshot:", error)
+    throw error
   }
-
-  const data = (await response.json()) as { store: { location: string } }
-
-  return data.store.location
 }
