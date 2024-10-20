@@ -11,7 +11,7 @@ import "./styles.css"
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <body className="min-h-dvh flex flex-col bg-background text-foreground font-sans">
+    <>
       <div className="fixed inset-x-0 top-0 -z-10 max-w-screen-lg mx-auto aspect-[2/1] overflow-hidden">
         <Stars className="absolute size-full -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2" />
       </div>
@@ -36,6 +36,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
       </Container>
 
       <Toaster />
-    </body>
+    </>
   )
 }

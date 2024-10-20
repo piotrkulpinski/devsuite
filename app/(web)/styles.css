@@ -103,6 +103,18 @@ svg.lucide:not([class*="size-"]):not([class*="h-"]) {
   @apply size-[1em];
 }
 
+[href] svg[class*="arrow-up-right"],
+[type] svg[class*="arrow-up-right"] {
+  @apply will-change-transform;
+  @apply duration-150;
+}
+
+[href]:hover svg[class*="arrow-up-right"],
+[type]:hover svg[class*="arrow-up-right"] {
+  @apply translate-x-[0.15em];
+  @apply rotate-12;
+}
+
 select:not([size]) {
   @apply bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyBmaWxsPSdub25lJyBzdHJva2U9JyNmZmYnIHN0cm9rZS13aWR0aD0nMicgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJyBjbGFzcz0nbHVjaWRlIGx1Y2lkZS1jaGV2cm9uLWRvd24nPjxwYXRoIGQ9J202IDkgNiA2IDYtNicvPjwvc3ZnPg==')];
   @apply bg-no-repeat;

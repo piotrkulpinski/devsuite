@@ -24,6 +24,10 @@ export const NavUser = ({ className, isCollapsed, ...props }: NavUserProps) => {
   const { data: session } = useSession()
   const user = session?.user
 
+  if (!user) {
+    return null
+  }
+
   return (
     <nav
       className={cx(
@@ -35,10 +39,8 @@ export const NavUser = ({ className, isCollapsed, ...props }: NavUserProps) => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            variant="outline"
-            size={isCollapsed ? "icon" : "md"}
             prefix={
-              user?.image ? (
+              user.image ? (
                 <Avatar className="size-5">
                   <AvatarImage src={user.image} />
                 </Avatar>
@@ -48,9 +50,9 @@ export const NavUser = ({ className, isCollapsed, ...props }: NavUserProps) => {
             }
             suffix={!isCollapsed && <ChevronsUpDown className="ml-auto text-muted-foreground" />}
             className={cx(!isCollapsed && "justify-start")}
-            aria-label={user?.name ?? "User"}
+            aria-label={user.name ?? "User"}
           >
-            {isCollapsed ? null : user?.name}
+            {isCollapsed ? null : user.name}
           </Button>
         </DropdownMenuTrigger>
 
@@ -67,17 +69,11 @@ export const NavUser = ({ className, isCollapsed, ...props }: NavUserProps) => {
 
           <DropdownMenuSeparator />
 
-          {user ? (
-            <DropdownMenuItem asChild>
-              <button type="button" onClick={() => signOut()}>
-                Sign Out
-              </button>
-            </DropdownMenuItem>
-          ) : (
-            <DropdownMenuItem asChild>
-              <Link href="/signin">Sign In</Link>
-            </DropdownMenuItem>
-          )}
+          <DropdownMenuItem asChild>
+            <button type="button" onClick={() => signOut()}>
+              Sign Out
+            </button>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </nav>

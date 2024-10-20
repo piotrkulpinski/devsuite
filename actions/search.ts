@@ -13,22 +13,22 @@ export const searchItems = createServerAction()
   .handler(async ({ input: { query } }) => {
     const [tools, categories, collections, tags] = await Promise.all([
       prisma.tool.findMany({
-        where: { name: { contains: query } },
+        where: { name: { contains: query, mode: "insensitive" } },
         orderBy: { name: "asc" },
         take: 5,
       }),
       prisma.category.findMany({
-        where: { name: { contains: query } },
+        where: { name: { contains: query, mode: "insensitive" } },
         orderBy: { name: "asc" },
         take: 5,
       }),
       prisma.collection.findMany({
-        where: { name: { contains: query } },
+        where: { name: { contains: query, mode: "insensitive" } },
         orderBy: { name: "asc" },
         take: 5,
       }),
       prisma.tag.findMany({
-        where: { slug: { contains: query } },
+        where: { slug: { contains: query, mode: "insensitive" } },
         orderBy: { slug: "asc" },
         take: 5,
       }),

@@ -46,7 +46,7 @@ export default async function SubmitThanks({ params }: SubmitThanksProps) {
         )}
       </Intro>
 
-      <img src="/3d-heart.webp" alt="" className="max-w-64 w-2/3 h-auto mx-auto" />
+      <img src="/_static/3d-heart.webp" alt="" className="max-w-64 w-2/3 h-auto mx-auto" />
     </Wrapper>
   )
 }

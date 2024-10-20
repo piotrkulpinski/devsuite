@@ -10,10 +10,8 @@ export default async function RootLayout({ children }: PropsWithChildren) {
 
   return (
     <SessionProvider session={session}>
-      <body className="flex flex-col min-h-screen w-full font-sans">
-        {children}
-        <Toaster />
-      </body>
+      {children}
+      <Toaster />
     </SessionProvider>
   )
 }

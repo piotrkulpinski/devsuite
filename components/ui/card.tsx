@@ -78,7 +78,7 @@ CardDescription.displayName = "CardDescription"
 
 export const CardContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cx("p-4 pt-0 md:p-6 md:pt-0", className)} {...props} />
+    <div ref={ref} className={cx("w-full p-4 pt-0 md:p-6 md:pt-0", className)} {...props} />
   ),
 )
 CardContent.displayName = "CardContent"

@@ -108,6 +108,18 @@
     @apply size-[1.33em];
   }
 
+  [href] svg[class*="arrow-up-right"],
+  [type] svg[class*="arrow-up-right"] {
+    @apply will-change-transform;
+    @apply duration-150;
+  }
+  
+  [href]:hover svg[class*="arrow-up-right"],
+  [type]:hover svg[class*="arrow-up-right"] {
+    @apply translate-x-[0.15em];
+    @apply rotate-12;
+  }
+
   strong {
     @apply font-medium;
   }

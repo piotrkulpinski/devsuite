@@ -112,7 +112,7 @@ export const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLEle
           rel="noopener noreferrer nofollow"
         >
           <img
-            src="/authors/piotrkulpinski.jpg"
+            src="/_static/authors/piotrkulpinski.jpg"
             alt="Piotr Kulpinski"
             loading="lazy"
             width="16"
