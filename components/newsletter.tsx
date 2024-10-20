@@ -29,7 +29,7 @@ export const Newsletter = ({ className, title, description, ...props }: Newslett
 
         <div className="absolute -inset-y-px -right-px w-1/2 rounded-lg overflow-clip select-none pointer-events-none max-md:hidden">
           <Image
-            src="/3d-panels.webp"
+            src="/_static/3d-panels.webp"
             alt="Newsletter"
             height={225}
             width={480}

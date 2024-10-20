@@ -20,7 +20,7 @@ export const buttonVariants = cva({
     size: {
       sm: "px-2 py-0.5 gap-[0.66ch] text-[13px]/normal",
       md: "px-3 py-1 gap-[0.75ch] text-[13px]/normal",
-      lg: "px-4 py-2 gap-[1ch] text-[13px]/normal sm:text-sm/tight",
+      lg: "px-4 py-2 gap-[1ch] text-[13px]/normal sm:text-sm/normal",
     },
     isAffixOnly: {
       true: "",
@@ -44,7 +44,7 @@ export const buttonVariants = cva({
 })
 
 export const buttonAffixVariants = cva({
-  base: "shrink-0 size-[1.1em] my-[0.2em] will-change-transform group-hover/button:last:[&:not(:only-child)]:rotate-12",
+  base: "shrink-0 size-[1.1em] my-[0.2em]",
 })
 
 export type ButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "size" | "prefix"> &

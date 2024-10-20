@@ -22,15 +22,7 @@ export const AnalyticsChart = ({ data, average, config, ...props }: AnalyticsCha
   }
 
   return (
-    <ChartContainer
-      config={{
-        visitors: {
-          label: "Visitors",
-        },
-        ...config,
-      }}
-      {...props}
-    >
+    <ChartContainer config={{ visitors: { label: "Visitors" }, ...config }} {...props}>
       <BarChart accessibilityLayer margin={{ left: -2, right: -2 }} data={data}>
         <Bar
           dataKey="visitors"

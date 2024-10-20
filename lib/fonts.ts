@@ -5,7 +5,7 @@ export const UncutSans = localFont({
   display: "swap",
   src: [
     {
-      path: "../public/fonts/UncutSans-Variable.woff2",
+      path: "../public/_static/fonts/UncutSans-Variable.woff2",
       weight: "400 900",
       style: "normal",
     },
@@ -17,7 +17,7 @@ export const GeistSans = localFont({
   display: "swap",
   src: [
     {
-      path: "../public/fonts/GeistSans-Variable.woff2",
+      path: "../public/_static/fonts/GeistSans-Variable.woff2",
       weight: "400 900",
       style: "normal",
     },

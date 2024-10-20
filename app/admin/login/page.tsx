@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 import { Button } from "~/components/ui/button"
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card"
-import { auth, signIn } from "~/services/auth"
+import { auth, signIn } from "~/lib/auth"
 
 export default async function LoginPage() {
   const session = await auth()
@@ -14,8 +14,8 @@ export default async function LoginPage() {
     <div className="min-h-screen flex justify-center items-start p-8 bg-muted md:items-center">
       <Card className="w-full max-w-xs">
         <CardHeader>
-          <CardTitle>Sign in</CardTitle>
-          <CardDescription>Login to your account</CardDescription>
+          <CardTitle>Log In</CardTitle>
+          <CardDescription>Sign in to your account</CardDescription>
         </CardHeader>
 
         <CardFooter>

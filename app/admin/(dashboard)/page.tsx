@@ -17,9 +17,9 @@ export default function DashboardPage() {
     <>
       <H3>Dashboard</H3>
 
-      <div className="grid grid-cols-2 gap-4 overflow-clip md:grid-cols-3 lg:grid-cols-6">
+      <div className="grid grid-cols-2 gap-4 overflow-clip md:grid-cols-3 lg:grid-cols-4">
         <Suspense
-          fallback={Array.from({ length: 6 }).map((_, index) => (
+          fallback={Array.from({ length: 4 }).map((_, index) => (
             <Card key={index}>
               <CardHeader>
                 <Skeleton className="h-5 w-24" />
@@ -31,12 +31,12 @@ export default function DashboardPage() {
           <StatsCard />
         </Suspense>
 
-        <Suspense fallback={<AnalyticsCardSkeleton className="col-span-full lg:col-span-3" />}>
-          <AnalyticsCard className="col-span-full lg:col-span-3" />
+        <Suspense fallback={<AnalyticsCardSkeleton className="col-span-full lg:col-span-2" />}>
+          <AnalyticsCard className="col-span-full lg:col-span-2" />
         </Suspense>
 
-        <Suspense fallback={<ScheduledToolsCardSkeleton className="col-span-full lg:col-span-3" />}>
-          <ScheduledToolsCard className="col-span-full lg:col-span-3" />
+        <Suspense fallback={<ScheduledToolsCardSkeleton className="col-span-full lg:col-span-2" />}>
+          <ScheduledToolsCard className="col-span-full lg:col-span-2" />
         </Suspense>
       </div>
     </>
