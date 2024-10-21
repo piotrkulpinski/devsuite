@@ -1,11 +1,12 @@
 "use client"
 
-import type { Tool } from "@openalternative/db"
+import type { Tool } from "@prisma/client"
 import type { Row } from "@tanstack/react-table"
 import { TrashIcon } from "lucide-react"
 import type * as React from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
+import { Button } from "~/components/admin/ui/button"
 import {
   Dialog,
   DialogClose,
@@ -16,7 +17,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/admin/ui/dialog"
-import { Button } from "~/components/ui/button"
 import { deleteTools } from "../_lib/actions"
 
 interface ToolsDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {

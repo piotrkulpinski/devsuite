@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect } from "react"
+import { Button } from "~/components/admin/ui/button"
 import { H3 } from "~/components/common/heading"
-import { Button } from "~/components/ui/button"
 
 type ErrorProps = {
   error: Error & { digest?: string }

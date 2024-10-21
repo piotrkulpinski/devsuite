@@ -1,13 +1,13 @@
 "use client"
 
 import { formatDate } from "@curiousleaf/utils"
-import type { Tool } from "@openalternative/db"
+import type { Tool } from "@prisma/client"
 import type { ColumnDef } from "@tanstack/react-table"
 import Image from "next/image"
 import Link from "next/link"
 import { ToolActions } from "~/app/admin/(dashboard)/tools/_components/tool-actions"
-import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
-import { Checkbox } from "~/components/ui/checkbox"
+import { DataTableColumnHeader } from "~/components/admin/data-table/data-table-column-header"
+import { Checkbox } from "~/components/common/forms/checkbox"
 
 export function getColumns(): ColumnDef<Tool>[] {
   return [
@@ -52,7 +52,7 @@ export function getColumns(): ColumnDef<Tool>[] {
           )}
 
           <Link
-            href={`/tools/${row.original.id}`}
+            href={`/admin/tools/${row.original.id}`}
             className="max-w-36 truncate font-medium text-primary hover:text-foreground"
           >
             {row.getValue("name")}

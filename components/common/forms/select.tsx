@@ -1,5 +1,5 @@
 import { type SelectHTMLAttributes, forwardRef } from "react"
-import { inputVariants } from "~/components/ui/forms/input"
+import { inputVariants } from "~/components/common/forms/input"
 import { type VariantProps, cx } from "~/utils/cva"
 
 export type SelectProps = Omit<SelectHTMLAttributes<HTMLSelectElement>, "size"> &

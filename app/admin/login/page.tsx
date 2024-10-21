@@ -1,6 +1,12 @@
 import { redirect } from "next/navigation"
-import { Button } from "~/components/ui/button"
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card"
+import { Button } from "~/components/admin/ui/button"
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "~/components/admin/ui/card"
 import { auth, signIn } from "~/lib/auth"
 
 export default async function LoginPage() {
@@ -22,7 +28,7 @@ export default async function LoginPage() {
           <form
             action={async () => {
               "use server"
-              await signIn("google", { redirectTo: "/" })
+              await signIn("google", { redirectTo: "/admin" })
             }}
             className="w-full"
           >

@@ -3,10 +3,10 @@ import { fontFamily } from "tailwindcss/defaultTheme"
 import plugin from "tailwindcss/plugin"
 
 export default {
-  // darkMode: ["class"],
   content: [
     "./components/common/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/web/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/*.{js,ts,jsx,tsx,mdx}",
     "./app/(web)/**/*.{js,ts,jsx,tsx,mdx}",
   ],
 

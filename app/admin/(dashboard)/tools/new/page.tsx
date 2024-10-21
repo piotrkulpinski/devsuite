@@ -1,16 +1,20 @@
 import { ToolForm } from "~/app/admin/(dashboard)/tools/_components/tool-form"
-import { getAlternatives, getCategories } from "~/app/admin/(dashboard)/tools/_lib/queries"
-import { H3 } from "~/components/common/heading"
-import { Wrapper } from "~/components/ui/wrapper"
+import { getCategories, getCollections, getTags } from "~/app/admin/(dashboard)/tools/_lib/queries"
+import { Wrapper } from "~/components/admin/ui/wrapper"
+import { H4 } from "~/components/common/heading"
 
 export default async function CreateToolPage() {
-  const [alternatives, categories] = await Promise.all([getAlternatives(), getCategories()])
+  const [categories, collections, tags] = await Promise.all([
+    getCategories(),
+    getCollections(),
+    getTags(),
+  ])
 
   return (
     <Wrapper size="md">
-      <H3>Create tool</H3>
+      <H4 as="h1">Create tool</H4>
 
-      <ToolForm alternatives={alternatives} categories={categories} />
+      <ToolForm categories={categories} collections={collections} tags={tags} />
     </Wrapper>
   )
 }

@@ -8,14 +8,14 @@ import {
   ScheduledToolsCardSkeleton,
 } from "~/app/admin/(dashboard)/_components/scheduled-tools-card"
 import { StatsCard } from "~/app/admin/(dashboard)/_components/stats-card"
-import { H3 } from "~/components/common/heading"
-import { Card, CardHeader } from "~/components/ui/card"
-import { Skeleton } from "~/components/ui/skeleton"
+import { Card, CardHeader } from "~/components/admin/ui/card"
+import { H4 } from "~/components/common/heading"
+import { Skeleton } from "~/components/common/skeleton"
 
 export default function DashboardPage() {
   return (
     <>
-      <H3>Dashboard</H3>
+      <H4>Dashboard</H4>
 
       <div className="grid grid-cols-2 gap-4 overflow-clip md:grid-cols-3 lg:grid-cols-4">
         <Suspense

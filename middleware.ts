@@ -1,8 +1,6 @@
-import { getUrlHostname } from "@curiousleaf/utils"
 import { NextResponse } from "next/server"
-import { env } from "~/env"
+import { env, isProd } from "~/env"
 import { auth } from "~/lib/auth"
-import { parse } from "~/lib/middleware"
 
 export const config = {
   matcher: [
@@ -20,9 +18,9 @@ export const config = {
 }
 
 export default auth(req => {
-  const { domain, path } = parse(req)
+  const { pathname } = req.nextUrl
 
-  if (env.ALLOWED_IPS) {
+  if (isProd && env.ALLOWED_IPS) {
     const allowedIps = env.ALLOWED_IPS.split(",")
     const ip = req.ip || req.headers.get("x-forwarded-for")
 
@@ -31,25 +29,8 @@ export default auth(req => {
     }
   }
 
-  const adminHostnames = new Set([
-    `admin.${getUrlHostname(env.NEXT_PUBLIC_SITE_URL)}`,
-    "admin.localhost:5175",
-  ])
-
-  // if (path.startsWith("/admin") && !adminHostnames.has(domain)) {
-  //   return NextResponse.redirect(new URL("/", req.url))
-  // }
-
-  if (adminHostnames.has(domain)) {
-    if (!req.auth && !path.includes("/login")) {
-      return NextResponse.redirect(new URL("/login", req.url))
-    }
-
-    if (req.auth && path.includes("/login")) {
-      return NextResponse.redirect(new URL("/", req.url))
-    }
-
-    return NextResponse.rewrite(new URL(`/admin${path === "/" ? "" : path}`, req.url))
+  if (!req.auth && pathname.includes("/admin") && !pathname.includes("/login")) {
+    return NextResponse.redirect(new URL("/admin/login", req.url))
   }
 
   return NextResponse.next()

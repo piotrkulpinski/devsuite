@@ -14,7 +14,7 @@ export const getToolsSchema = searchParamsSchema
 
 export type GetToolsSchema = z.infer<typeof getToolsSchema>
 
-export const linkSchema = z.object({
+export const socialSchema = z.object({
   name: z.string().min(1, "Name is required"),
   url: z.string().url("Must be a valid URL"),
 })
@@ -22,33 +22,22 @@ export const linkSchema = z.object({
 export const toolSchema = z.object({
   name: z.string().min(1, "Name is required"),
   slug: z.string().optional(),
-  website: z.string().min(1, "Website is required").url(),
-  repository: z
-    .string()
-    .min(1, "Repository is required")
-    .url()
-    .refine(
-      url => /^https:\/\/github\.com\/([^/]+)\/([^/]+)(\/)?$/.test(url),
-      "The repository must be a valid GitHub URL",
-    ),
   tagline: z.string().optional(),
   description: z.string().optional(),
   content: z.string().optional(),
-  links: z.array(linkSchema).optional(),
-  bump: z.number().optional(),
-  faviconUrl: z.string().optional(),
-  screenshotUrl: z.string().optional(),
+  websiteUrl: z.string().url("Invalid URL").min(1, "Website URL is required"),
+  affiliateUrl: z.string().url("Invalid URL").optional(),
+  faviconUrl: z.string().url("Invalid URL").optional(),
+  screenshotUrl: z.string().url("Invalid URL").optional(),
+  socials: z.array(socialSchema).optional(),
   isFeatured: z.boolean().default(false),
+  xHandle: z.string().optional(),
   submitterName: z.string().optional(),
-  submitterEmail: z.string().optional(),
-  submitterNote: z.string().optional(),
-  hostingUrl: z.string().url().optional().or(z.literal("")),
-  discountCode: z.string().optional(),
-  discountAmount: z.string().optional(),
-  twitterHandle: z.string().optional(),
-  publishedAt: z.date().nullish(),
-  alternatives: z.array(z.string()).optional(),
+  submitterEmail: z.string().email("Invalid email").optional(),
+  publishedAt: z.date().nullable(),
   categories: z.array(z.string()).optional(),
+  collections: z.array(z.string()).optional(),
+  tags: z.array(z.string()).optional(),
 })
 
 export type ToolSchema = z.infer<typeof toolSchema>

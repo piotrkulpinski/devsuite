@@ -1,6 +1,6 @@
 "use client"
 
-import type { Category } from "@openalternative/db"
+import type { Category } from "@prisma/client"
 import type { Table } from "@tanstack/react-table"
 import { CategoriesDeleteDialog } from "./categories-delete-dialog"
 

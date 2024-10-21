@@ -2,10 +2,10 @@ import type { Config } from "tailwindcss"
 import { fontFamily } from "tailwindcss/defaultTheme"
 
 export default {
-  darkMode: ["class"],
   content: [
     "./components/common/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/admin/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/*.{js,ts,jsx,tsx,mdx}",
     "./app/admin/**/*.{js,ts,jsx,tsx,mdx}",
   ],
 
