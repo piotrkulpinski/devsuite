@@ -1,20 +1,11 @@
 "use client"
 
 import { Slot } from "@radix-ui/react-slot"
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  CalendarIcon,
-  HomeIcon,
-  LinkIcon,
-  LoaderIcon,
-} from "lucide-react"
+import { ArrowLeftIcon, ArrowRightIcon, HomeIcon, LinkIcon } from "lucide-react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { Fragment, type HTMLAttributes } from "react"
 import { toast } from "sonner"
-import { useServerAction } from "zsa-react"
-import { publishTool } from "~/actions/ai"
 import type { ToolOne } from "~/api/tools/payloads"
 import { BrandFacebookIcon } from "~/components/common/icons/brand-facebook"
 import { BrandHackerNewsIcon } from "~/components/common/icons/brand-hackernews"
@@ -34,7 +25,6 @@ type NavProps = HTMLAttributes<HTMLElement> & {
 }
 
 export const Nav = ({ tool, previous, next, ...props }: NavProps) => {
-  // const [isFavorite, setIsFavorite] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
   const currentUrl = `${config.site.url}${pathname}`
@@ -75,29 +65,12 @@ export const Nav = ({ tool, previous, next, ...props }: NavProps) => {
     },
   ]
 
-  const { execute, isPending } = useServerAction(publishTool, {
-    onSuccess: ({ data }) => {
-      console.log(data)
-    },
-
-    onError: ({ err }) => {
-      console.error(err.message)
-      toast.error(err.message)
-    },
-  })
-
   const actions: (null | NavItemProps)[] = [
     {
       icon: <HomeIcon />,
       tooltip: "Go Home",
       shortcut: "H",
       onClick: () => router.push("/"),
-    },
-    {
-      icon: isPending ? <LoaderIcon className="animate-spin" /> : <CalendarIcon />,
-      tooltip: "Publish Tool",
-      shortcut: "P",
-      onClick: () => execute({ slug: tool.slug }),
     },
     // {
     //   icon: <EraserIcon />,

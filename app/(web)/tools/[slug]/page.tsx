@@ -154,14 +154,14 @@ export default async function ToolPage({ params: { slug } }: { params: { slug: s
         <p className="text-foreground/50 text-sm">
           Last updated: {formatDistanceToNowStrict(tool.updatedAt, { addSuffix: true })}
         </p>
-      </Wrapper>
 
-      <Nav
-        className="sticky bottom-4 z-30 mx-auto"
-        tool={tool}
-        previous={previous?.slug}
-        next={next?.slug}
-      />
+        <Nav
+          className="sticky bottom-4 z-30 mx-auto"
+          tool={tool}
+          previous={previous?.slug}
+          next={next?.slug}
+        />
+      </Wrapper>
 
       <Suspense
         fallback={

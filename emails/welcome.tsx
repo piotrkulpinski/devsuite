@@ -13,7 +13,12 @@ const EmailWelcome = ({ ...props }: EmailWelcomeProps) => {
         <strong>Thank you for subscribing 🚀</strong>
       </Text>
 
-      <Img src={`${config.site.url}/thanks.gif`} width={500} alt="Thanks" className="w-full" />
+      <Img
+        src={`${config.site.url}/_static/thanks.gif`}
+        width={500}
+        alt="Thanks"
+        className="w-full"
+      />
 
       <Text>
         Every couple of weeks, I'll send you a free email with the latest tools, articles, and
@@ -50,7 +55,7 @@ const EmailWelcome = ({ ...props }: EmailWelcomeProps) => {
       </Text>
 
       <Img
-        src={`${config.site.url}/authors/piotrkulpinski.jpg`}
+        src={`${config.site.url}/_static/authors/piotrkulpinski.jpg`}
         width={128}
         alt="Author"
         className="mb-4 w-16 h-16 rounded-full"

@@ -26,7 +26,7 @@ export async function GET() {
     feed.item({
       title: tool.name,
       guid: tool.slug,
-      url: addUTMTracking(`${config.site.url}/${tool.slug}`, { source: "rss" }),
+      url: addUTMTracking(`${config.site.url}/tools/${tool.slug}`, { source: "rss" }),
       date: tool.publishedAt?.toUTCString() ?? new Date().toUTCString(),
       description: tool.description ?? "",
       categories: tool.categories?.map(c => c.name) || [],

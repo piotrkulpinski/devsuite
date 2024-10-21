@@ -8,6 +8,7 @@ import { getSocialsFromUrl } from "~/lib/socials"
 import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
 
+// TODO: remove later
 export const publishTool = createServerAction()
   .input(z.object({ slug: z.string() }))
   .handler(async ({ input }) => {

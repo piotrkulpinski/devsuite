@@ -29,7 +29,7 @@ export const EmailWrapper = ({ subject, to, children, ...props }: EmailWrapperPr
           <Container className="w-full max-w-[580px] mx-auto px-10" {...props}>
             <Link href={config.site.url} className="inline-block mt-6 mb-2">
               <Img
-                src={`${config.site.url}/logo.svg`}
+                src={`${config.site.url}/_static/logo.svg`}
                 width="122"
                 height="32"
                 alt={config.site.name}
