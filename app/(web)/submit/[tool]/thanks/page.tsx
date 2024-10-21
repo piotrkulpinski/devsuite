@@ -1,8 +1,8 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { findUniqueTool } from "~/api/tools/queries"
-import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
-import { Wrapper } from "~/components/ui/wrapper"
+import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
+import { Wrapper } from "~/components/web/ui/wrapper"
 import { config } from "~/config"
 
 type SubmitThanksProps = {

@@ -2,8 +2,8 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Button } from "~/components/ui/button"
-import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
+import { Button } from "~/components/web/ui/button"
+import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 
 export default function NotFound() {
   const pathname = usePathname()

@@ -1,6 +1,6 @@
 import type { ToolOne } from "~/api/tools/payloads"
 import { countUpcomingTools } from "~/api/tools/queries"
-import { Plan } from "~/components/plan"
+import { Plan } from "~/components/web/plan"
 import { getProductFeatures, getProducts } from "~/lib/products"
 import { isToolPublished } from "~/lib/tools"
 import { stripe } from "~/services/stripe"

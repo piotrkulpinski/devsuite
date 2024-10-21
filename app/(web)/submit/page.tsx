@@ -1,6 +1,6 @@
 import { SubmitForm } from "~/app/(web)/submit/form"
-import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
-import { Wrapper } from "~/components/ui/wrapper"
+import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
+import { Wrapper } from "~/components/web/ui/wrapper"
 
 export default function SubmitPage() {
   return (

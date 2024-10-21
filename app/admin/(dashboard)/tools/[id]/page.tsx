@@ -6,7 +6,7 @@ import {
   getCategories,
   getToolById,
 } from "~/app/admin/(dashboard)/tools/_lib/queries"
-import { H3 } from "~/components/ui/heading"
+import { H3 } from "~/components/common/heading"
 import { Wrapper } from "~/components/ui/wrapper"
 
 export default async function UpdateToolPage({ params }: { params: { id: string } }) {

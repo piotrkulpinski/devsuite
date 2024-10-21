@@ -1,6 +1,6 @@
 import { AlternativeForm } from "~/app/admin/(dashboard)/alternatives/_components/alternative-form"
 import { getTools } from "~/app/admin/(dashboard)/alternatives/_lib/queries"
-import { H3 } from "~/components/ui/heading"
+import { H3 } from "~/components/common/heading"
 import { Wrapper } from "~/components/ui/wrapper"
 
 export default async function CreateAlternativePage() {

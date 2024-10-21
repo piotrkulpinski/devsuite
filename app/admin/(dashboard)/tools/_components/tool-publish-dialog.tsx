@@ -6,8 +6,6 @@ import { ClockIcon } from "lucide-react"
 import * as React from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { Button } from "~/components/ui/button"
-import { Calendar } from "~/components/ui/calendar"
 import {
   Dialog,
   DialogClose,
@@ -17,7 +15,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog"
+} from "~/components/admin/ui/dialog"
+import { Button } from "~/components/ui/button"
+import { Calendar } from "~/components/ui/calendar"
 import { publishTool } from "../_lib/actions"
 
 interface ToolPublishDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {

@@ -1,12 +1,12 @@
 import type { Prisma } from "@prisma/client"
 import { countTools, findTools } from "~/api/tools/queries"
 import { ToolFilters } from "~/app/(web)/tools/(tools)/filters"
-import { ToolCard } from "~/components/cards/tool-card"
-import { EmptyList } from "~/components/empty-list"
-import { Pagination } from "~/components/pagination"
-import { Grid } from "~/components/ui/grid"
-import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
-import { Wrapper } from "~/components/ui/wrapper"
+import { ToolCard } from "~/components/web/cards/tool-card"
+import { EmptyList } from "~/components/web/empty-list"
+import { Pagination } from "~/components/web/pagination"
+import { Grid } from "~/components/web/ui/grid"
+import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
+import { Wrapper } from "~/components/web/ui/wrapper"
 import { toolSearchParamsCache } from "~/lib/search-params"
 
 type ToolsPageProps = {

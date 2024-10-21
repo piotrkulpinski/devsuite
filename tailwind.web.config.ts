@@ -1,10 +1,14 @@
 import type { Config } from "tailwindcss"
-import defaultTheme from "tailwindcss/defaultTheme"
+import { fontFamily } from "tailwindcss/defaultTheme"
 import plugin from "tailwindcss/plugin"
 
 export default {
-  content: ["./components/**/*.{js,ts,jsx,tsx,mdx}", "./app/(web)/**/*.{js,ts,jsx,tsx,mdx}"],
-  // darkMode: "class",
+  // darkMode: ["class"],
+  content: [
+    "./components/common/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/web/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/(web)/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
 
   theme: {
     extend: {
@@ -13,19 +17,24 @@ export default {
         foreground: "hsl(var(--color-foreground) / <alpha-value>)",
         accent: "hsl(var(--color-accent) / <alpha-value>)",
       },
+
       letterSpacing: {
         micro: "-0.0125em",
       },
+
       borderColor: {
         DEFAULT: "hsl(var(--color-border))",
       },
+
       fontFamily: {
-        sans: ["var(--font-geist-sans)", ...defaultTheme.fontFamily.sans],
-        display: ["var(--font-uncut-sans)", ...defaultTheme.fontFamily.sans],
+        sans: ["var(--font-geist-sans)", ...fontFamily.sans],
+        display: ["var(--font-uncut-sans)", ...fontFamily.sans],
       },
+
       fontSize: {
         "5xl": ["2.75rem", "1.05"],
       },
+
       gridColumns: {
         DEFAULT: "16rem",
         xxs: "10rem",
@@ -35,6 +44,7 @@ export default {
         lg: "18rem",
         xl: "20rem",
       },
+
       scale: {
         flip: "-1",
       },

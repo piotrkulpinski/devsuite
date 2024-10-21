@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation"
 import { findCollectionSlugs, findUniqueCollection } from "~/api/collections/queries"
 import { findTools } from "~/api/tools/queries"
-import { ToolCard } from "~/components/cards/tool-card"
-import { EmptyList } from "~/components/empty-list"
-import { Grid } from "~/components/ui/grid"
-import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
-import { Wrapper } from "~/components/ui/wrapper"
+import { ToolCard } from "~/components/web/cards/tool-card"
+import { EmptyList } from "~/components/web/empty-list"
+import { Grid } from "~/components/web/ui/grid"
+import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
+import { Wrapper } from "~/components/web/ui/wrapper"
 
 export async function generateStaticParams() {
   const collections = await findCollectionSlugs({})

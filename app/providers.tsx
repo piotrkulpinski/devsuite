@@ -6,7 +6,7 @@ import PlausibleProvider from "next-plausible"
 import posthog from "posthog-js"
 import { PostHogProvider } from "posthog-js/react"
 import type { PropsWithChildren } from "react"
-import { PosthogPageview } from "~/components/posthog-pageview"
+import { PosthogPageview } from "~/components/web/posthog-pageview"
 import { config } from "~/config"
 import { env } from "~/env"
 

@@ -1,8 +1,8 @@
 import { formatDistanceToNowStrict } from "date-fns"
 import Link from "next/link"
 import type { ComponentProps } from "react"
+import { ScrollArea } from "~/components/admin/ui/scroll-area"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
-import { ScrollArea } from "~/components/ui/scroll-area"
 import { Skeleton } from "~/components/ui/skeleton"
 import { prisma } from "~/services/prisma"
 

@@ -19,8 +19,6 @@ import {
   type AlternativeSchema,
   alternativeSchema,
 } from "~/app/admin/(dashboard)/alternatives/_lib/validations"
-import { RelationSelector } from "~/components/relation-selector"
-import { Button } from "~/components/ui/button"
 import {
   Form,
   FormControl,
@@ -28,7 +26,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form"
+} from "~/components/common/forms/form"
+import { RelationSelector } from "~/components/relation-selector"
+import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { Switch } from "~/components/ui/switch"
 import { Textarea } from "~/components/ui/textarea"
