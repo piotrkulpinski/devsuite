@@ -56,7 +56,7 @@ interface DateRangePickerProps extends React.ComponentPropsWithoutRef<typeof Pop
   triggerClassName?: string
 }
 
-export function DateRangePicker({
+export const DateRangePicker = ({
   dateRange,
   dayCount,
   placeholder = "Pick a date",
@@ -65,7 +65,7 @@ export function DateRangePicker({
   triggerClassName,
   className,
   ...props
-}: DateRangePickerProps) {
+}: DateRangePickerProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()

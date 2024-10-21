@@ -1,15 +1,27 @@
 "use client"
 
-import { GemIcon, LayoutDashboardIcon, LibraryIcon, ShapesIcon, TagIcon } from "lucide-react"
+import {
+  ArrowUpRightIcon,
+  GemIcon,
+  LayoutDashboardIcon,
+  LibraryIcon,
+  LogOutIcon,
+  ShapesIcon,
+  TagIcon,
+} from "lucide-react"
+import { signOut } from "next-auth/react"
+import Link from "next/link"
 import * as React from "react"
 import { Nav } from "~/components/admin/nav"
-import { NavUser } from "~/components/admin/nav-user"
+import { NavMain } from "~/components/admin/nav-main"
+import { Button } from "~/components/admin/ui/button"
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "~/components/admin/ui/resizable"
 import { Separator } from "~/components/admin/ui/separator"
+import { siteConfig } from "~/config/site"
 import { useIsMobile } from "~/hooks/use-mobile"
 import { useStats } from "~/hooks/use-stats-context"
 import { cx } from "~/utils/cva"
@@ -58,48 +70,69 @@ export function Shell({
           isCollapsed ? "min-w-12 transition-all duration-300 ease-in-out" : "min-w-52 max-w-64",
         )}
       >
-        <Nav
-          isCollapsed={isCollapsed}
-          links={[
-            {
-              title: "Dashboard",
-              href: "/admin",
-              icon: <LayoutDashboardIcon />,
-            },
-          ]}
-        />
-        <Separator />
-        <Nav
-          isCollapsed={isCollapsed}
-          links={[
-            {
-              title: "Tools",
-              href: "/admin/tools",
-              label: stats[0].toString(),
-              icon: <GemIcon />,
-            },
-            {
-              title: "Categories",
-              href: "/admin/categories",
-              label: stats[1].toString(),
-              icon: <ShapesIcon />,
-            },
-            {
-              title: "Collections",
-              href: "/admin/collections",
-              label: stats[2].toString(),
-              icon: <LibraryIcon />,
-            },
-            {
-              title: "Tags",
-              href: "/admin/tags",
-              label: stats[3].toString(),
-              icon: <TagIcon />,
-            },
-          ]}
-        />
+        <Nav>
+          <NavMain
+            isCollapsed={isCollapsed}
+            links={[
+              {
+                title: "Dashboard",
+                href: "/admin",
+                icon: <LayoutDashboardIcon />,
+              },
+            ]}
+          />
+        </Nav>
 
-        <NavUser isCollapsed={isCollapsed} className="mt-auto" />
+        <Separator />
+
+        <Nav>
+          <NavMain
+            isCollapsed={isCollapsed}
+            links={[
+              {
+                title: "Tools",
+                href: "/admin/tools",
+                label: stats[0].toString(),
+                icon: <GemIcon />,
+              },
+              {
+                title: "Categories",
+                href: "/admin/categories",
+                label: stats[1].toString(),
+                icon: <ShapesIcon />,
+              },
+              {
+                title: "Collections",
+                href: "/admin/collections",
+                label: stats[2].toString(),
+                icon: <LibraryIcon />,
+              },
+              {
+                title: "Tags",
+                href: "/admin/tags",
+                label: stats[3].toString(),
+                icon: <TagIcon />,
+              },
+            ]}
+          />
+        </Nav>
+
+        <Nav className="mt-auto">
+          <Button variant="ghost" suffix={<ArrowUpRightIcon />} className="justify-between" asChild>
+            <Link href={siteConfig.url} target="_blank">
+              Visit Site
+            </Link>
+          </Button>
+
+          <Button
+            variant="ghost"
+            suffix={<LogOutIcon />}
+            className="justify-between"
+            onClick={() => signOut()}
+          >
+            Sign Out
+          </Button>
+        </Nav>
       </ResizablePanel>
 
       <ResizableHandle
