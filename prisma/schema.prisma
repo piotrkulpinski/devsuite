@@ -72,6 +72,7 @@ model Collection {
 
 model Tag {
   id        String   @id @default(cuid())
+  name      String
   slug      String   @unique
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
@@ -80,5 +81,5 @@ model Tag {
   tools Tool[]
 
   // Indexes
-  @@index([slug])
+  @@index([name])
 }

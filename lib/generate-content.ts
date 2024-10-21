@@ -50,7 +50,7 @@ export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
         .transform(a => a.map(slug => categories.find(c => c.slug === slug)).filter(isTruthy))
         .describe("A list of categories for the tool."),
       tags: z
-        .array(z.string().transform(tag => slugify(tag)))
+        .array(z.string().transform(name => ({ name, slug: slugify(name) })))
         .max(10)
         .describe(
           "A list (max 10) of tags for the tool. Should be short, descriptive and related to software development",
