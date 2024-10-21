@@ -1,11 +1,11 @@
 import type { PropsWithChildren } from "react"
-import { Footer } from "~/components/footer"
-import { Header } from "~/components/header"
-import { Newsletter } from "~/components/newsletter"
-import { Container } from "~/components/ui/container"
-import { Stars } from "~/components/ui/stars"
-import { Toaster } from "~/components/ui/toaster"
-import { Wrapper } from "~/components/ui/wrapper"
+import { Footer } from "~/components/web/footer"
+import { Header } from "~/components/web/header"
+import { Newsletter } from "~/components/web/newsletter"
+import { Container } from "~/components/web/ui/container"
+import { Stars } from "~/components/web/ui/stars"
+import { Toaster } from "~/components/web/ui/toaster"
+import { Wrapper } from "~/components/web/ui/wrapper"
 
 import "./styles.css"
 

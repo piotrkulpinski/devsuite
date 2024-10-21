@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 import { AlternativeActions } from "~/app/admin/(dashboard)/alternatives/_components/alternative-actions"
 import { AlternativeForm } from "~/app/admin/(dashboard)/alternatives/_components/alternative-form"
 import { getAlternativeById, getTools } from "~/app/admin/(dashboard)/alternatives/_lib/queries"
-import { H3 } from "~/components/ui/heading"
+import { H3 } from "~/components/common/heading"
 import { Wrapper } from "~/components/ui/wrapper"
 
 export default async function UpdateAlternativePage({ params }: { params: { id: string } }) {

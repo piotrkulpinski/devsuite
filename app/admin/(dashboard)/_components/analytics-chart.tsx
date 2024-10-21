@@ -3,8 +3,8 @@
 import { formatDate } from "@curiousleaf/utils"
 import type { ComponentProps } from "react"
 import { Bar, BarChart, Cell, Label, Rectangle, ReferenceLine, XAxis } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "~/components/ui/chart"
-import { Skeleton } from "~/components/ui/skeleton"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "~/components/admin/ui/chart"
+import { Skeleton } from "~/components/common/skeleton"
 
 export type AnalyticsChartData = {
   date: string

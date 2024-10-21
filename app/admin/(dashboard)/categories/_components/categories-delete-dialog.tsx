@@ -5,7 +5,6 @@ import type { Row } from "@tanstack/react-table"
 import { TrashIcon } from "lucide-react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { Button } from "~/components/ui/button"
 import {
   Dialog,
   DialogClose,
@@ -15,7 +14,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog"
+} from "~/components/admin/ui/dialog"
+import { Button } from "~/components/ui/button"
 import { deleteCategories } from "../_lib/actions"
 
 interface CategoriesDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {

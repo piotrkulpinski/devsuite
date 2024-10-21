@@ -10,8 +10,12 @@ import {
 import * as React from "react"
 import { Nav } from "~/app/admin/(dashboard)/nav"
 import { NavUser } from "~/app/admin/(dashboard)/nav-user"
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "~/components/ui/resizable"
-import { Separator } from "~/components/ui/separator"
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "~/components/admin/ui/resizable"
+import { Separator } from "~/components/admin/ui/separator"
 import { useIsMobile } from "~/hooks/use-mobile"
 import { useStats } from "~/hooks/use-stats-context"
 import { cx } from "~/utils/cva"

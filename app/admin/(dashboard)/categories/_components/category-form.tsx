@@ -13,8 +13,6 @@ import {
   type CategorySchema,
   categorySchema,
 } from "~/app/admin/(dashboard)/categories/_lib/validations"
-import { RelationSelector } from "~/components/relation-selector"
-import { Button } from "~/components/ui/button"
 import {
   Form,
   FormControl,
@@ -22,7 +20,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form"
+} from "~/components/common/forms/form"
+import { RelationSelector } from "~/components/relation-selector"
+import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"

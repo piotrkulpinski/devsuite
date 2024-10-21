@@ -13,7 +13,6 @@ import {
   type LicenseSchema,
   licenseSchema,
 } from "~/app/admin/(dashboard)/licenses/_lib/validations"
-import { Button } from "~/components/ui/button"
 import {
   Form,
   FormControl,
@@ -21,7 +20,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form"
+} from "~/components/common/forms/form"
+import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { Textarea } from "~/components/ui/textarea"
 import { cx } from "~/utils/cva"

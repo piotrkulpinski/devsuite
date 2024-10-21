@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 import { LicenseActions } from "~/app/admin/(dashboard)/licenses/_components/license-actions"
 import { LicenseForm } from "~/app/admin/(dashboard)/licenses/_components/license-form"
 import { getLicenseById } from "~/app/admin/(dashboard)/licenses/_lib/queries"
-import { H3 } from "~/components/ui/heading"
+import { H3 } from "~/components/common/heading"
 import { Wrapper } from "~/components/ui/wrapper"
 
 export default async function UpdateLicensePage({ params }: { params: { id: string } }) {

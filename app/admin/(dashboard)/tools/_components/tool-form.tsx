@@ -16,8 +16,6 @@ import type {
   getToolById,
 } from "~/app/admin/(dashboard)/tools/_lib/queries"
 import { type ToolSchema, toolSchema } from "~/app/admin/(dashboard)/tools/_lib/validations"
-import { RelationSelector } from "~/components/relation-selector"
-import { Button } from "~/components/ui/button"
 import {
   Form,
   FormControl,
@@ -25,7 +23,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/ui/form"
+} from "~/components/common/forms/form"
+import { RelationSelector } from "~/components/relation-selector"
+import { Button } from "~/components/ui/button"
 import { Input } from "~/components/ui/input"
 import { Switch } from "~/components/ui/switch"
 import { Textarea } from "~/components/ui/textarea"

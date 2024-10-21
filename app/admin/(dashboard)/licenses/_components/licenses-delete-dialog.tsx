@@ -6,7 +6,6 @@ import { TrashIcon } from "lucide-react"
 import type * as React from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { Button } from "~/components/ui/button"
 import {
   Dialog,
   DialogClose,
@@ -16,7 +15,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog"
+} from "~/components/admin/ui/dialog"
+import { Button } from "~/components/ui/button"
 import { deleteLicenses } from "../_lib/actions"
 
 interface LicensesDeleteDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {

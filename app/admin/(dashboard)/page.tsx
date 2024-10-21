@@ -8,8 +8,8 @@ import {
   ScheduledToolsCardSkeleton,
 } from "~/app/admin/(dashboard)/_components/scheduled-tools-card"
 import { StatsCard } from "~/app/admin/(dashboard)/_components/stats-card"
+import { H3 } from "~/components/common/heading"
 import { Card, CardHeader } from "~/components/ui/card"
-import { H3 } from "~/components/ui/heading"
 import { Skeleton } from "~/components/ui/skeleton"
 
 export default function DashboardPage() {

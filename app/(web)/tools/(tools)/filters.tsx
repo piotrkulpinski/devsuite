@@ -3,9 +3,9 @@
 import { LoaderIcon, SearchIcon } from "lucide-react"
 import { type Values, useQueryStates } from "nuqs"
 import { useEffect, useState } from "react"
-import { Input } from "~/components/ui/forms/input"
-import { Select } from "~/components/ui/forms/select"
-import { Stack } from "~/components/ui/stack"
+import { Stack } from "~/components/common/stack"
+import { Input } from "~/components/web/ui/forms/input"
+import { Select } from "~/components/web/ui/forms/select"
 import { useDebounce } from "~/hooks/use-debounce"
 import { toolSearchParams } from "~/lib/search-params"
 

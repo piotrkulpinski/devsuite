@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 import { CategoryActions } from "~/app/admin/(dashboard)/categories/_components/category-actions"
 import { CategoryForm } from "~/app/admin/(dashboard)/categories/_components/category-form"
 import { getCategoryById, getTools } from "~/app/admin/(dashboard)/categories/_lib/queries"
-import { H3 } from "~/components/ui/heading"
+import { H3 } from "~/components/common/heading"
 import { Wrapper } from "~/components/ui/wrapper"
 
 export default async function UpdateCategoryPage({ params }: { params: { id: string } }) {

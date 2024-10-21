@@ -1,7 +1,7 @@
 import { cookies } from "next/headers"
 import type { PropsWithChildren } from "react"
 import { Shell } from "~/app/admin/(dashboard)/shell"
-import { CommandMenu } from "~/components/command-menu"
+import { CommandMenu } from "~/components/admin/command-menu"
 import { prisma } from "~/services/prisma"
 import { Providers } from "./providers"
 

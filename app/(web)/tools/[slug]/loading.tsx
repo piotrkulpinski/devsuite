@@ -1,9 +1,9 @@
 import { ArrowUpRightIcon, HashIcon } from "lucide-react"
-import { Button } from "~/components/ui/button"
-import { Gallery } from "~/components/ui/gallery"
-import { Skeleton } from "~/components/ui/skeleton"
-import { Stack } from "~/components/ui/stack"
-import { Wrapper } from "~/components/ui/wrapper"
+import { Skeleton } from "~/components/common/skeleton"
+import { Stack } from "~/components/common/stack"
+import { Button } from "~/components/web/ui/button"
+import { Gallery } from "~/components/web/ui/gallery"
+import { Wrapper } from "~/components/web/ui/wrapper"
 
 export default function Loading() {
   return (

@@ -1,8 +1,8 @@
-import { ToolSkeleton } from "~/components/cards/tool-skeleton"
-import { Grid } from "~/components/ui/grid"
-import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
-import { Skeleton } from "~/components/ui/skeleton"
-import { Wrapper } from "~/components/ui/wrapper"
+import { Skeleton } from "~/components/common/skeleton"
+import { ToolSkeleton } from "~/components/web/cards/tool-skeleton"
+import { Grid } from "~/components/web/ui/grid"
+import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
+import { Wrapper } from "~/components/web/ui/wrapper"
 
 export default function Loading() {
   return (

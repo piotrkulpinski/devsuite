@@ -1,9 +1,9 @@
 import { findCollections } from "~/api/collections/queries"
-import { CategoryCard } from "~/components/cards/category-card"
-import { EmptyList } from "~/components/empty-list"
-import { Grid } from "~/components/ui/grid"
-import { Intro, IntroDescription, IntroTitle } from "~/components/ui/intro"
-import { Wrapper } from "~/components/ui/wrapper"
+import { CategoryCard } from "~/components/web/cards/category-card"
+import { EmptyList } from "~/components/web/empty-list"
+import { Grid } from "~/components/web/ui/grid"
+import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
+import { Wrapper } from "~/components/web/ui/wrapper"
 
 export default async function Collections() {
   const collections = await findCollections({})

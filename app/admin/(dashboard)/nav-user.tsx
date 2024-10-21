@@ -4,7 +4,7 @@ import { ChevronsUpDown, User } from "lucide-react"
 import { signOut, useSession } from "next-auth/react"
 import Link from "next/link"
 import type { ComponentProps } from "react"
-import { Avatar, AvatarImage } from "~/components/ui/avatar"
+import { Avatar, AvatarImage } from "~/components/admin/ui/avatar"
 import { Button } from "~/components/ui/button"
 import {
   DropdownMenu,
