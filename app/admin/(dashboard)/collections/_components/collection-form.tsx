@@ -11,7 +11,10 @@ import {
   createCollection,
   updateCollection,
 } from "~/app/admin/(dashboard)/collections/_lib/actions"
-import type { getCollectionById, getTools } from "~/app/admin/(dashboard)/collections/_lib/queries"
+import type {
+  getCollectionBySlug,
+  getTools,
+} from "~/app/admin/(dashboard)/collections/_lib/queries"
 import {
   type CollectionSchema,
   collectionSchema,
@@ -27,12 +30,11 @@ import {
   FormMessage,
 } from "~/components/common/forms/form"
 import { Input } from "~/components/common/forms/input"
-import { TextArea } from "~/components/common/forms/textarea"
 import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
 type CollectionFormProps = React.HTMLAttributes<HTMLFormElement> & {
-  collection?: Awaited<ReturnType<typeof getCollectionById>>
+  collection?: Awaited<ReturnType<typeof getCollectionBySlug>>
   tools: Awaited<ReturnType<typeof getTools>>
 }
 
@@ -57,7 +59,7 @@ export function CollectionForm({
     {
       onSuccess: ({ data }) => {
         toast.success("Collection successfully created")
-        redirect(`/admin/collections/${data.id}`)
+        redirect(`/admin/collections/${data.slug}`)
       },
 
       onError: ({ err }) => {
@@ -72,7 +74,7 @@ export function CollectionForm({
     {
       onSuccess: ({ data }) => {
         toast.success("Collection successfully updated")
-        redirect(`/admin/collections/${data.id}`)
+        redirect(`/admin/collections/${data.slug}`)
       },
 
       onError: ({ err }) => {
@@ -119,20 +121,6 @@ export function CollectionForm({
               <FormLabel>Slug</FormLabel>
               <FormControl>
                 <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem className="col-span-full">
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <TextArea {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

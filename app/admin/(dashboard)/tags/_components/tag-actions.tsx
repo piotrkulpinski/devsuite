@@ -52,7 +52,7 @@ export const TagActions = ({ tag, row, className, ...props }: TagActionsProps) =
 
         <DropdownMenuContent align="end">
           <DropdownMenuItem asChild>
-            <Link href={`/admin/tags/${tag.id}`}>Edit</Link>
+            <Link href={`/admin/tags/${tag.slug}`}>Edit</Link>
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>

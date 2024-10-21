@@ -52,7 +52,7 @@ export function getColumns(): ColumnDef<Tool>[] {
           )}
 
           <Link
-            href={`/admin/tools/${row.original.id}`}
+            href={`/admin/tools/${row.original.slug}`}
             className="max-w-36 truncate font-medium text-primary hover:text-foreground"
           >
             {row.getValue("name")}

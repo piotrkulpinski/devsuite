@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { createTag, updateTag } from "~/app/admin/(dashboard)/tags/_lib/actions"
-import type { getTagById, getTools } from "~/app/admin/(dashboard)/tags/_lib/queries"
+import type { getTagBySlug, getTools } from "~/app/admin/(dashboard)/tags/_lib/queries"
 import { type TagSchema, tagSchema } from "~/app/admin/(dashboard)/tags/_lib/validations"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/admin/ui/button"
@@ -21,12 +21,11 @@ import {
   FormMessage,
 } from "~/components/common/forms/form"
 import { Input } from "~/components/common/forms/input"
-import { TextArea } from "~/components/common/forms/textarea"
 import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
 type TagFormProps = React.HTMLAttributes<HTMLFormElement> & {
-  tag?: Awaited<ReturnType<typeof getTagById>>
+  tag?: Awaited<ReturnType<typeof getTagBySlug>>
   tools: Awaited<ReturnType<typeof getTools>>
 }
 
@@ -43,7 +42,7 @@ export function TagForm({ children, className, tag, tools, ...props }: TagFormPr
   const { execute: createTagAction, isPending: isCreatingTag } = useServerAction(createTag, {
     onSuccess: ({ data }) => {
       toast.success("Tag successfully created")
-      redirect(`/admin/tags/${data.id}`)
+      redirect(`/admin/tags/${data.slug}`)
     },
 
     onError: ({ err }) => {
@@ -55,7 +54,7 @@ export function TagForm({ children, className, tag, tools, ...props }: TagFormPr
   const { execute: updateTagAction, isPending: isUpdatingTag } = useServerAction(updateTag, {
     onSuccess: ({ data }) => {
       toast.success("Tag successfully updated")
-      redirect(`/admin/tags/${data.id}`)
+      redirect(`/admin/tags/${data.slug}`)
     },
 
     onError: ({ err }) => {
@@ -99,20 +98,6 @@ export function TagForm({ children, className, tag, tools, ...props }: TagFormPr
               <FormLabel>Slug</FormLabel>
               <FormControl>
                 <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem className="col-span-full">
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <TextArea {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

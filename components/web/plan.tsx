@@ -153,6 +153,7 @@ export const Plan = forwardRef<PlanElement, PlanProps>((props, ref) => {
             format={{ notation: "compact" }}
             locales="en-US"
             className="!flex items-center h-[0.9em] font-semibold tabular-nums"
+            continuous
           />
 
           {!!fullPrice && (

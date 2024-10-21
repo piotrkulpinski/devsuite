@@ -57,7 +57,7 @@ export const CollectionActions = ({
 
         <DropdownMenuContent align="end">
           <DropdownMenuItem asChild>
-            <Link href={`/admin/collections/${collection.id}`}>Edit</Link>
+            <Link href={`/admin/collections/${collection.slug}`}>Edit</Link>
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>

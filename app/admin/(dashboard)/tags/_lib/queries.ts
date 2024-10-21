@@ -70,11 +70,11 @@ export async function getTools() {
   }
 }
 
-export async function getTagById(id: string) {
+export async function getTagBySlug(slug: string) {
   noStore()
   try {
     return await prisma.tag.findUnique({
-      where: { id },
+      where: { slug },
       include: { tools: true },
     })
   } catch (err) {

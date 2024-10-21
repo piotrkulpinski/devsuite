@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { createCategory, updateCategory } from "~/app/admin/(dashboard)/categories/_lib/actions"
-import type { getCategoryById, getTools } from "~/app/admin/(dashboard)/categories/_lib/queries"
+import type { getCategoryBySlug, getTools } from "~/app/admin/(dashboard)/categories/_lib/queries"
 import {
   type CategorySchema,
   categorySchema,
@@ -29,7 +29,7 @@ import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
 type CategoryFormProps = React.HTMLAttributes<HTMLFormElement> & {
-  category?: Awaited<ReturnType<typeof getCategoryById>>
+  category?: Awaited<ReturnType<typeof getCategoryBySlug>>
   tools: Awaited<ReturnType<typeof getTools>>
 }
 
@@ -54,7 +54,7 @@ export function CategoryForm({
     {
       onSuccess: ({ data }) => {
         toast.success("Category successfully created")
-        redirect(`/admin/categories/${data.id}`)
+        redirect(`/admin/categories/${data.slug}`)
       },
 
       onError: ({ err }) => {
@@ -69,7 +69,7 @@ export function CategoryForm({
     {
       onSuccess: ({ data }) => {
         toast.success("Category successfully updated")
-        redirect(`/admin/categories/${data.id}`)
+        redirect(`/admin/categories/${data.slug}`)
       },
 
       onError: ({ err }) => {

@@ -15,7 +15,7 @@ import { prisma } from "~/services/prisma"
 export const ScheduledToolsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
   const tools = await prisma.tool.findMany({
     where: { publishedAt: { gt: new Date() } },
-    select: { id: true, name: true, publishedAt: true },
+    select: { slug: true, name: true, publishedAt: true },
     orderBy: { publishedAt: "asc" },
   })
 
@@ -31,8 +31,8 @@ export const ScheduledToolsCard = async ({ ...props }: ComponentProps<typeof Car
           <ScrollArea className="px-4 -mx-4 lg:h-56">
             {tools.map(tool => (
               <Link
-                key={tool.id}
-                href={`/admin/tools/${tool.id}`}
+                key={tool.slug}
+                href={`/admin/tools/${tool.slug}`}
                 className="group flex items-center gap-3 py-1"
               >
                 <span className="font-medium truncate">{tool.name}</span>

@@ -5,14 +5,14 @@ import {
   getCategories,
   getCollections,
   getTags,
-  getToolById,
+  getToolBySlug,
 } from "~/app/admin/(dashboard)/tools/_lib/queries"
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H4 } from "~/components/common/heading"
 
-export default async function UpdateToolPage({ params }: { params: { id: string } }) {
+export default async function UpdateToolPage({ params }: { params: { slug: string } }) {
   const [tool, categories, collections, tags] = await Promise.all([
-    getToolById(params.id),
+    getToolBySlug(params.slug),
     getCategories(),
     getCollections(),
     getTags(),

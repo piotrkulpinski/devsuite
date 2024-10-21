@@ -1,12 +1,12 @@
 import { notFound } from "next/navigation"
 import { CollectionActions } from "~/app/admin/(dashboard)/collections/_components/collection-actions"
 import { CollectionForm } from "~/app/admin/(dashboard)/collections/_components/collection-form"
-import { getCollectionById, getTools } from "~/app/admin/(dashboard)/collections/_lib/queries"
+import { getCollectionBySlug, getTools } from "~/app/admin/(dashboard)/collections/_lib/queries"
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H4 } from "~/components/common/heading"
 
-export default async function UpdateCollectionPage({ params }: { params: { id: string } }) {
-  const [collection, tools] = await Promise.all([getCollectionById(params.id), getTools()])
+export default async function UpdateCollectionPage({ params }: { params: { slug: string } }) {
+  const [collection, tools] = await Promise.all([getCollectionBySlug(params.slug), getTools()])
 
   if (!collection) {
     return notFound()
