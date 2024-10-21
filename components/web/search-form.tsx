@@ -2,7 +2,7 @@
 
 import { SearchIcon } from "lucide-react"
 import { type HTMLAttributes, useRef, useState } from "react"
-import { Input } from "~/components/common/forms/input"
+import { Input } from "~/components/web/ui/input"
 import { cx } from "~/utils/cva"
 
 export const SearchForm = ({ className, ...props }: HTMLAttributes<HTMLFormElement>) => {

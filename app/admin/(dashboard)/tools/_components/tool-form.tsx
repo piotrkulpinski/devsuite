@@ -19,6 +19,9 @@ import type {
 import { type ToolSchema, toolSchema } from "~/app/admin/(dashboard)/tools/_lib/validations"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/admin/ui/button"
+import { Input } from "~/components/admin/ui/input"
+import { Switch } from "~/components/admin/ui/switch"
+import { Textarea } from "~/components/admin/ui/textarea"
 import {
   Form,
   FormControl,
@@ -26,10 +29,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/common/forms/form"
-import { Input } from "~/components/common/forms/input"
-import { Switch } from "~/components/common/forms/switch"
-import { TextArea } from "~/components/common/forms/textarea"
+} from "~/components/common/form"
 import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
@@ -166,7 +166,7 @@ export function ToolForm({
             <FormItem className="col-span-full">
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <TextArea
+                <Textarea
                   placeholder="PostHog is the only all-in-one platform for product analytics, feature flags, session replays, experiments, and surveys that's built for developers."
                   {...field}
                 />
@@ -183,7 +183,7 @@ export function ToolForm({
             <FormItem className="col-span-full">
               <FormLabel>Content</FormLabel>
               <FormControl>
-                <TextArea {...field} />
+                <Textarea {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

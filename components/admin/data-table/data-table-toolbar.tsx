@@ -7,7 +7,7 @@ import type { DataTableFilterField } from "~/types"
 
 import { DataTableFacetedFilter } from "~/components/admin/data-table/data-table-faceted-filter"
 import { Button } from "~/components/admin/ui/button"
-import { Input } from "~/components/common/forms/input"
+import { Input } from "~/components/admin/ui/input"
 import { cx } from "~/utils/cva"
 
 interface DataTableToolbarProps<TData> extends React.HTMLAttributes<HTMLDivElement> {

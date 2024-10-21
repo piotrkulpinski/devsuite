@@ -21,6 +21,7 @@ import {
 } from "~/app/admin/(dashboard)/collections/_lib/validations"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/admin/ui/button"
+import { Input } from "~/components/admin/ui/input"
 import {
   Form,
   FormControl,
@@ -28,8 +29,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "~/components/common/forms/form"
-import { Input } from "~/components/common/forms/input"
+} from "~/components/common/form"
 import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
