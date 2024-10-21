@@ -1,11 +1,13 @@
 "use client"
 
-import type { Tool } from "@openalternative/db"
+import type { Tool } from "@prisma/client"
 import type { Row } from "@tanstack/react-table"
 import { ClockIcon } from "lucide-react"
 import * as React from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
+import { Button } from "~/components/admin/ui/button"
+import { Calendar } from "~/components/admin/ui/calendar"
 import {
   Dialog,
   DialogClose,
@@ -16,8 +18,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/admin/ui/dialog"
-import { Button } from "~/components/ui/button"
-import { Calendar } from "~/components/ui/calendar"
 import { publishTool } from "../_lib/actions"
 
 interface ToolPublishDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
@@ -64,7 +64,7 @@ export const ToolPublishDialog = ({
         </DialogHeader>
 
         <Calendar
-          initialFocus
+          // initialFocus
           mode="single"
           selected={publishedAt}
           onSelect={setPublishedAt}

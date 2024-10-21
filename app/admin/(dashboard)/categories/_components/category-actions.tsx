@@ -1,6 +1,6 @@
 "use client"
 
-import type { Category } from "@openalternative/db"
+import type { Category } from "@prisma/client"
 import type { Row } from "@tanstack/react-table"
 import { EllipsisIcon } from "lucide-react"
 import Link from "next/link"
@@ -8,14 +8,14 @@ import { useRouter } from "next/navigation"
 import type React from "react"
 import { useState } from "react"
 import { CategoriesDeleteDialog } from "~/app/admin/(dashboard)/categories/_components/categories-delete-dialog"
-import { Button } from "~/components/ui/button"
+import { Button } from "~/components/admin/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu"
+} from "~/components/admin/ui/dropdown-menu"
 import { siteConfig } from "~/config/site"
 import { cx } from "~/utils/cva"
 
@@ -35,7 +35,7 @@ export const CategoryActions = ({ category, row, className, ...props }: Category
         onOpenChange={setShowCategoriesDeleteDialog}
         categories={[category]}
         showTrigger={false}
-        onSuccess={() => row?.toggleSelected(false) || router.push("/categories")}
+        onSuccess={() => row?.toggleSelected(false) || router.push("/admin/categories")}
       />
 
       <DropdownMenu>
@@ -52,7 +52,7 @@ export const CategoryActions = ({ category, row, className, ...props }: Category
 
         <DropdownMenuContent align="end">
           <DropdownMenuItem asChild>
-            <Link href={`/categories/${category.id}`}>Edit</Link>
+            <Link href={`/admin/categories/${category.id}`}>Edit</Link>
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>

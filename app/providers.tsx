@@ -1,7 +1,6 @@
 "use client"
 
 import { getUrlHostname } from "@curiousleaf/utils"
-import { SessionProvider } from "next-auth/react"
 import PlausibleProvider from "next-plausible"
 import posthog from "posthog-js"
 import { PostHogProvider } from "posthog-js/react"
@@ -32,10 +31,8 @@ export default function Providers({ children }: PropsWithChildren) {
         }}
       />
 
-      <SessionProvider>
-        <PosthogPageview />
-        {children}
-      </SessionProvider>
+      <PosthogPageview />
+      {children}
     </PostHogProvider>
   )
 }

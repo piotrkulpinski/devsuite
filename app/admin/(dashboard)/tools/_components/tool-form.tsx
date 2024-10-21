@@ -11,11 +11,14 @@ import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
 import { createTool, updateTool } from "~/app/admin/(dashboard)/tools/_lib/actions"
 import type {
-  getAlternatives,
   getCategories,
+  getCollections,
+  getTags,
   getToolById,
 } from "~/app/admin/(dashboard)/tools/_lib/queries"
 import { type ToolSchema, toolSchema } from "~/app/admin/(dashboard)/tools/_lib/validations"
+import { RelationSelector } from "~/components/admin/relation-selector"
+import { Button } from "~/components/admin/ui/button"
 import {
   Form,
   FormControl,
@@ -24,48 +27,49 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/forms/form"
-import { RelationSelector } from "~/components/relation-selector"
-import { Button } from "~/components/ui/button"
-import { Input } from "~/components/ui/input"
-import { Switch } from "~/components/ui/switch"
-import { Textarea } from "~/components/ui/textarea"
+import { Input } from "~/components/common/forms/input"
+import { Switch } from "~/components/common/forms/switch"
+import { TextArea } from "~/components/common/forms/textarea"
 import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
 type ToolFormProps = React.HTMLAttributes<HTMLFormElement> & {
   tool?: Awaited<ReturnType<typeof getToolById>>
-  alternatives: Awaited<ReturnType<typeof getAlternatives>>
+  collections: Awaited<ReturnType<typeof getCollections>>
   categories: Awaited<ReturnType<typeof getCategories>>
+  tags: Awaited<ReturnType<typeof getTags>>
 }
 
 export function ToolForm({
   children,
   className,
   tool,
-  alternatives,
+  collections,
   categories,
+  tags,
   ...props
 }: ToolFormProps) {
   const form = useForm<ToolSchema>({
     resolver: zodResolver(toolSchema),
     defaultValues: {
       ...nullsToUndefined(tool),
-      alternatives: tool?.alternatives?.map(({ alternative }) => alternative.id),
-      categories: tool?.categories?.map(({ category }) => category.id),
+      categories: tool?.categories?.map(({ id }) => id),
+      collections: tool?.collections?.map(({ id }) => id),
+      tags: tool?.tags?.map(({ id }) => id),
     },
   })
 
   const {
-    fields: linkFields,
-    append: appendLink,
-    remove: removeLink,
-  } = useFieldArray({ control: form.control, name: "links" })
+    fields: socialFields,
+    append: appendSocial,
+    remove: removeSocial,
+  } = useFieldArray({ control: form.control, name: "socials" })
 
   // Create tool
   const { execute: createToolAction, isPending: isCreatingTool } = useServerAction(createTool, {
     onSuccess: ({ data }) => {
       toast.success("Tool successfully created")
-      redirect(`/tools/${data.id}`)
+      redirect(`/admin/tools/${data.id}`)
     },
 
     onError: ({ err }) => {
@@ -77,7 +81,7 @@ export function ToolForm({
   const { execute: updateToolAction, isPending: isUpdatingTool } = useServerAction(updateTool, {
     onSuccess: ({ data }) => {
       toast.success("Tool successfully updated")
-      redirect(`/tools/${data.id}`)
+      redirect(`/admin/tools/${data.id}`)
     },
 
     onError: ({ err }) => {
@@ -99,44 +103,14 @@ export function ToolForm({
         noValidate
         {...props}
       >
-        <div className="flex flex-row gap-4 max-sm:contents">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem className="flex-1">
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="PostHog" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="slug"
-            render={({ field }) => (
-              <FormItem className="flex-1">
-                <FormLabel>Slug</FormLabel>
-                <FormControl>
-                  <Input placeholder="posthog" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
         <FormField
           control={form.control}
-          name="website"
+          name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Website</FormLabel>
+              <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="https://posthog.com" {...field} />
+                <Input placeholder="PostHog" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -145,12 +119,26 @@ export function ToolForm({
 
         <FormField
           control={form.control}
-          name="repository"
+          name="slug"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Repository</FormLabel>
+              <FormLabel>Slug</FormLabel>
               <FormControl>
-                <Input type="url" placeholder="https://github.com/posthog/posthog" {...field} />
+                <Input placeholder="posthog" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="websiteUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Website</FormLabel>
+              <FormControl>
+                <Input placeholder="https://posthog.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -178,7 +166,7 @@ export function ToolForm({
             <FormItem className="col-span-full">
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea
+                <TextArea
                   placeholder="PostHog is the only all-in-one platform for product analytics, feature flags, session replays, experiments, and surveys that's built for developers."
                   {...field}
                 />
@@ -195,7 +183,7 @@ export function ToolForm({
             <FormItem className="col-span-full">
               <FormLabel>Content</FormLabel>
               <FormControl>
-                <Textarea {...field} />
+                <TextArea {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -218,16 +206,16 @@ export function ToolForm({
 
         <FormField
           control={form.control}
-          name="bump"
+          name="publishedAt"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Bump</FormLabel>
+              <FormLabel>Published At</FormLabel>
               <FormControl>
                 <Input
-                  type="number"
-                  step={100}
+                  type="datetime-local"
                   {...field}
-                  onChange={e => field.onChange(Number.parseFloat(e.target.value))}
+                  value={field.value ? formatDate(field.value, "yyyy-MM-dd HH:mm") : undefined}
+                  onChange={e => field.onChange(e.target.value ? new Date(e.target.value) : null)}
                 />
               </FormControl>
               <FormMessage />
@@ -265,24 +253,10 @@ export function ToolForm({
 
         <FormField
           control={form.control}
-          name="submitterNote"
+          name="xHandle"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Submitter Note</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="twitterHandle"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Twitter Handle</FormLabel>
+              <FormLabel>Twitter/X Handle</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -321,77 +295,16 @@ export function ToolForm({
 
         <FormField
           control={form.control}
-          name="discountCode"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Discount Code</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="discountAmount"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Discount Amount</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="hostingUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Hosting URL</FormLabel>
-              <FormControl>
-                <Input type="url" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="publishedAt"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Published At</FormLabel>
-              <FormControl>
-                <Input
-                  type="datetime-local"
-                  {...field}
-                  value={field.value ? formatDate(field.value, "yyyy-MM-dd HH:mm") : undefined}
-                  onChange={e => field.onChange(e.target.value ? new Date(e.target.value) : null)}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="links"
+          name="socials"
           render={() => (
             <FormItem className="col-span-full">
-              <FormLabel>Links</FormLabel>
+              <FormLabel>Socials</FormLabel>
               <div className="space-y-2">
-                {linkFields.map((field, index) => (
+                {socialFields.map((field, index) => (
                   <div key={field.id} className="flex flex-wrap items-center gap-2 md:gap-4">
                     <FormField
                       control={form.control}
-                      name={`links.${index}.name`}
+                      name={`socials.${index}.name`}
                       render={({ field }) => (
                         <FormItem className="flex-grow">
                           <FormControl>
@@ -403,7 +316,7 @@ export function ToolForm({
 
                     <FormField
                       control={form.control}
-                      name={`links.${index}.url`}
+                      name={`socials.${index}.url`}
                       render={({ field }) => (
                         <FormItem className="flex-grow">
                           <FormControl>
@@ -418,7 +331,7 @@ export function ToolForm({
                       variant="outline"
                       size="icon"
                       prefix={<TrashIcon />}
-                      onClick={() => removeLink(index)}
+                      onClick={() => removeSocial(index)}
                       className="text-red-500"
                     />
                   </div>
@@ -429,26 +342,11 @@ export function ToolForm({
                   size="sm"
                   variant="outline"
                   prefix={<PlusIcon />}
-                  onClick={() => appendLink({ name: "", url: "" })}
+                  onClick={() => appendSocial({ name: "", url: "" })}
                 >
-                  Add Link
+                  Add Social
                 </Button>
               </div>
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="alternatives"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Alternatives</FormLabel>
-              <RelationSelector
-                relations={alternatives}
-                selectedIds={field.value ?? []}
-                onChange={field.onChange}
-              />
             </FormItem>
           )}
         />
@@ -468,9 +366,39 @@ export function ToolForm({
           )}
         />
 
+        <FormField
+          control={form.control}
+          name="collections"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Collections</FormLabel>
+              <RelationSelector
+                relations={collections}
+                selectedIds={field.value ?? []}
+                onChange={field.onChange}
+              />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="tags"
+          render={({ field }) => (
+            <FormItem className="col-span-full">
+              <FormLabel>Tags</FormLabel>
+              <RelationSelector
+                relations={tags.map(tag => ({ id: tag.id, name: tag.slug }))}
+                selectedIds={field.value ?? []}
+                onChange={field.onChange}
+              />
+            </FormItem>
+          )}
+        />
+
         <div className="flex justify-between gap-4 col-span-full">
           <Button variant="outline" asChild>
-            <Link href="/tools">Cancel</Link>
+            <Link href="/admin/tools">Cancel</Link>
           </Button>
 
           <Button isPending={isPending} disabled={isPending}>

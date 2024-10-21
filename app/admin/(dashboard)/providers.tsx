@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { TooltipProvider } from "~/components/ui/tooltip"
+import { TooltipProvider } from "~/components/admin/ui/tooltip"
 import { StatsContext } from "~/hooks/use-stats-context"
 
 interface ProviderProps extends React.PropsWithChildren {

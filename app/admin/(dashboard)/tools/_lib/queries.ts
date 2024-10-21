@@ -1,6 +1,6 @@
 import "server-only"
 
-import type { Prisma } from "@openalternative/db"
+import type { Prisma } from "@prisma/client"
 import { endOfDay, startOfDay } from "date-fns"
 import { unstable_noStore as noStore } from "next/cache"
 import { prisma } from "~/services/prisma"
@@ -89,10 +89,10 @@ export async function getTools(input: GetToolsSchema) {
   }
 }
 
-export async function getAlternatives() {
+export async function getCategories() {
   noStore()
   try {
-    return await prisma.alternative.findMany({
+    return await prisma.category.findMany({
       select: { id: true, name: true },
       orderBy: { name: "asc" },
     })
@@ -101,12 +101,24 @@ export async function getAlternatives() {
   }
 }
 
-export async function getCategories() {
+export async function getCollections() {
   noStore()
   try {
-    return await prisma.category.findMany({
+    return await prisma.collection.findMany({
       select: { id: true, name: true },
       orderBy: { name: "asc" },
+    })
+  } catch (err) {
+    return []
+  }
+}
+
+export async function getTags() {
+  noStore()
+  try {
+    return await prisma.tag.findMany({
+      select: { id: true, slug: true },
+      orderBy: { slug: "asc" },
     })
   } catch (err) {
     return []
@@ -133,8 +145,9 @@ export async function getToolById(id: string) {
     return await prisma.tool.findUnique({
       where: { id },
       include: {
-        alternatives: { include: { alternative: true } },
-        categories: { include: { category: true } },
+        categories: true,
+        collections: true,
+        tags: true,
       },
     })
   } catch (err) {

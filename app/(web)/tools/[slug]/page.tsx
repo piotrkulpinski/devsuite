@@ -1,4 +1,4 @@
-import { getUrlHostname, slugify } from "@curiousleaf/utils"
+import { getUrlHostname } from "@curiousleaf/utils"
 import { formatDistanceToNowStrict } from "date-fns"
 import { ArrowUpRightIcon, DollarSignIcon, EllipsisIcon, HashIcon, SparkleIcon } from "lucide-react"
 import Link from "next/link"
@@ -19,8 +19,6 @@ import { Gallery } from "~/components/web/ui/gallery"
 import { Grid } from "~/components/web/ui/grid"
 import { IntroDescription } from "~/components/web/ui/intro"
 import { Wrapper } from "~/components/web/ui/wrapper"
-import { config } from "~/config"
-import { updateUrlWithSearchParams } from "~/utils/query-string"
 
 export async function generateStaticParams() {
   const tools = await findToolSlugs({})
@@ -74,11 +72,7 @@ export default async function ToolPage({ params: { slug } }: { params: { slug: s
               <Button size="md" variant="secondary" suffix={<EllipsisIcon />} />
 
               <Button size="md" variant="primary" suffix={<ArrowUpRightIcon />} asChild>
-                <a
-                  href={updateUrlWithSearchParams(websiteUrl, { ref: slugify(config.site.name) })}
-                  target="_blank"
-                  rel="nofollow noreferrer"
-                >
+                <a href={websiteUrl} target="_blank" rel="nofollow noreferrer">
                   {getUrlHostname(websiteUrl)}
                 </a>
               </Button>

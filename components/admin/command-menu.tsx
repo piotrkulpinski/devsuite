@@ -110,10 +110,10 @@ export const CommandMenu = () => {
 
         <CommandGroup heading="Create">
           <CommandItem onSelect={() => handleSelect("/tools/new")}>New Tool</CommandItem>
+          <CommandItem onSelect={() => handleSelect("/categories/new")}>New Category</CommandItem>
           <CommandItem onSelect={() => handleSelect("/collections/new")}>
             New Collection
           </CommandItem>
-          <CommandItem onSelect={() => handleSelect("/categories/new")}>New Category</CommandItem>
           <CommandItem onSelect={() => handleSelect("/tags/new")}>New Tag</CommandItem>
         </CommandGroup>
 

@@ -1,6 +1,6 @@
 "use client"
 
-import type { Tool } from "@openalternative/db"
+import type { Tool } from "@prisma/client"
 import type { Table } from "@tanstack/react-table"
 import { ToolsDeleteDialog } from "./tools-delete-dialog"
 

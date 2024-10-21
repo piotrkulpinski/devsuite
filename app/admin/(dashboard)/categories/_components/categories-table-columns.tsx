@@ -1,12 +1,12 @@
 "use client"
 
 import { formatDate } from "@curiousleaf/utils"
-import type { Category } from "@openalternative/db"
+import type { Category } from "@prisma/client"
 import type { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link"
 import { CategoryActions } from "~/app/admin/(dashboard)/categories/_components/category-actions"
-import { DataTableColumnHeader } from "~/components/data-table/data-table-column-header"
-import { Checkbox } from "~/components/ui/checkbox"
+import { DataTableColumnHeader } from "~/components/admin/data-table/data-table-column-header"
+import { Checkbox } from "~/components/common/forms/checkbox"
 
 export function getColumns(): ColumnDef<Category>[] {
   return [
@@ -40,18 +40,11 @@ export function getColumns(): ColumnDef<Category>[] {
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
       cell: ({ row }) => (
         <Link
-          href={`/categories/${row.original.id}`}
+          href={`/admin/categories/${row.original.id}`}
           className="max-w-36 truncate font-medium text-primary hover:text-foreground"
         >
           {row.getValue("name")}
         </Link>
-      ),
-    },
-    {
-      accessorKey: "tagline",
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Label" />,
-      cell: ({ row }) => (
-        <span className="max-w-96 truncate text-muted-foreground">{row.original.label}</span>
       ),
     },
     {

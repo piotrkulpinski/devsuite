@@ -9,6 +9,7 @@ import type { z } from "zod"
 import { useServerAction } from "zsa-react"
 import { submitTool } from "~/actions/submit"
 import { submitToolSchema } from "~/api/schemas"
+import { Checkbox } from "~/components/common/forms/checkbox"
 import {
   Form,
   FormControl,
@@ -17,9 +18,8 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/forms/form"
+import { Input } from "~/components/common/forms/input"
 import { Button } from "~/components/web/ui/button"
-import { Checkbox } from "~/components/web/ui/forms/checkbox"
-import { Input } from "~/components/web/ui/forms/input"
 import { cx } from "~/utils/cva"
 
 export const SubmitForm = ({ className, ...props }: HTMLAttributes<HTMLFormElement>) => {

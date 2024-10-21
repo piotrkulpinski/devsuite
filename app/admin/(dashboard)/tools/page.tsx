@@ -1,5 +1,5 @@
 import { Suspense } from "react"
-import { DataTableSkeleton } from "~/components/data-table/data-table-skeleton"
+import { DataTableSkeleton } from "~/components/admin/data-table/data-table-skeleton"
 import { searchParamsSchema } from "~/schema/search-params"
 import type { SearchParams } from "~/types"
 import { ToolsTable } from "./_components/tools-table"

@@ -2,18 +2,20 @@ import { notFound } from "next/navigation"
 import { ToolActions } from "~/app/admin/(dashboard)/tools/_components/tool-actions"
 import { ToolForm } from "~/app/admin/(dashboard)/tools/_components/tool-form"
 import {
-  getAlternatives,
   getCategories,
+  getCollections,
+  getTags,
   getToolById,
 } from "~/app/admin/(dashboard)/tools/_lib/queries"
-import { H3 } from "~/components/common/heading"
-import { Wrapper } from "~/components/ui/wrapper"
+import { Wrapper } from "~/components/admin/ui/wrapper"
+import { H4 } from "~/components/common/heading"
 
 export default async function UpdateToolPage({ params }: { params: { id: string } }) {
-  const [tool, alternatives, categories] = await Promise.all([
+  const [tool, categories, collections, tags] = await Promise.all([
     getToolById(params.id),
-    getAlternatives(),
     getCategories(),
+    getCollections(),
+    getTags(),
   ])
 
   if (!tool) {
@@ -23,12 +25,12 @@ export default async function UpdateToolPage({ params }: { params: { id: string 
   return (
     <Wrapper size="md">
       <div className="flex items-center justify-between gap-4">
-        <H3>Update tool</H3>
+        <H4 as="h1">Update tool</H4>
 
         <ToolActions tool={tool} />
       </div>
 
-      <ToolForm tool={tool} alternatives={alternatives} categories={categories} />
+      <ToolForm tool={tool} categories={categories} collections={collections} tags={tags} />
     </Wrapper>
   )
 }

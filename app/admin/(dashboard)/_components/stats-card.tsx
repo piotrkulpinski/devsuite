@@ -1,4 +1,4 @@
-import { Card, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
+import { Card, CardDescription, CardHeader, CardTitle } from "~/components/admin/ui/card"
 import { prisma } from "~/services/prisma"
 
 export const StatsCard = async () => {
@@ -22,7 +22,7 @@ export const StatsCard = async () => {
         <Card key={index}>
           <CardHeader>
             <CardDescription>{statsLabels[index as keyof typeof statsLabels]}</CardDescription>
-            <CardTitle className="text-3xl tabular-nums">{stat.toLocaleString()}</CardTitle>
+            <CardTitle className="text-3xl">{stat.toLocaleString()}</CardTitle>
           </CardHeader>
         </Card>
       ))}

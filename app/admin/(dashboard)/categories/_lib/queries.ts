@@ -1,6 +1,6 @@
 import "server-only"
 
-import type { Prisma } from "@openalternative/db"
+import type { Prisma } from "@prisma/client"
 import { endOfDay, startOfDay } from "date-fns"
 import { unstable_noStore as noStore } from "next/cache"
 import { prisma } from "~/services/prisma"
@@ -75,7 +75,7 @@ export async function getCategoryById(id: string) {
   try {
     return await prisma.category.findUnique({
       where: { id },
-      include: { tools: { include: { tool: true } } },
+      include: { tools: true },
     })
   } catch (err) {
     return null

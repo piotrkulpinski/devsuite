@@ -1,9 +1,15 @@
 import { formatDistanceToNowStrict } from "date-fns"
 import Link from "next/link"
 import type { ComponentProps } from "react"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/admin/ui/card"
 import { ScrollArea } from "~/components/admin/ui/scroll-area"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
-import { Skeleton } from "~/components/ui/skeleton"
+import { Skeleton } from "~/components/common/skeleton"
 import { prisma } from "~/services/prisma"
 
 export const ScheduledToolsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
@@ -26,7 +32,7 @@ export const ScheduledToolsCard = async ({ ...props }: ComponentProps<typeof Car
             {tools.map(tool => (
               <Link
                 key={tool.id}
-                href={`/tools/${tool.id}`}
+                href={`/admin/tools/${tool.id}`}
                 className="group flex items-center gap-3 py-1"
               >
                 <span className="font-medium truncate">{tool.name}</span>

@@ -4,8 +4,14 @@ import {
   AnalyticsChart,
   type AnalyticsChartData,
 } from "~/app/admin/(dashboard)/_components/analytics-chart"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
-import { Skeleton } from "~/components/ui/skeleton"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/admin/ui/card"
+import { Skeleton } from "~/components/common/skeleton"
 import { env } from "~/env"
 
 export const AnalyticsCard = async ({ ...props }: ComponentProps<typeof Card>) => {
@@ -23,7 +29,7 @@ export const AnalyticsCard = async ({ ...props }: ComponentProps<typeof Card>) =
     <Card {...props}>
       <CardHeader>
         <CardDescription>Visitors</CardDescription>
-        <CardTitle className="text-3xl tabular-nums">{totalVisitors.toLocaleString()}</CardTitle>
+        <CardTitle className="text-3xl">{totalVisitors.toLocaleString()}</CardTitle>
       </CardHeader>
 
       <CardContent>

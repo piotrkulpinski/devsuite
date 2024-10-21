@@ -3,15 +3,15 @@
 import * as React from "react"
 import type { DataTableFilterField } from "~/types"
 
-import type { Category } from "@openalternative/db"
+import type { Category } from "@prisma/client"
 import { PlusIcon } from "lucide-react"
 import Link from "next/link"
-import { DataTable } from "~/components/data-table/data-table"
-import { DataTableHeader } from "~/components/data-table/data-table-header"
-import { DataTableToolbar } from "~/components/data-table/data-table-toolbar"
-import { DataTableViewOptions } from "~/components/data-table/data-table-view-options"
-import { DateRangePicker } from "~/components/date-range-picker"
-import { Button } from "~/components/ui/button"
+import { DataTable } from "~/components/admin/data-table/data-table"
+import { DataTableHeader } from "~/components/admin/data-table/data-table-header"
+import { DataTableToolbar } from "~/components/admin/data-table/data-table-toolbar"
+import { DataTableViewOptions } from "~/components/admin/data-table/data-table-view-options"
+import { DateRangePicker } from "~/components/admin/date-range-picker"
+import { Button } from "~/components/admin/ui/button"
 import { useDataTable } from "~/hooks/use-data-table"
 import type { getCategories } from "../_lib/queries"
 import { getColumns } from "./categories-table-columns"
@@ -87,7 +87,7 @@ export function CategoriesTable({ categoriesPromise }: CategoriesTableProps) {
         total={categoriesTotal}
         callToAction={
           <Button prefix={<PlusIcon />} asChild>
-            <Link href="/categories/new">
+            <Link href="/admin/categories/new">
               <span className="max-sm:sr-only">New category</span>
             </Link>
           </Button>

@@ -13,6 +13,8 @@ import {
   type CategorySchema,
   categorySchema,
 } from "~/app/admin/(dashboard)/categories/_lib/validations"
+import { RelationSelector } from "~/components/admin/relation-selector"
+import { Button } from "~/components/admin/ui/button"
 import {
   Form,
   FormControl,
@@ -21,9 +23,8 @@ import {
   FormLabel,
   FormMessage,
 } from "~/components/common/forms/form"
-import { RelationSelector } from "~/components/relation-selector"
-import { Button } from "~/components/ui/button"
-import { Input } from "~/components/ui/input"
+import { Input } from "~/components/common/forms/input"
+import { TextArea } from "~/components/common/forms/textarea"
 import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
@@ -43,7 +44,7 @@ export function CategoryForm({
     resolver: zodResolver(categorySchema),
     defaultValues: {
       ...nullsToUndefined(category),
-      tools: category?.tools.map(({ tool }) => tool.id),
+      tools: category?.tools.map(({ id }) => id),
     },
   })
 
@@ -53,7 +54,7 @@ export function CategoryForm({
     {
       onSuccess: ({ data }) => {
         toast.success("Category successfully created")
-        redirect(`/categories/${data.id}`)
+        redirect(`/admin/categories/${data.id}`)
       },
 
       onError: ({ err }) => {
@@ -68,7 +69,7 @@ export function CategoryForm({
     {
       onSuccess: ({ data }) => {
         toast.success("Category successfully updated")
-        redirect(`/categories/${data.id}`)
+        redirect(`/admin/categories/${data.id}`)
       },
 
       onError: ({ err }) => {
@@ -91,44 +92,42 @@ export function CategoryForm({
         noValidate
         {...props}
       >
-        <div className="flex flex-col gap-4 sm:flex-row">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="slug"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Slug</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}
-          name="label"
+          name="slug"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Label</FormLabel>
+              <FormLabel>Slug</FormLabel>
               <FormControl>
                 <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem className="col-span-full">
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <TextArea {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -152,7 +151,7 @@ export function CategoryForm({
 
         <div className="flex justify-between gap-4 col-span-full">
           <Button variant="outline" asChild>
-            <Link href="/categories">Cancel</Link>
+            <Link href="/admin/categories">Cancel</Link>
           </Button>
 
           <Button isPending={isPending} disabled={isPending}>

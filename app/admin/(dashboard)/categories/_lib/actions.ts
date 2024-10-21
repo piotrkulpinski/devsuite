@@ -1,12 +1,12 @@
 "use server"
 
 import "server-only"
+import { slugify } from "@curiousleaf/utils"
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import { categorySchema } from "~/app/admin/(dashboard)/categories/_lib/validations"
 import { authedProcedure } from "~/lib/safe-actions"
 import { prisma } from "~/services/prisma"
-import { getSlug } from "~/utils/helpers"
 
 export const createCategory = authedProcedure
   .createServerAction()
@@ -15,17 +15,14 @@ export const createCategory = authedProcedure
     const category = await prisma.category.create({
       data: {
         ...input,
-        slug: input.slug || getSlug(input.name),
+        slug: input.slug || slugify(input.name),
 
-        tools: {
-          create: tools?.map(id => ({
-            tool: { connect: { id } },
-          })),
-        },
+        // Relations
+        tools: { connect: tools?.map(id => ({ id })) },
       },
     })
 
-    revalidatePath("/categories")
+    revalidatePath("/admin/categories")
 
     return category
   })
@@ -38,19 +35,14 @@ export const updateCategory = authedProcedure
       where: { id },
       data: {
         ...input,
-        slug: input.slug || getSlug(input.name),
 
-        tools: {
-          deleteMany: { categoryId: id },
-
-          create: tools?.map(id => ({
-            tool: { connect: { id } },
-          })),
-        },
+        // Relations
+        tools: { set: tools?.map(id => ({ id })) },
       },
     })
 
-    revalidatePath("/categories")
+    revalidatePath("/admin/categories")
+    revalidatePath(`/admin/categories/${category.slug}`)
 
     return category
   })
@@ -64,7 +56,7 @@ export const updateCategories = authedProcedure
       data,
     })
 
-    revalidatePath("/categories")
+    revalidatePath("/admin/categories")
 
     return true
   })
@@ -77,7 +69,7 @@ export const deleteCategories = authedProcedure
       where: { id: { in: ids } },
     })
 
-    revalidatePath("/categories")
+    revalidatePath("/admin/categories")
 
     return true
   })

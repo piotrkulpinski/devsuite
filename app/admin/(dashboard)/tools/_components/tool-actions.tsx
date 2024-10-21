@@ -1,6 +1,6 @@
 "use client"
 
-import type { Tool } from "@openalternative/db"
+import type { Tool } from "@prisma/client"
 import type { Row } from "@tanstack/react-table"
 import { EllipsisIcon } from "lucide-react"
 import Link from "next/link"
@@ -11,7 +11,7 @@ import { useServerAction } from "zsa-react"
 import { ToolPublishDialog } from "~/app/admin/(dashboard)/tools/_components/tool-publish-dialog"
 import { ToolsDeleteDialog } from "~/app/admin/(dashboard)/tools/_components/tools-delete-dialog"
 import { reuploadToolAssets } from "~/app/admin/(dashboard)/tools/_lib/actions"
-import { Button } from "~/components/ui/button"
+import { Button } from "~/components/admin/ui/button"
 
 import {
   DropdownMenu,
@@ -19,7 +19,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu"
+} from "~/components/admin/ui/dropdown-menu"
 import { siteConfig } from "~/config/site"
 import { cx } from "~/utils/cva"
 
@@ -50,7 +50,7 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
         onOpenChange={setShowToolsDeleteDialog}
         tools={[tool]}
         showTrigger={false}
-        onSuccess={() => row?.toggleSelected(false) || router.push("/tools")}
+        onSuccess={() => row?.toggleSelected(false) || router.push("/admin/tools")}
       />
 
       <ToolPublishDialog
@@ -74,7 +74,7 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
 
         <DropdownMenuContent align="end">
           <DropdownMenuItem asChild>
-            <Link href={`/tools/${tool.id}`}>Edit</Link>
+            <Link href={`/admin/tools/${tool.id}`}>Edit</Link>
           </DropdownMenuItem>
 
           {!tool.publishedAt && (
@@ -88,7 +88,7 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
 
           {tool.publishedAt && tool.publishedAt <= new Date() && (
             <DropdownMenuItem asChild>
-              <Link href={`${siteConfig.url}/${tool.slug}`} target="_blank">
+              <Link href={`${siteConfig.url}/tools/${tool.slug}`} target="_blank">
                 View
               </Link>
             </DropdownMenuItem>
@@ -101,14 +101,8 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
           <DropdownMenuSeparator />
 
           <DropdownMenuItem asChild>
-            <Link href={tool.website} target="_blank">
+            <Link href={tool.websiteUrl} target="_blank">
               Visit website
-            </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem asChild>
-            <Link href={tool.repository} target="_blank">
-              Visit repository
             </Link>
           </DropdownMenuItem>
 
