@@ -1,12 +1,12 @@
 import { notFound } from "next/navigation"
 import { CategoryActions } from "~/app/admin/(dashboard)/categories/_components/category-actions"
 import { CategoryForm } from "~/app/admin/(dashboard)/categories/_components/category-form"
-import { getCategoryById, getTools } from "~/app/admin/(dashboard)/categories/_lib/queries"
+import { getCategoryBySlug, getTools } from "~/app/admin/(dashboard)/categories/_lib/queries"
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H4 } from "~/components/common/heading"
 
-export default async function UpdateCategoryPage({ params }: { params: { id: string } }) {
-  const [category, tools] = await Promise.all([getCategoryById(params.id), getTools()])
+export default async function UpdateCategoryPage({ params }: { params: { slug: string } }) {
+  const [category, tools] = await Promise.all([getCategoryBySlug(params.slug), getTools()])
 
   if (!category) {
     return notFound()

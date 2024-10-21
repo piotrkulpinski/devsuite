@@ -14,7 +14,7 @@ import type {
   getCategories,
   getCollections,
   getTags,
-  getToolById,
+  getToolBySlug,
 } from "~/app/admin/(dashboard)/tools/_lib/queries"
 import { type ToolSchema, toolSchema } from "~/app/admin/(dashboard)/tools/_lib/validations"
 import { RelationSelector } from "~/components/admin/relation-selector"
@@ -34,7 +34,7 @@ import { cx } from "~/utils/cva"
 import { nullsToUndefined } from "~/utils/helpers"
 
 type ToolFormProps = React.HTMLAttributes<HTMLFormElement> & {
-  tool?: Awaited<ReturnType<typeof getToolById>>
+  tool?: Awaited<ReturnType<typeof getToolBySlug>>
   collections: Awaited<ReturnType<typeof getCollections>>
   categories: Awaited<ReturnType<typeof getCategories>>
   tags: Awaited<ReturnType<typeof getTags>>
@@ -69,7 +69,7 @@ export function ToolForm({
   const { execute: createToolAction, isPending: isCreatingTool } = useServerAction(createTool, {
     onSuccess: ({ data }) => {
       toast.success("Tool successfully created")
-      redirect(`/admin/tools/${data.id}`)
+      redirect(`/admin/tools/${data.slug}`)
     },
 
     onError: ({ err }) => {
@@ -81,7 +81,7 @@ export function ToolForm({
   const { execute: updateToolAction, isPending: isUpdatingTool } = useServerAction(updateTool, {
     onSuccess: ({ data }) => {
       toast.success("Tool successfully updated")
-      redirect(`/admin/tools/${data.id}`)
+      redirect(`/admin/tools/${data.slug}`)
     },
 
     onError: ({ err }) => {
@@ -244,7 +244,7 @@ export function ToolForm({
             <FormItem>
               <FormLabel>Submitter Email</FormLabel>
               <FormControl>
-                <Input type="email" {...field} />
+                <Input type="email" data-1p-ignore {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

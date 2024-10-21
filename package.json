@@ -26,7 +26,7 @@
     "@curiousleaf/utils": "^1.0.36",
     "@hookform/resolvers": "^3.9.0",
     "@mendable/firecrawl-js": "^1.6.1",
-    "@number-flow/react": "^0.1.3",
+    "@number-flow/react": "^0.2.3",
     "@prisma/client": "^5.21.1",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-checkbox": "^1.1.2",

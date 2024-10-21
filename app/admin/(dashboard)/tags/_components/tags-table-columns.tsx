@@ -40,7 +40,7 @@ export function getColumns(): ColumnDef<Tag>[] {
       header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
       cell: ({ row }) => (
         <Link
-          href={`/admin/tags/${row.original.id}`}
+          href={`/admin/tags/${row.original.slug}`}
           className="max-w-36 truncate font-medium text-primary hover:text-foreground"
         >
           {row.getValue("name")}

@@ -52,7 +52,7 @@ export const CategoryActions = ({ category, row, className, ...props }: Category
 
         <DropdownMenuContent align="end">
           <DropdownMenuItem asChild>
-            <Link href={`/admin/categories/${category.id}`}>Edit</Link>
+            <Link href={`/admin/categories/${category.slug}`}>Edit</Link>
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>

@@ -1,12 +1,12 @@
 import { notFound } from "next/navigation"
 import { TagActions } from "~/app/admin/(dashboard)/tags/_components/tag-actions"
 import { TagForm } from "~/app/admin/(dashboard)/tags/_components/tag-form"
-import { getTagById, getTools } from "~/app/admin/(dashboard)/tags/_lib/queries"
+import { getTagBySlug, getTools } from "~/app/admin/(dashboard)/tags/_lib/queries"
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H4 } from "~/components/common/heading"
 
-export default async function UpdateTagPage({ params }: { params: { id: string } }) {
-  const [tag, tools] = await Promise.all([getTagById(params.id), getTools()])
+export default async function UpdateTagPage({ params }: { params: { slug: string } }) {
+  const [tag, tools] = await Promise.all([getTagBySlug(params.slug), getTools()])
 
   if (!tag) {
     return notFound()

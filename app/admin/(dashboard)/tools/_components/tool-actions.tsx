@@ -74,7 +74,7 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
 
         <DropdownMenuContent align="end">
           <DropdownMenuItem asChild>
-            <Link href={`/admin/tools/${tool.id}`}>Edit</Link>
+            <Link href={`/admin/tools/${tool.slug}`}>Edit</Link>
           </DropdownMenuItem>
 
           {!tool.publishedAt && (
