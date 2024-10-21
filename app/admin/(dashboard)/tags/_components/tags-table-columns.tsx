@@ -6,7 +6,7 @@ import type { ColumnDef } from "@tanstack/react-table"
 import Link from "next/link"
 import { TagActions } from "~/app/admin/(dashboard)/tags/_components/tag-actions"
 import { DataTableColumnHeader } from "~/components/admin/data-table/data-table-column-header"
-import { Checkbox } from "~/components/common/forms/checkbox"
+import { Checkbox } from "~/components/common/checkbox"
 
 export function getColumns(): ColumnDef<Tag>[] {
   return [

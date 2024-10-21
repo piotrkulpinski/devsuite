@@ -8,10 +8,10 @@ import type { z } from "zod"
 import { useServerAction } from "zsa-react"
 import { subscribeToNewsletter } from "~/actions/subscribe"
 import { newsletterSchema } from "~/api/schemas"
-import { Form, FormControl, FormField } from "~/components/common/forms/form"
-import { Hint } from "~/components/common/forms/hint"
-import { Input } from "~/components/common/forms/input"
+import { Form, FormControl, FormField } from "~/components/common/form"
+import { Hint } from "~/components/common/hint"
 import { Button, type ButtonProps } from "~/components/web/ui/button"
+import { Input } from "~/components/web/ui/input"
 import { cx } from "~/utils/cva"
 
 type NewsletterProps = HTMLAttributes<HTMLFormElement> & {

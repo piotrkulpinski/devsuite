@@ -8,8 +8,8 @@ import {
   FormProvider,
   useFormContext,
 } from "react-hook-form"
-import { Hint } from "~/components/common/forms/hint"
-import { Label } from "~/components/common/forms/label"
+import { Hint } from "~/components/common/hint"
+import { Label } from "~/components/common/label"
 import { cx } from "~/utils/cva"
 
 const Form = FormProvider

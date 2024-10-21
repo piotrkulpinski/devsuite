@@ -11,7 +11,7 @@ import {
 } from "~/components/admin/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/admin/ui/popover"
 import { Separator } from "~/components/admin/ui/separator"
-import { Checkbox } from "~/components/common/forms/checkbox"
+import { Checkbox } from "~/components/common/checkbox"
 
 type Relation = {
   id: string

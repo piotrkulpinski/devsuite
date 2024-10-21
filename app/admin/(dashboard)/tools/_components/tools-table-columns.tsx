@@ -7,7 +7,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ToolActions } from "~/app/admin/(dashboard)/tools/_components/tool-actions"
 import { DataTableColumnHeader } from "~/components/admin/data-table/data-table-column-header"
-import { Checkbox } from "~/components/common/forms/checkbox"
+import { Checkbox } from "~/components/common/checkbox"
 
 export function getColumns(): ColumnDef<Tool>[] {
   return [
