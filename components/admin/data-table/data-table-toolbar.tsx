@@ -49,7 +49,7 @@ export function DataTableToolbar<TData>({
                   onChange={event =>
                     table.getColumn(String(column.value))?.setFilterValue(event.target.value)
                   }
-                  className="h-8 w-40 lg:w-64"
+                  className="h-8 w-full min-w-40 lg:min-w-64"
                 />
               ),
           )}
