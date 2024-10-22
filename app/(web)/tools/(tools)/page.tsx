@@ -55,7 +55,7 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
         </IntroDescription>
       </Intro>
 
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 lg:gap-8">
         <ToolFilters />
 
         <Grid>

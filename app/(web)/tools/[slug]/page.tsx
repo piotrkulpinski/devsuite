@@ -7,16 +7,15 @@ import { Suspense } from "react"
 import { z } from "zod"
 import { findFirstTool, findToolSlugs, findUniqueTool } from "~/api/tools/queries"
 import { RelatedTools } from "~/app/(web)/tools/[slug]/related-tools"
-import { H2, H4 } from "~/components/common/heading"
+import { RelatedToolsSkeleton } from "~/app/(web)/tools/[slug]/related-tools-skeleton"
+import { H2 } from "~/components/common/heading"
 import { Markdown } from "~/components/common/markdown"
 import { Stack } from "~/components/common/stack"
-import { ToolSkeleton } from "~/components/web/cards/tool-skeleton"
 import { Nav } from "~/components/web/nav"
 import { Badge } from "~/components/web/ui/badge"
 import { Button } from "~/components/web/ui/button"
 import { FaviconImage } from "~/components/web/ui/favicon"
 import { Gallery } from "~/components/web/ui/gallery"
-import { Grid } from "~/components/web/ui/grid"
 import { IntroDescription } from "~/components/web/ui/intro"
 import { Wrapper } from "~/components/web/ui/wrapper"
 
@@ -161,21 +160,7 @@ export default async function ToolPage({ params: { slug } }: { params: { slug: s
         />
       </Wrapper>
 
-      <Suspense
-        fallback={
-          <div className="flex flex-col gap-6 items-center">
-            <H4 as="h3" className="text-center">
-              Other Alternatives to {tool.name}:
-            </H4>
-
-            <Grid className="w-full">
-              {Array.from({ length: 3 }).map((_, index) => (
-                <ToolSkeleton key={index} />
-              ))}
-            </Grid>
-          </div>
-        }
-      >
+      <Suspense fallback={<RelatedToolsSkeleton />}>
         <RelatedTools tool={tool} />
       </Suspense>
     </>

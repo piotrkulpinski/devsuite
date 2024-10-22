@@ -49,7 +49,7 @@ export const SubmitForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(data => execute(data))}
-        className={cx("grid w-full gap-6 sm:grid-cols-2", className)}
+        className={cx("grid w-full gap-5 sm:grid-cols-2", className)}
         noValidate
         {...props}
       >

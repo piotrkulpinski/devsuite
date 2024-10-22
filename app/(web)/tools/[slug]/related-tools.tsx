@@ -8,7 +8,7 @@ import { Grid } from "~/components/web/ui/grid"
 import { prisma } from "~/services/prisma"
 
 export const RelatedTools = async ({ tool }: { tool: ToolOne }) => {
-  const take = 3
+  const take = 4
   const where = {
     categories: { some: { slug: { in: tool.categories.map(({ slug }) => slug) } } },
     NOT: { slug: tool.slug },
@@ -28,7 +28,7 @@ export const RelatedTools = async ({ tool }: { tool: ToolOne }) => {
   })
 
   return (
-    <div className="flex flex-col gap-6 items-center">
+    <div className="flex flex-col items-center gap-6 lg:gap-8">
       <H4 as="h3" className="text-center">
         Other Alternatives to {tool.name}:
       </H4>

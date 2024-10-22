@@ -60,7 +60,7 @@ export default async function SubmitPackages({ params }: { params: { tool: strin
         </Badge>
       </Intro>
 
-      <div className="flex flex-wrap justify-center gap-6">
+      <div className="flex flex-wrap justify-center gap-5">
         <Suspense fallback={[...Array(3)].map((_, index) => <PlanSkeleton key={index} />)}>
           <SubmitProducts tool={tool} />
         </Suspense>

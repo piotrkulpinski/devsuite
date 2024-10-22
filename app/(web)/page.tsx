@@ -4,7 +4,7 @@ import Link from "next/link"
 import plur from "plur"
 import { findCategories } from "~/api/categories/queries"
 import { countTools, findTools } from "~/api/tools/queries"
-import { H3, H4 } from "~/components/common/heading"
+import { H3 } from "~/components/common/heading"
 import { CategoryCard } from "~/components/web/cards/category-card"
 import { ToolCard } from "~/components/web/cards/tool-card"
 import { NewsletterForm } from "~/components/web/newsletter-form"
@@ -43,8 +43,8 @@ export default async function Home() {
       </Intro>
 
       {!!tools.length && (
-        <div className="flex flex-col gap-8">
-          <H4 className="text-center">Featured Tools</H4>
+        <div className="flex flex-col gap-6 lg:gap-8">
+          <H3 className="text-center">Featured Tools</H3>
 
           <Grid>
             {tools.map((tool, i) => (
@@ -55,7 +55,7 @@ export default async function Home() {
       )}
 
       {!!categories.length && (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 lg:gap-8">
           <H3 className="text-center">Browse Categories</H3>
 
           <Grid>
