@@ -113,7 +113,7 @@ export const uploadScreenshot = async (url: string, s3Key: string): Promise<stri
     cache_ttl: "2592000",
 
     // Blockers
-    delay: "2",
+    delay: "3",
     block_ads: "true",
     block_chats: "true",
     block_trackers: "true",

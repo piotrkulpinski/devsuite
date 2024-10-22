@@ -11,7 +11,7 @@ datasource db {
 
 model Tool {
   id             String    @id @default(cuid())
-  name           String
+  name           String    @db.Citext
   slug           String    @unique
   tagline        String?
   description    String?
@@ -43,7 +43,7 @@ model Tool {
 
 model Category {
   id          String   @id @default(cuid())
-  name        String
+  name        String   @db.Citext
   slug        String   @unique
   description String?
   updatedAt   DateTime @updatedAt
@@ -58,7 +58,7 @@ model Category {
 
 model Collection {
   id          String   @id @default(cuid())
-  name        String
+  name        String   @db.Citext
   slug        String   @unique
   description String?
   updatedAt   DateTime @updatedAt
@@ -73,7 +73,7 @@ model Collection {
 
 model Tag {
   id        String   @id @default(cuid())
-  name      String
+  name      String   @db.Citext
   slug      String   @unique
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())

@@ -34,7 +34,7 @@ export const ToolsDeleteDialog = ({
   const { execute, isPending } = useServerAction(deleteTools, {
     onSuccess: () => {
       props.onOpenChange?.(false)
-      toast.success("Tools deleted")
+      toast.success("Tool(s) deleted")
       onSuccess?.()
     },
 

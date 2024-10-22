@@ -18,26 +18,26 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/admin/ui/dialog"
-import { scheduleTool } from "../_lib/actions"
+import { scheduleTools } from "../_lib/actions"
 
-interface ToolScheduleDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
-  tool: Row<Tool>["original"]
+interface ToolsScheduleDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
+  tools: Row<Tool>["original"][]
   showTrigger?: boolean
   onSuccess?: () => void
 }
 
-export const ToolScheduleDialog = ({
-  tool,
+export const ToolsScheduleDialog = ({
+  tools,
   showTrigger = true,
   onSuccess,
   ...props
-}: ToolScheduleDialogProps) => {
+}: ToolsScheduleDialogProps) => {
   const [publishedAt, setPublishedAt] = React.useState<Date | undefined>(undefined)
 
-  const { execute, isPending } = useServerAction(scheduleTool, {
+  const { execute, isPending } = useServerAction(scheduleTools, {
     onSuccess: () => {
       props.onOpenChange?.(false)
-      toast.success("Tool scheduled")
+      toast.success("Tool(s) scheduled")
       onSuccess?.()
     },
 
@@ -50,9 +50,8 @@ export const ToolScheduleDialog = ({
     <Dialog {...props}>
       {showTrigger && (
         <DialogTrigger asChild>
-          <Button variant="outline" size="sm">
-            <ClockIcon className="max-sm:mr-2" aria-hidden="true" />
-            Schedule
+          <Button variant="outline" size="sm" prefix={<ClockIcon />}>
+            Schedule ({tools.length})
           </Button>
         </DialogTrigger>
       )}
@@ -60,11 +59,13 @@ export const ToolScheduleDialog = ({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Pick a date to publish</DialogTitle>
-          <DialogDescription>This tool will be published on the date you choose.</DialogDescription>
+          <DialogDescription>
+            This tool(s) will be published on the date you choose.
+          </DialogDescription>
         </DialogHeader>
 
         <Calendar
-          // initialFocus
+          initialFocus
           mode="single"
           selected={publishedAt}
           onSelect={setPublishedAt}
@@ -79,7 +80,7 @@ export const ToolScheduleDialog = ({
           <Button
             aria-label="Schedule"
             variant="default"
-            onClick={() => publishedAt && execute({ id: tool.id, publishedAt })}
+            onClick={() => publishedAt && execute({ ids: tools.map(({ id }) => id), publishedAt })}
             isPending={isPending}
             disabled={!publishedAt || isPending}
           >

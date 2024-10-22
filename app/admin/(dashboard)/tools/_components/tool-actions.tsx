@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation"
 import React from "react"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
-import { ToolScheduleDialog } from "~/app/admin/(dashboard)/tools/_components/tool-schedule-dialog"
 import { ToolsDeleteDialog } from "~/app/admin/(dashboard)/tools/_components/tools-delete-dialog"
+import { ToolsScheduleDialog } from "~/app/admin/(dashboard)/tools/_components/tools-schedule-dialog"
 import { reuploadToolAssets } from "~/app/admin/(dashboard)/tools/_lib/actions"
 import { Button } from "~/components/admin/ui/button"
 
@@ -31,7 +31,7 @@ interface ToolActionsProps extends React.ComponentPropsWithoutRef<typeof Button>
 export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps) => {
   const router = useRouter()
   const [showToolsDeleteDialog, setShowToolsDeleteDialog] = React.useState(false)
-  const [showToolScheduleDialog, setShowToolScheduleDialog] = React.useState(false)
+  const [showToolsScheduleDialog, setShowToolsScheduleDialog] = React.useState(false)
 
   const { execute: reuploadAssetsAction } = useServerAction(reuploadToolAssets, {
     onSuccess: () => {
@@ -53,10 +53,10 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
         onSuccess={() => row?.toggleSelected(false) || router.push("/admin/tools")}
       />
 
-      <ToolScheduleDialog
-        open={showToolScheduleDialog}
-        onOpenChange={setShowToolScheduleDialog}
-        tool={tool}
+      <ToolsScheduleDialog
+        open={showToolsScheduleDialog}
+        onOpenChange={setShowToolsScheduleDialog}
+        tools={[tool]}
         showTrigger={false}
       />
 
@@ -79,7 +79,7 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
 
           {!tool.publishedAt && (
             <DropdownMenuItem
-              onSelect={() => setShowToolScheduleDialog(true)}
+              onSelect={() => setShowToolsScheduleDialog(true)}
               className="text-green-600 dark:text-green-400"
             >
               Schedule

@@ -34,7 +34,7 @@ export const generateToolContent = createServerAction()
       where: { slug: input.slug },
     })
 
-    const [{ categories, tags, ...content }, socials] = await Promise.all([
+    const [{ tags, ...content }, socials] = await Promise.all([
       generateContent(tool),
       getSocialsFromUrl(tool.websiteUrl),
     ])
@@ -45,11 +45,11 @@ export const generateToolContent = createServerAction()
         ...content,
         xHandle: socials.X?.[0]?.user,
         socials: Object.entries(socials).map(([name, links]) => ({ name, url: links[0].url })),
-        categories: { set: categories.map(({ slug }) => ({ slug })) },
+        // categories: { set: categories.map(({ slug }) => ({ slug })) },
         tags: {
-          connectOrCreate: tags.map(({ name, slug }) => ({
+          connectOrCreate: tags.map(slug => ({
             where: { slug },
-            create: { name, slug },
+            create: { name: slug, slug },
           })),
         },
       },

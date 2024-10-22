@@ -46,7 +46,7 @@ interface DateRangePickerProps extends React.ComponentPropsWithoutRef<typeof Pop
    * @default "default"
    * @type "default" | "sm" | "lg"
    */
-  triggerSize?: Exclude<ButtonProps["size"], "sm">
+  triggerSize?: ButtonProps["size"]
 
   /**
    * The class name of the calendar trigger button.
@@ -138,7 +138,7 @@ export const DateRangePicker = ({
 
       <PopoverContent className={cx("w-auto p-0", className)} {...props}>
         <Calendar
-          // initialFocus
+          initialFocus
           mode="range"
           defaultMonth={date?.from}
           selected={date}

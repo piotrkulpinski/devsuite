@@ -70,7 +70,7 @@ export default async function ToolPage({ params: { slug } }: { params: { slug: s
 
             <Stack size="sm" className="items-stretch">
               <Button size="md" variant="primary" suffix={<ArrowUpRightIcon />} asChild>
-                <a href={websiteUrl} target="_blank" rel="nofollow noreferrer">
+                <a href={websiteUrl} target="_blank" rel="nofollow noreferrer noopener">
                   {getUrlHostname(websiteUrl)}
                 </a>
               </Button>
@@ -79,37 +79,35 @@ export default async function ToolPage({ params: { slug } }: { params: { slug: s
 
           <IntroDescription>{tool.description}</IntroDescription>
 
-          <div className="flex items-center justify-between gap-4 w-full mt-4">
-            <Stack>
-              {tool.isFeatured && (
-                <Badge variant="outline" prefix={<SparkleIcon className="text-yellow-500" />}>
-                  Featured
-                </Badge>
-              )}
+          <Stack className="mt-4 empty:contents">
+            {tool.isFeatured && (
+              <Badge variant="outline" prefix={<SparkleIcon className="text-yellow-500" />}>
+                Featured
+              </Badge>
+            )}
 
-              {tool.collections.map(collection => (
-                <Badge key={collection.id} variant="outline" asChild>
-                  <Link href={`/collections/${collection.slug}`}>{collection.name}</Link>
-                </Badge>
+            {tool.collections.map(collection => (
+              <Badge key={collection.id} variant="outline" asChild>
+                <Link href={`/collections/${collection.slug}`}>{collection.name}</Link>
+              </Badge>
+            ))}
+
+            {tool.pricing && (
+              <Badge variant="ghost" prefix={<DollarSignIcon className="text-green-500" />}>
+                {tool.pricing}
+              </Badge>
+            )}
+          </Stack>
+
+          {/* {!!socials.data?.length && (
+            <Stack size="sm">
+              {socials.data.map(({ url, name }) => (
+                <Button key={url} size="md" variant="secondary" suffix={<EllipsisIcon />}>
+                  More
+                </Button>
               ))}
-
-              {tool.pricing && (
-                <Badge variant="ghost" prefix={<DollarSignIcon className="text-green-500" />}>
-                  {tool.pricing}
-                </Badge>
-              )}
             </Stack>
-
-            {/* {!!socials.data?.length && (
-              <Stack size="sm">
-                {socials.data.map(({ url, name }) => (
-                  <Button key={url} size="md" variant="secondary" suffix={<EllipsisIcon />}>
-                    More
-                  </Button>
-                ))}
-              </Stack>
-            )} */}
-          </div>
+          )} */}
         </div>
 
         {tool.screenshotUrl && <Gallery images={[tool.screenshotUrl]} />}

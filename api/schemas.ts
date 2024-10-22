@@ -5,7 +5,6 @@ import { isRealEmail } from "~/lib/email"
 export const submitToolSchema = z.object({
   name: z.string().min(1, "Name is required"),
   websiteUrl: z.string().min(1, "Website is required").url("Invalid URL"),
-  description: z.string().optional(),
   submitterName: z.string().min(1, "Your name is required"),
   submitterEmail: z.string().min(1, "Your email is required").email(),
   newsletterOptIn: z.boolean().optional().default(true),

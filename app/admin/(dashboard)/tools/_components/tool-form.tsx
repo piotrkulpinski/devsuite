@@ -253,6 +253,20 @@ export function ToolForm({
 
         <FormField
           control={form.control}
+          name="pricing"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Pricing</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="xHandle"
           render={({ field }) => (
             <FormItem>

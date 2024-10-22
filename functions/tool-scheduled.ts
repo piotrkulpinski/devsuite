@@ -5,7 +5,7 @@ import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
 
 export const toolScheduled = inngest.createFunction(
-  { id: "tool.scheduled" },
+  { id: "tool.scheduled", concurrency: { limit: 2 } },
   { event: "tool.scheduled" },
   async ({ event, step }) => {
     const tool = await step.run("fetch-tool", async () => {
@@ -28,8 +28,12 @@ export const toolScheduled = inngest.createFunction(
       return getSocialsFromUrl(tool.websiteUrl)
     })
 
-    const [{ categories, tags, ...content }, faviconUrl, screenshotUrl, socials] =
-      await Promise.all([contentPromise, faviconPromise, screenshotPromise, socialsPromise])
+    const [{ tags, ...content }, faviconUrl, screenshotUrl, socials] = await Promise.all([
+      contentPromise,
+      faviconPromise,
+      screenshotPromise,
+      socialsPromise,
+    ])
 
     await step.run("update-tool", async () => {
       return prisma.tool.update({
@@ -40,11 +44,11 @@ export const toolScheduled = inngest.createFunction(
           screenshotUrl,
           xHandle: socials.X?.[0]?.user,
           socials: Object.entries(socials).map(([name, links]) => ({ name, url: links[0].url })),
-          categories: { set: categories.map(({ id }) => ({ id })) },
+          // categories: { set: categories.map(({ id }) => ({ id })) },
           tags: {
-            connectOrCreate: tags.map(({ name, slug }) => ({
+            connectOrCreate: tags.map(slug => ({
               where: { slug },
-              create: { name, slug },
+              create: { name: slug, slug },
             })),
           },
         },

@@ -1,6 +1,6 @@
 import { createAnthropic } from "@ai-sdk/anthropic"
 import { openai } from "@ai-sdk/openai"
-import { isTruthy, slugify } from "@curiousleaf/utils"
+import { slugify } from "@curiousleaf/utils"
 import type { Tool } from "@prisma/client"
 import { generateObject } from "ai"
 import type { Jsonify } from "inngest/helpers/jsonify"
@@ -42,15 +42,15 @@ export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
       content: z
         .string()
         .describe(
-          "A detailed and engaging longer description with key benefits (up to 1000 characters). Can be Markdown formatted, but should start with paragraph and not use headings. Make sure the lists use correct Markdown syntax.",
+          "A detailed and engaging longer description with key benefits (up to 1000 characters). Can be Markdown formatted, but should start with paragraph and not use headings. Highlight important points with bold text. Make sure the lists use correct Markdown syntax.",
         ),
-      categories: z
-        .array(z.string())
-        .max(2)
-        .transform(a => a.map(slug => categories.find(c => c.slug === slug)).filter(isTruthy))
-        .describe("A list of categories for the tool."),
+      // categories: z
+      //   .array(z.string())
+      //   .max(2)
+      //   .transform(a => a.map(name => categories.find(c => c.name === name)).filter(isTruthy))
+      //   .describe("A list of categories for the tool."),
       tags: z
-        .array(z.string().transform(name => ({ name, slug: slugify(name) })))
+        .array(z.string().transform(name => slugify(name)))
         .max(10)
         .describe(
           "A list (max 10) of tags for the tool. Should be short, descriptive and related to software development",
@@ -64,19 +64,20 @@ export const generateContent = async (tool: Tool | Jsonify<Tool>) => {
         You are an expert content creator specializing in developer tool software products.
         Your task is to generate high-quality, engaging content to display on a directory website.
         You do not use any catchphrases like "Empower", "Streamline" etc.
-        You also assign the project to specified categories and collections.
-        DO NOT force it to be in a category or collection if it does not belong to any.
-        DO NOT assign to any categories or collections that do not exist.
       `,
+      //   You also assign the project to specified categories and collections.
+      //   DO NOT force it to be in a category or collection if it does not belong to any.
+      //   DO NOT assign to any categories or collections that do not exist.
+      // `,
       prompt: `
         Provide me details for the following data:
         title: ${scrapedData.metadata?.title}
         description: ${scrapedData.metadata?.description}
         content: ${scrapedData.markdown}
-
-        Here is the list of categories to assign to the tool:
-        ${categories.map(({ name }) => name).join("\n")}
       `,
+      //   Here is the list of categories to assign to the tool:
+      //   ${categories.map(({ name }) => name).join("\n")}
+      // `,
       temperature: 0.3,
     })
 

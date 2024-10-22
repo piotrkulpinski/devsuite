@@ -127,7 +127,7 @@ export const CommandMenu = () => {
               <CommandItem
                 key={tool.id}
                 value={`tool:${tool.name}`}
-                onSelect={() => handleSelect(`/tools/${tool.id}`)}
+                onSelect={() => handleSelect(`/admin/tools/${tool.slug}`)}
               >
                 {tool.name}
               </CommandItem>
@@ -140,7 +140,7 @@ export const CommandMenu = () => {
             {searchResults.categories.map(category => (
               <CommandItem
                 key={category.id}
-                onSelect={() => handleSelect(`/categories/${category.id}`)}
+                onSelect={() => handleSelect(`/admin/categories/${category.slug}`)}
               >
                 {category.name}
               </CommandItem>
@@ -154,7 +154,7 @@ export const CommandMenu = () => {
               <CommandItem
                 key={collection.id}
                 value={`collection:${collection.name}`}
-                onSelect={() => handleSelect(`/collections/${collection.id}`)}
+                onSelect={() => handleSelect(`/admin/collections/${collection.slug}`)}
               >
                 {collection.name}
               </CommandItem>
@@ -165,7 +165,7 @@ export const CommandMenu = () => {
         {!!searchResults?.tags.length && (
           <CommandGroup heading="Tags">
             {searchResults.tags.map(tag => (
-              <CommandItem key={tag.id} onSelect={() => handleSelect(`/tags/${tag.id}`)}>
+              <CommandItem key={tag.id} onSelect={() => handleSelect(`/admin/tags/${tag.slug}`)}>
                 {tag.slug}
               </CommandItem>
             ))}

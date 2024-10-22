@@ -2,7 +2,7 @@ import { GiftIcon } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
-import { findToolSlugs, findUniqueTool } from "~/api/tools/queries"
+import { findUniqueTool } from "~/api/tools/queries"
 import { SubmitProducts } from "~/app/(web)/submit/[tool]/products"
 import { Prose } from "~/components/common/prose"
 import { PlanSkeleton } from "~/components/web/plan"
@@ -13,16 +13,7 @@ import { Wrapper } from "~/components/web/ui/wrapper"
 import { config } from "~/config"
 import { isToolPublished } from "~/lib/tools"
 
-export async function generateStaticParams() {
-  const tools = await findToolSlugs({})
-  return tools.map(({ slug }) => ({ tool: slug }))
-}
-
-type SubmitPackagesProps = {
-  params: { tool: string }
-}
-
-export default async function SubmitPackages({ params }: SubmitPackagesProps) {
+export default async function SubmitPackages({ params }: { params: { tool: string } }) {
   const tool = await findUniqueTool({
     where: {
       slug: params.tool,

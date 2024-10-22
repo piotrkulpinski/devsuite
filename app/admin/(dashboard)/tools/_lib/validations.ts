@@ -31,6 +31,7 @@ export const toolSchema = z.object({
   screenshotUrl: z.string().url("Invalid URL").optional(),
   socials: z.array(socialSchema).optional(),
   isFeatured: z.boolean().default(false),
+  pricing: z.string().optional(),
   xHandle: z.string().optional(),
   submitterName: z.string().optional(),
   submitterEmail: z.string().email("Invalid email").optional(),

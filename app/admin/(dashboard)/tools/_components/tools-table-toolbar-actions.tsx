@@ -2,6 +2,7 @@
 
 import type { Tool } from "@prisma/client"
 import type { Table } from "@tanstack/react-table"
+import { ToolsScheduleDialog } from "~/app/admin/(dashboard)/tools/_components/tools-schedule-dialog"
 import { ToolsDeleteDialog } from "./tools-delete-dialog"
 
 interface ToolsTableToolbarActionsProps {
@@ -12,10 +13,17 @@ export function ToolsTableToolbarActions({ table }: ToolsTableToolbarActionsProp
   return (
     <>
       {table.getFilteredSelectedRowModel().rows.length > 0 ? (
-        <ToolsDeleteDialog
-          tools={table.getFilteredSelectedRowModel().rows.map(row => row.original)}
-          onSuccess={() => table.toggleAllRowsSelected(false)}
-        />
+        <>
+          <ToolsScheduleDialog
+            tools={table.getFilteredSelectedRowModel().rows.map(row => row.original)}
+            onSuccess={() => table.toggleAllRowsSelected(false)}
+          />
+
+          <ToolsDeleteDialog
+            tools={table.getFilteredSelectedRowModel().rows.map(row => row.original)}
+            onSuccess={() => table.toggleAllRowsSelected(false)}
+          />
+        </>
       ) : null}
 
       {/**

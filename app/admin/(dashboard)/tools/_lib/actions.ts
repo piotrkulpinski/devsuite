@@ -95,20 +95,26 @@ export const deleteTools = authedProcedure
     return true
   })
 
-export const scheduleTool = authedProcedure
+export const scheduleTools = authedProcedure
   .createServerAction()
-  .input(z.object({ id: z.string(), publishedAt: z.date() }))
-  .handler(async ({ input: { id, publishedAt } }) => {
-    const tool = await prisma.tool.update({
-      where: { id },
+  .input(z.object({ ids: z.array(z.string()), publishedAt: z.date() }))
+  .handler(async ({ input: { ids, publishedAt } }) => {
+    const tools = await prisma.tool.findMany({
+      where: { id: { in: ids } },
+      select: { slug: true },
+    })
+
+    await prisma.tool.updateMany({
+      where: { id: { in: ids } },
       data: { publishedAt },
     })
 
     revalidatePath("/admin/tools")
-    revalidatePath(`/admin/tools/${tool.slug}`)
 
     // Send an event to the Inngest pipeline
-    await inngest.send({ name: "tool.scheduled", data: { slug: tool.slug } })
+    for (const tool of tools) {
+      await inngest.send({ name: "tool.scheduled", data: { slug: tool.slug } })
+    }
 
     return true
   })

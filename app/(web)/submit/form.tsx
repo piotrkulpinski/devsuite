@@ -28,7 +28,6 @@ export const SubmitForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
     defaultValues: {
       name: "",
       websiteUrl: "",
-      description: "",
       submitterName: "",
       submitterEmail: "",
       newsletterOptIn: true,
@@ -110,24 +109,6 @@ export const SubmitForm = ({ className, ...props }: HTMLAttributes<HTMLFormEleme
               <FormLabel isRequired>Website URL:</FormLabel>
               <FormControl>
                 <Input type="url" size="lg" placeholder="https://posthog.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem className="col-span-full">
-              <FormLabel>Description:</FormLabel>
-              <FormControl>
-                <Input
-                  size="lg"
-                  placeholder="A platform that helps engineers build better products"
-                  {...field}
-                />
               </FormControl>
               <FormMessage />
             </FormItem>
