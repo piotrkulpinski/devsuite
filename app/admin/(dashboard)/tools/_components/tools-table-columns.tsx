@@ -6,6 +6,7 @@ import type { ColumnDef } from "@tanstack/react-table"
 import { ToolActions } from "~/app/admin/(dashboard)/tools/_components/tool-actions"
 import { DataTableColumnHeader } from "~/components/admin/data-table/data-table-column-header"
 import { DataTableLink } from "~/components/admin/data-table/data-table-link"
+import { DataTableThumbnail } from "~/components/admin/data-table/data-table-thumbnail"
 import { Checkbox } from "~/components/common/checkbox"
 
 export function getColumns(): ColumnDef<Tool>[] {
@@ -36,21 +37,8 @@ export function getColumns(): ColumnDef<Tool>[] {
             className="block my-auto mx-1.5"
           />
 
-          <DataTableLink
-            href={`/admin/tools/${row.original.slug}`}
-            className="flex items-center gap-2"
-          >
-            {row.original.faviconUrl && (
-              <img
-                src={row.original.faviconUrl}
-                alt="Favicon"
-                loading="lazy"
-                width={16}
-                height={16}
-                className="size-5 rounded"
-              />
-            )}
-
+          <DataTableLink href={`/admin/tools/${row.original.slug}`}>
+            {row.original.faviconUrl && <DataTableThumbnail src={row.original.faviconUrl} />}
             {row.getValue("name")}
           </DataTableLink>
         </div>

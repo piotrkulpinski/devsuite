@@ -13,13 +13,11 @@ import { prisma } from "~/services/prisma"
 export const createTool = authedProcedure
   .createServerAction()
   .input(toolSchema)
-  .handler(async ({ input: { categories, collections, tags, ...input }, ctx: { user } }) => {
+  .handler(async ({ input: { categories, collections, tags, ...input } }) => {
     const tool = await prisma.tool.create({
       data: {
         ...input,
         slug: input.slug || slugify(input.name),
-        submitterName: user.name,
-        submitterEmail: user.email,
 
         // Relations
         categories: { connect: categories?.map(id => ({ id })) },
@@ -97,7 +95,7 @@ export const deleteTools = authedProcedure
     return true
   })
 
-export const publishTool = authedProcedure
+export const scheduleTool = authedProcedure
   .createServerAction()
   .input(z.object({ id: z.string(), publishedAt: z.date() }))
   .handler(async ({ input: { id, publishedAt } }) => {
@@ -110,7 +108,7 @@ export const publishTool = authedProcedure
     revalidatePath(`/admin/tools/${tool.slug}`)
 
     // Send an event to the Inngest pipeline
-    await inngest.send({ name: "tool.published", data: { slug: tool.slug } })
+    await inngest.send({ name: "tool.scheduled", data: { slug: tool.slug } })
 
     return true
   })
