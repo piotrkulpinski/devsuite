@@ -1,6 +1,6 @@
 import { z } from "zod"
 import { config } from "~/config"
-import { isRealEmail } from "~/lib/email"
+import { isRealEmail } from "~/utils/helpers"
 
 export const submitToolSchema = z.object({
   name: z.string().min(1, "Name is required"),

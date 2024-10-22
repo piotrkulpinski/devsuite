@@ -1,9 +1,6 @@
 import type Stripe from "stripe"
-import { config } from "~/config"
-import EmailAdminNewSubmission from "~/emails/admin/new-submission"
-import EmailSubmissionExpedited from "~/emails/submission-expedited"
 import { env } from "~/env"
-import { sendEmail } from "~/lib/email"
+import { inngest } from "~/services/inngest"
 import { prisma } from "~/services/prisma"
 import { stripe } from "~/services/stripe"
 
@@ -38,27 +35,8 @@ export async function POST(request: Request) {
           where: { slug: metadata.tool },
         })
 
-        const to = config.site.email // TODO: Update when out of sandbox: tool.submitterEmail ?? ""
-        const subject = `🙌 Thanks for submitting ${tool.name}!`
-
-        const adminTo = config.site.email
-        const adminSubject = "New Expedited Listing Request"
-
-        await Promise.all([
-          // Send submission email to user
-          sendEmail({
-            to,
-            subject,
-            template: EmailSubmissionExpedited({ tool, to, subject }),
-          }),
-
-          // Send admin email about new expedited listing
-          sendEmail({
-            to: adminTo,
-            subject: adminSubject,
-            template: EmailAdminNewSubmission({ tool, to: adminTo, subject: adminSubject }),
-          }),
-        ])
+        // Send an event to the Inngest pipeline
+        await inngest.send({ name: "tool.expedited", data: { slug: tool.slug } })
 
         break
       }
@@ -73,13 +51,14 @@ export async function POST(request: Request) {
           break
         }
 
-        await prisma.tool.update({
+        const tool = await prisma.tool.update({
           where: { slug: metadata?.tool },
           data: { isFeatured: subscription.status === "active" },
         })
 
         if (event.type === "customer.subscription.created") {
-          // TODO: Send admin email about new featured listing
+          // Send an event to the Inngest pipeline
+          await inngest.send({ name: "tool.featured", data: { slug: tool.slug } })
         }
 
         if (event.type === "customer.subscription.deleted") {

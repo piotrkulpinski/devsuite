@@ -1,6 +1,7 @@
 import type { Tool } from "@prisma/client"
 import { Text } from "@react-email/components"
 import { differenceInWeeks, subDays } from "date-fns"
+import type { Jsonify } from "inngest/helpers/jsonify"
 import plur from "plur"
 import { config } from "~/config"
 import { EmailButton } from "~/emails/_components/button"
@@ -8,7 +9,7 @@ import { EmailFeatureNudge } from "~/emails/_components/feature-nudge"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/_components/wrapper"
 
 export type EmailSubmissionProps = EmailWrapperProps & {
-  tool?: Tool
+  tool?: Tool | Jsonify<Tool>
   queueDays?: number
 }
 

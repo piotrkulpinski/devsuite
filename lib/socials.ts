@@ -1,3 +1,4 @@
+import "server-only"
 import ky from "ky"
 
 export type Socials = Record<string, Array<Record<string, string> & { url: string }>>

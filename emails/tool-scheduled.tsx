@@ -1,13 +1,14 @@
 import type { Tool } from "@prisma/client"
 import { Text } from "@react-email/components"
 import { differenceInDays, formatDistanceToNowStrict } from "date-fns"
+import type { Jsonify } from "inngest/helpers/jsonify"
 import { config } from "~/config"
 import { EmailButton } from "~/emails/_components/button"
 import { EmailFeatureNudge } from "~/emails/_components/feature-nudge"
 import { EmailWrapper, type EmailWrapperProps } from "~/emails/_components/wrapper"
 
 export type EmailToolScheduledProps = EmailWrapperProps & {
-  tool?: Tool
+  tool?: Tool | Jsonify<Tool>
 }
 
 const EmailToolScheduled = ({ tool, ...props }: EmailToolScheduledProps) => {

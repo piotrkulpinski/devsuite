@@ -1,3 +1,4 @@
+import "server-only"
 import { DeleteObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3"
 import { Upload } from "@aws-sdk/lib-storage"
 import { stripURLSubpath } from "@curiousleaf/utils"

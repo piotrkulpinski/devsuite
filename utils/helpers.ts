@@ -1,3 +1,20 @@
+import ky from "ky"
+
+/**
+ * Checks if an email is a real email by checking if the domain is not in the disposable domains list
+ * @param email
+ * @returns
+ */
+export const isRealEmail = async (email: string) => {
+  const disposableJsonURL =
+    "https://rawcdn.githack.com/disposable/disposable-email-domains/master/domains.json"
+
+  const disposableDomains = await ky.get(disposableJsonURL).json<string[]>()
+  const domain = email.split("@")[1]
+
+  return !disposableDomains.includes(domain)
+}
+
 /**
  * Adds UTM tracking to the provided link
  * It uses the search params and accepts source, medium and campaign which are optional

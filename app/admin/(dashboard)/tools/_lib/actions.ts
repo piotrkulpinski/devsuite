@@ -30,7 +30,7 @@ export const createTool = authedProcedure
 
     // Send an event to the Inngest pipeline
     if (tool.publishedAt) {
-      await inngest.send({ name: "tool.published", data: { slug: tool.slug } })
+      await inngest.send({ name: "tool.scheduled", data: { slug: tool.slug } })
     }
 
     return tool

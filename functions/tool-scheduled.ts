@@ -1,3 +1,6 @@
+import { config } from "~/config"
+import EmailToolScheduled from "~/emails/tool-scheduled"
+import { sendEmails } from "~/lib/email"
 import { generateContent } from "~/lib/generate-content"
 import { uploadFavicon, uploadScreenshot } from "~/lib/media"
 import { getSocialsFromUrl } from "~/lib/socials"
@@ -52,6 +55,19 @@ export const toolScheduled = inngest.createFunction(
             })),
           },
         },
+      })
+    })
+
+    await step.run("send-email", async () => {
+      if (!tool.submitterEmail) return
+
+      const to = tool.submitterEmail
+      const subject = `Great news! ${tool.name}, is scheduled for publication on ${config.site.name}`
+
+      return sendEmails({
+        to,
+        subject,
+        react: EmailToolScheduled({ to, subject, tool }),
       })
     })
   },

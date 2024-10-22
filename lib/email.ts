@@ -1,40 +1,25 @@
-import { SendEmailCommand } from "@aws-sdk/client-sesv2"
+import "server-only"
 import { render } from "@react-email/components"
-import ky from "ky"
 import type { ReactElement } from "react"
 import { config } from "~/config"
-import { sesClient } from "~/services/aws-ses"
+import { resend } from "~/services/resend"
 
-type EmailParams = {
-  to: string | string[]
+export type EmailParams = {
+  to: string
   subject: string
-  template: ReactElement
+  react: ReactElement
 }
 
-export const sendEmail = async ({ to, subject, template }: EmailParams) => {
-  return sesClient.send(
-    new SendEmailCommand({
-      FromEmailAddress: `${config.site.name} <${config.site.email}>`,
-      Destination: { ToAddresses: Array.isArray(to) ? to : [to] },
-      Content: {
-        Simple: {
-          Subject: { Data: subject },
-          Body: {
-            Html: { Data: await render(template) },
-            Text: { Data: await render(template, { plainText: true }) },
-          },
-        },
-      },
-    }),
-  )
-}
+export async function sendEmails(emails: EmailParams | EmailParams[]) {
+  const emailArray = Array.isArray(emails) ? emails : [emails]
 
-export const isRealEmail = async (email: string) => {
-  const disposableJsonURL =
-    "https://rawcdn.githack.com/disposable/disposable-email-domains/master/domains.json"
+  const emailPromises = emailArray.map(async ({ to, subject, react }) => ({
+    from: `${config.site.name} <${config.site.email}>`,
+    to,
+    subject,
+    react,
+    text: await render(react, { plainText: true }),
+  }))
 
-  const disposableDomains = await ky.get(disposableJsonURL).json<string[]>()
-  const domain = email.split("@")[1]
-
-  return !disposableDomains.includes(domain)
+  return resend.batch.send(await Promise.all(emailPromises))
 }

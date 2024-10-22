@@ -14,11 +14,11 @@ import {
 import { config } from "~/config"
 
 export type EmailWrapperProps = ContainerProps & {
-  subject: string
   to: string
+  subject: string
 }
 
-export const EmailWrapper = ({ subject, to, children, ...props }: EmailWrapperProps) => {
+export const EmailWrapper = ({ to, subject, children, ...props }: EmailWrapperProps) => {
   return (
     <Html>
       <Head />
