@@ -12,7 +12,7 @@ interface NavMainProps extends ComponentProps<"nav"> {
   links: {
     title: string
     href: string
-    label?: string
+    label?: ReactNode
     icon: ReactNode
   }[]
 }
@@ -39,7 +39,7 @@ export const NavMain = ({ className, links, isCollapsed, ...props }: NavMainProp
           <Tooltip key={index}>
             <TooltipTrigger asChild>
               <Button
-                size="icon"
+                size="sm"
                 variant={getButtonVariant(href)}
                 prefix={icon}
                 aria-label={title}

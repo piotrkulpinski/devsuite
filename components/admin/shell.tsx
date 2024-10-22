@@ -1,20 +1,17 @@
 "use client"
 
 import {
-  ArrowUpRightIcon,
   GemIcon,
+  GlobeIcon,
   LayoutDashboardIcon,
   LibraryIcon,
   LogOutIcon,
   ShapesIcon,
   TagIcon,
 } from "lucide-react"
-import { signOut } from "next-auth/react"
-import Link from "next/link"
 import * as React from "react"
 import { Nav } from "~/components/admin/nav"
 import { NavMain } from "~/components/admin/nav-main"
-import { Button } from "~/components/admin/ui/button"
 import {
   ResizableHandle,
   ResizablePanel,
@@ -118,20 +115,21 @@ export function Shell({
         </Nav>
 
         <Nav className="mt-auto">
-          <Button variant="ghost" suffix={<ArrowUpRightIcon />} className="justify-between" asChild>
-            <Link href={siteConfig.url} target="_blank">
-              Visit Site
-            </Link>
-          </Button>
-
-          <Button
-            variant="ghost"
-            suffix={<LogOutIcon />}
-            className="justify-between"
-            onClick={() => signOut()}
-          >
-            Sign Out
-          </Button>
+          <NavMain
+            isCollapsed={isCollapsed}
+            links={[
+              {
+                title: "Visit Site",
+                href: siteConfig.url,
+                icon: <GlobeIcon />,
+              },
+              {
+                title: "Sign Out",
+                href: "/admin/sign-out",
+                icon: <LogOutIcon />,
+              },
+            ]}
+          />
         </Nav>
       </ResizablePanel>
 

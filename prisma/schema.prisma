@@ -20,6 +20,7 @@ model Tool {
   affiliateUrl   String?
   faviconUrl     String?
   screenshotUrl  String?
+  pricing        String?
   socials        Json?
   isFeatured     Boolean   @default(false)
   xHandle        String?

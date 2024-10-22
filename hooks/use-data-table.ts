@@ -118,7 +118,7 @@ export function useDataTable<TData>({
   // Search params
   const search = searchParamsSchema.parse(Object.fromEntries(searchParams))
   const page = search.page
-  const perPage = search.per_page ?? props.initialState?.pagination?.pageSize ?? 25
+  const perPage = search.per_page ?? props.initialState?.pagination?.pageSize ?? 50
   const sort =
     search.sort ??
     `${props.initialState?.sorting?.[0]?.id}.${props.initialState?.sorting?.[0]?.desc ? "desc" : "asc"}`

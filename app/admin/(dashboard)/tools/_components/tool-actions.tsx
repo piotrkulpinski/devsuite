@@ -65,7 +65,7 @@ export const ToolActions = ({ tool, row, className, ...props }: ToolActionsProps
           <Button
             aria-label="Open menu"
             variant="outline"
-            size="icon"
+            size="sm"
             prefix={<EllipsisIcon />}
             className={cx("text-muted-foreground data-[state=open]:bg-muted", className)}
             {...props}

@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    --header-height: 3.125rem;
+    --header-height: 3rem;
     --header-top: 0.5rem;
 
     --color-background: 233 100% 4%;

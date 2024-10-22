@@ -1,6 +1,6 @@
 import { getUrlHostname } from "@curiousleaf/utils"
 import { formatDistanceToNowStrict } from "date-fns"
-import { ArrowUpRightIcon, DollarSignIcon, EllipsisIcon, HashIcon, SparkleIcon } from "lucide-react"
+import { ArrowUpRightIcon, DollarSignIcon, HashIcon, SparkleIcon } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
@@ -69,8 +69,6 @@ export default async function ToolPage({ params: { slug } }: { params: { slug: s
             </Stack>
 
             <Stack size="sm" className="items-stretch">
-              <Button size="md" variant="secondary" suffix={<EllipsisIcon />} />
-
               <Button size="md" variant="primary" suffix={<ArrowUpRightIcon />} asChild>
                 <a href={websiteUrl} target="_blank" rel="nofollow noreferrer">
                   {getUrlHostname(websiteUrl)}
@@ -95,9 +93,11 @@ export default async function ToolPage({ params: { slug } }: { params: { slug: s
                 </Badge>
               ))}
 
-              <Badge variant="ghost" prefix={<DollarSignIcon className="text-green-500" />}>
-                free + from $9/mo
-              </Badge>
+              {tool.pricing && (
+                <Badge variant="ghost" prefix={<DollarSignIcon className="text-green-500" />}>
+                  {tool.pricing}
+                </Badge>
+              )}
             </Stack>
 
             {/* {!!socials.data?.length && (

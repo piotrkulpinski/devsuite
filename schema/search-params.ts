@@ -2,7 +2,7 @@ import { z } from "zod"
 
 export const searchParamsSchema = z.object({
   page: z.coerce.number().default(1),
-  per_page: z.coerce.number().default(25),
+  per_page: z.coerce.number().default(50),
   sort: z.string().optional(),
   name: z.string().optional(),
   // status: z.string().optional(),

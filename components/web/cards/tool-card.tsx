@@ -34,15 +34,17 @@ export const ToolCard = ({ tool, ...props }: ToolCardProps) => {
 
         <div className="w-full flex gap-3 items-center justify-between">
           <H4>{tool.name}</H4>
-          {tool.faviconUrl && <Favicon src={tool.faviconUrl} className="rounded-full" />}
+          {tool.faviconUrl && <Favicon src={tool.faviconUrl} />}
         </div>
 
         {tool.tagline && <CardDescription>{tool.tagline}</CardDescription>}
 
-        <Stack size="sm">
-          <Badge variant="ghost">
-            <DollarSignIcon className="text-green-500" /> free + from $9/mo
-          </Badge>
+        <Stack size="sm" className="mt-auto">
+          {tool.pricing && (
+            <Badge variant="ghost" prefix={<DollarSignIcon className="text-green-500" />}>
+              {tool.pricing}
+            </Badge>
+          )}
         </Stack>
       </Link>
     </Card>

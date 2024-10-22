@@ -118,7 +118,7 @@ export const CommandMenu = () => {
         </CommandGroup>
 
         {/* <CommandGroup heading="Quick Commands">
-          <CommandItem onSelect={handleIndexSearch}>Index Search</CommandItem>
+          <CommandItem onSelect={handleUpdatePricing}>Update Pricing</CommandItem>
         </CommandGroup> */}
 
         {!!searchResults?.tools.length && (

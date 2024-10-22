@@ -301,7 +301,7 @@ export function ToolForm({
               <FormLabel>Socials</FormLabel>
               <div className="space-y-2">
                 {socialFields.map((field, index) => (
-                  <div key={field.id} className="flex flex-wrap items-center gap-2 md:gap-4">
+                  <div key={field.id} className="flex flex-wrap items-stretch gap-2">
                     <FormField
                       control={form.control}
                       name={`socials.${index}.name`}
@@ -329,7 +329,7 @@ export function ToolForm({
                     <Button
                       type="button"
                       variant="outline"
-                      size="icon"
+                      size="md"
                       prefix={<TrashIcon />}
                       onClick={() => removeSocial(index)}
                       className="text-red-500"
