@@ -67,6 +67,7 @@
     "react-day-picker": "^8.10.1",
     "react-dom": "19.0.0-rc-69d4b800-20241021",
     "react-hook-form": "^7.53.1",
+    "react-is": "19.0.0-rc-69d4b800-20241021",
     "react-markdown": "^9.0.1",
     "react-resizable-panels": "^2.1.4",
     "recharts": "^2.13.0",
@@ -94,6 +95,7 @@
     "typescript": "^5.6.3"
   },
   "overrides": {
+    "react-is": "$react-is",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
   }
