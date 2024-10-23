@@ -15,54 +15,73 @@ export const toolScheduled = inngest.createFunction(
       return prisma.tool.findUniqueOrThrow({ where: { slug: event.data.slug } })
     })
 
-    const contentPromise = step.run("generate-content", async () => {
-      return generateContent(tool)
-    })
+    // Run steps in parallel
+    await Promise.all([
+      step.run("generate-content", async () => {
+        const { tags, ...content } = await generateContent(tool)
 
-    const faviconPromise = step.run("upload-favicon", async () => {
-      return uploadFavicon(tool.websiteUrl, `tools/${tool.slug}/favicon`)
-    })
+        return prisma.tool.update({
+          where: { id: tool.id },
+          data: {
+            ...content,
+            // categories: { set: categories.map(({ id }) => ({ id })) },
+            tags: {
+              connectOrCreate: tags.map(slug => ({
+                where: { slug },
+                create: { name: slug, slug },
+              })),
+            },
+          },
+        })
+      }),
 
-    const screenshotPromise = step.run("upload-screenshot", async () => {
-      return uploadScreenshot(tool.websiteUrl, `tools/${tool.slug}/screenshot`)
-    })
+      step.run("upload-favicon", async () => {
+        const { id, slug, websiteUrl } = tool
+        const faviconUrl = await uploadFavicon(websiteUrl, `tools/${slug}/favicon`)
 
-    const socialsPromise = step.run("get-socials", async () => {
-      return getSocialsFromUrl(tool.websiteUrl)
-    })
+        return prisma.tool.update({
+          where: { id },
+          data: { faviconUrl },
+        })
+      }),
 
-    const [{ tags, ...content }, faviconUrl, screenshotUrl, socials] = await Promise.all([
-      contentPromise,
-      faviconPromise,
-      screenshotPromise,
-      socialsPromise,
-    ])
+      step.run("upload-screenshot", async () => {
+        const { id, slug, websiteUrl } = tool
+        const screenshotUrl = await uploadScreenshot(websiteUrl, `tools/${slug}/screenshot`)
 
-    await step.run("update-tool", async () => {
-      return prisma.tool.update({
-        where: { id: tool.id },
-        data: {
-          ...content,
-          faviconUrl,
-          screenshotUrl,
-          xHandle: socials.X?.[0]?.user,
-          socials: Object.entries(socials).map(([name, links]) => ({ name, url: links[0].url })),
-          // categories: { set: categories.map(({ id }) => ({ id })) },
-          tags: {
-            connectOrCreate: tags.map(slug => ({
-              where: { slug },
-              create: { name: slug, slug },
+        return prisma.tool.update({
+          where: { id },
+          data: { screenshotUrl },
+        })
+      }),
+
+      step.run("get-socials", async () => {
+        const socials = await getSocialsFromUrl(tool.websiteUrl)
+
+        return prisma.tool.update({
+          where: { id: tool.id },
+          data: {
+            xHandle: socials.X?.[0]?.user,
+            socials: Object.entries(socials).map(([name, links]) => ({
+              name,
+              url: links[0].url,
             })),
           },
-        },
-      })
+        })
+      }),
+    ])
+
+    // Disconnect from DB
+    await step.run("disconnect-from-db", async () => {
+      return prisma.$disconnect()
     })
 
+    // Send email
     await step.run("send-email", async () => {
       if (!tool.submitterEmail) return
 
       const to = tool.submitterEmail
-      const subject = `Great news! ${tool.name}, is scheduled for publication on ${config.site.name}`
+      const subject = `Great news! ${tool.name} is scheduled for publication on ${config.site.name}`
 
       return sendEmails({
         to,

@@ -16,6 +16,11 @@ export default async function LoginPage() {
     redirect("/")
   }
 
+  const handleSignIn = async () => {
+    "use server"
+    await signIn("google", { redirectTo: "/admin" })
+  }
+
   return (
     <div className="min-h-screen flex justify-center items-start p-8 bg-muted md:items-center">
       <Card className="w-full max-w-xs">
@@ -25,15 +30,9 @@ export default async function LoginPage() {
         </CardHeader>
 
         <CardFooter>
-          <form
-            action={async () => {
-              "use server"
-              await signIn("google", { redirectTo: "/admin" })
-            }}
-            className="w-full"
-          >
-            <Button className="w-full">Sign in with Google</Button>
-          </form>
+          <Button size="lg" className="w-full" onClick={handleSignIn}>
+            Sign in with Google
+          </Button>
         </CardFooter>
       </Card>
     </div>

@@ -10,10 +10,7 @@ type FaviconProps = HTMLAttributes<HTMLDivElement> & {
 export const Favicon = ({ className, src, title, ...props }: FaviconProps) => {
   return (
     <div
-      className={cx(
-        "flex size-9 items-center justify-center shrink-0 rounded-md bg-foreground/10 p-0.5",
-        className,
-      )}
+      className={cx("flex size-8 items-center justify-center shrink-0 rounded-md", className)}
       {...props}
     >
       <FaviconImage src={src} title={title} className="size-full" />

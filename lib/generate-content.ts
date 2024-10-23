@@ -127,21 +127,3 @@ export const generateLaunchTweet = async (tool: Tool | Jsonify<Tool>) => {
 
   return object
 }
-
-/**
- * Finds the Twitter handle from a list of links.
- * @param links The list of links.
- * @returns The Twitter handle, or undefined if not found.
- */
-export const findTwitterHandle = (urls: string[]) => {
-  const regex = /^https?:\/\/(?:www\.)?(twitter|x)\.com\/(@?[a-zA-Z0-9_]{1,25})/i
-
-  for (const url of urls) {
-    const match = url.match(regex)
-    if (match) {
-      return match[2]?.startsWith("@") ? match[2].slice(1) : match[2]
-    }
-  }
-
-  return undefined
-}
