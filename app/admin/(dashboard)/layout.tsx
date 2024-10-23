@@ -2,6 +2,7 @@ import { cookies } from "next/headers"
 import type { PropsWithChildren } from "react"
 import { CommandMenu } from "~/components/admin/command-menu"
 import { Shell } from "~/components/admin/shell"
+import { Toaster } from "~/components/admin/ui/toaster"
 import { prisma } from "~/services/prisma"
 import { Providers } from "./providers"
 
@@ -28,6 +29,7 @@ export default async function DashboardLayout({ children }: PropsWithChildren) {
       </Shell>
 
       <CommandMenu />
+      <Toaster />
     </Providers>
   )
 }
