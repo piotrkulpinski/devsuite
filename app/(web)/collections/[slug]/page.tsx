@@ -7,12 +7,16 @@ import { Grid } from "~/components/web/ui/grid"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Wrapper } from "~/components/web/ui/wrapper"
 
+type Params = Promise<{ slug: string }>
+
 export async function generateStaticParams() {
   const collections = await findCollectionSlugs({})
   return collections.map(({ slug }) => ({ slug }))
 }
 
-export default async function CollectionPage({ params: { slug } }: { params: { slug: string } }) {
+export default async function CollectionPage({ params }: { params: Params }) {
+  const { slug } = await params
+
   const [collection, tools] = await Promise.all([
     findUniqueCollection({ where: { slug } }),
     findTools({ where: { collections: { some: { slug } } } }),

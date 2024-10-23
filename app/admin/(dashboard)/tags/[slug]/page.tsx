@@ -5,8 +5,11 @@ import { getTagBySlug, getTools } from "~/app/admin/(dashboard)/tags/_lib/querie
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H4 } from "~/components/common/heading"
 
-export default async function UpdateTagPage({ params }: { params: { slug: string } }) {
-  const [tag, tools] = await Promise.all([getTagBySlug(params.slug), getTools()])
+type Params = Promise<{ slug: string }>
+
+export default async function UpdateTagPage({ params }: { params: Params }) {
+  const { slug } = await params
+  const [tag, tools] = await Promise.all([getTagBySlug(slug), getTools()])
 
   if (!tag) {
     return notFound()

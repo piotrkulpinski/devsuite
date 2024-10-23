@@ -5,12 +5,8 @@ import type { SearchParams } from "~/types"
 import { TagsTable } from "./_components/tags-table"
 import { getTags } from "./_lib/queries"
 
-export interface TagsPageProps {
-  searchParams: SearchParams
-}
-
-export default function TagsPage({ searchParams }: TagsPageProps) {
-  const search = searchParamsSchema.parse(searchParams)
+export default async function TagsPage({ searchParams }: { searchParams: SearchParams }) {
+  const search = searchParamsSchema.parse(await searchParams)
   const tagsPromise = getTags(search)
 
   return (

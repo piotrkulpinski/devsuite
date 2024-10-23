@@ -5,8 +5,11 @@ import { getCategoryBySlug, getTools } from "~/app/admin/(dashboard)/categories/
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H4 } from "~/components/common/heading"
 
-export default async function UpdateCategoryPage({ params }: { params: { slug: string } }) {
-  const [category, tools] = await Promise.all([getCategoryBySlug(params.slug), getTools()])
+type Params = Promise<{ slug: string }>
+
+export default async function UpdateCategoryPage({ params }: { params: Params }) {
+  const { slug } = await params
+  const [category, tools] = await Promise.all([getCategoryBySlug(slug), getTools()])
 
   if (!category) {
     return notFound()

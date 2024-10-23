@@ -10,9 +10,13 @@ import {
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H4 } from "~/components/common/heading"
 
-export default async function UpdateToolPage({ params }: { params: { slug: string } }) {
+type Params = Promise<{ slug: string }>
+
+export default async function UpdateToolPage({ params }: { params: Params }) {
+  const { slug } = await params
+
   const [tool, categories, collections, tags] = await Promise.all([
-    getToolBySlug(params.slug),
+    getToolBySlug(slug),
     getCategories(),
     getCollections(),
     getTags(),

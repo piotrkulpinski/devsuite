@@ -19,12 +19,15 @@ import { Gallery } from "~/components/web/ui/gallery"
 import { IntroDescription } from "~/components/web/ui/intro"
 import { Wrapper } from "~/components/web/ui/wrapper"
 
+type Params = Promise<{ slug: string }>
+
 export async function generateStaticParams() {
   const tools = await findToolSlugs({})
   return tools.map(({ slug }) => ({ slug }))
 }
 
-export default async function ToolPage({ params: { slug } }: { params: { slug: string } }) {
+export default async function ToolPage({ params }: { params: Params }) {
+  const { slug } = await params
   const tool = await findUniqueTool({ where: { slug } })
 
   if (!tool) {

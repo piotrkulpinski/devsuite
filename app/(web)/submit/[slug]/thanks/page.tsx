@@ -5,16 +5,13 @@ import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Wrapper } from "~/components/web/ui/wrapper"
 import { config } from "~/config"
 
-type SubmitThanksProps = {
-  params: { tool: string }
-}
+type Params = Promise<{ slug: string }>
 
-export default async function SubmitThanks({ params }: SubmitThanksProps) {
+export default async function SubmitThanks({ params }: { params: Params }) {
+  const { slug } = await params
+
   const tool = await findUniqueTool({
-    where: {
-      slug: params.tool,
-      publishedAt: undefined,
-    },
+    where: { slug, publishedAt: undefined },
   })
 
   if (!tool) {

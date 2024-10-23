@@ -5,12 +5,8 @@ import type { SearchParams } from "~/types"
 import { CategoriesTable } from "./_components/categories-table"
 import { getCategories } from "./_lib/queries"
 
-export interface CategoriesPageProps {
-  searchParams: SearchParams
-}
-
-export default function CategoriesPage({ searchParams }: CategoriesPageProps) {
-  const search = searchParamsSchema.parse(searchParams)
+export default async function CategoriesPage({ searchParams }: { searchParams: SearchParams }) {
+  const search = searchParamsSchema.parse(await searchParams)
   const categoriesPromise = getCategories(search)
 
   return (

@@ -5,12 +5,8 @@ import type { SearchParams } from "~/types"
 import { ToolsTable } from "./_components/tools-table"
 import { getTools } from "./_lib/queries"
 
-export interface ToolsPageProps {
-  searchParams: SearchParams
-}
-
-export default function ToolsPage({ searchParams }: ToolsPageProps) {
-  const search = searchParamsSchema.parse(searchParams)
+export default async function ToolsPage({ searchParams }: { searchParams: SearchParams }) {
+  const search = searchParamsSchema.parse(await searchParams)
   const toolsPromise = getTools(search)
 
   return (
