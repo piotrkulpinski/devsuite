@@ -5,12 +5,8 @@ import type { SearchParams } from "~/types"
 import { CollectionsTable } from "./_components/collections-table"
 import { getCollections } from "./_lib/queries"
 
-export interface CollectionsPageProps {
-  searchParams: SearchParams
-}
-
-export default function CollectionsPage({ searchParams }: CollectionsPageProps) {
-  const search = searchParamsSchema.parse(searchParams)
+export default async function CollectionsPage({ searchParams }: { searchParams: SearchParams }) {
+  const search = searchParamsSchema.parse(await searchParams)
   const collectionsPromise = getCollections(search)
 
   return (

@@ -22,10 +22,10 @@ export default auth(req => {
 
   if (isProd && env.ALLOWED_IPS) {
     const allowedIps = env.ALLOWED_IPS.split(",")
-    const ip = req.ip || req.headers.get("x-forwarded-for")
+    const ip = req.headers.get("x-forwarded-for")
 
     if (!ip || !allowedIps.includes(ip)) {
-      return NextResponse.redirect(new URL("https://devsuite.beehiiv.com/subscribe"))
+      return NextResponse.redirect(new URL("https://kulp.in/devsuite"))
     }
   }
 

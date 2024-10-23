@@ -8,13 +8,10 @@ import { Grid } from "~/components/web/ui/grid"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Wrapper } from "~/components/web/ui/wrapper"
 import { toolSearchParamsCache } from "~/lib/search-params"
+import type { SearchParams } from "~/types"
 
-type ToolsPageProps = {
-  searchParams: Record<string, string | string[] | undefined>
-}
-
-export default async function ToolsPage({ searchParams }: ToolsPageProps) {
-  const { q, page, sort, perPage } = toolSearchParamsCache.parse(searchParams)
+export default async function ToolsPage({ searchParams }: { searchParams: SearchParams }) {
+  const { q, page, sort, perPage } = toolSearchParamsCache.parse(await searchParams)
 
   const skip = (page - 1) * perPage
   const take = perPage

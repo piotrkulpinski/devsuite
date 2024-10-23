@@ -3,7 +3,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 import { findUniqueTool } from "~/api/tools/queries"
-import { SubmitProducts } from "~/app/(web)/submit/[tool]/products"
+import { SubmitProducts } from "~/app/(web)/submit/[slug]/products"
 import { Prose } from "~/components/common/prose"
 import { PlanSkeleton } from "~/components/web/plan"
 import { Badge } from "~/components/web/ui/badge"
@@ -13,13 +13,13 @@ import { Wrapper } from "~/components/web/ui/wrapper"
 import { config } from "~/config"
 import { isToolPublished } from "~/lib/tools"
 
-export default async function SubmitPackages({ params }: { params: { tool: string } }) {
+type Params = Promise<{ slug: string }>
+
+export default async function SubmitPackages({ params }: { params: Params }) {
+  const { slug } = await params
+
   const tool = await findUniqueTool({
-    where: {
-      slug: params.tool,
-      publishedAt: undefined,
-      isFeatured: false,
-    },
+    where: { slug, publishedAt: undefined, isFeatured: false },
   })
 
   if (!tool) {

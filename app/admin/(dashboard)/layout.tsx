@@ -6,6 +6,8 @@ import { prisma } from "~/services/prisma"
 import { Providers } from "./providers"
 
 export default async function DashboardLayout({ children }: PropsWithChildren) {
+  const cookieStore = await cookies()
+
   const statsPromise = Promise.all([
     prisma.tool.count(),
     prisma.category.count(),
@@ -13,8 +15,8 @@ export default async function DashboardLayout({ children }: PropsWithChildren) {
     prisma.tag.count(),
   ])
 
-  const layout = cookies().get("react-resizable-panels:layout")
-  const collapsed = cookies().get("react-resizable-panels:collapsed")
+  const layout = cookieStore.get("react-resizable-panels:layout")
+  const collapsed = cookieStore.get("react-resizable-panels:collapsed")
 
   const defaultLayout = layout ? JSON.parse(layout.value) : undefined
   const defaultCollapsed = collapsed ? JSON.parse(collapsed.value) : undefined

@@ -5,8 +5,11 @@ import { getCollectionBySlug, getTools } from "~/app/admin/(dashboard)/collectio
 import { Wrapper } from "~/components/admin/ui/wrapper"
 import { H4 } from "~/components/common/heading"
 
-export default async function UpdateCollectionPage({ params }: { params: { slug: string } }) {
-  const [collection, tools] = await Promise.all([getCollectionBySlug(params.slug), getTools()])
+type Params = Promise<{ slug: string }>
+
+export default async function UpdateCollectionPage({ params }: { params: Params }) {
+  const { slug } = await params
+  const [collection, tools] = await Promise.all([getCollectionBySlug(slug), getTools()])
 
   if (!collection) {
     return notFound()
