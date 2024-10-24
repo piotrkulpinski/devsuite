@@ -8,7 +8,7 @@ import { Grid } from "~/components/web/ui/grid"
 import { prisma } from "~/services/prisma"
 
 export const RelatedTools = async ({ tool }: { tool: ToolOne }) => {
-  const take = 4
+  const take = 3
   const where = {
     categories: { some: { slug: { in: tool.categories.map(({ slug }) => slug) } } },
     NOT: { slug: tool.slug },

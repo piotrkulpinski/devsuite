@@ -26,7 +26,7 @@ const DropdownMenuContent = forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cx(
-        "z-50 min-w-[8rem] flex flex-col overflow-hidden rounded-md border border-foreground/15 bg-background/25 backdrop-blur-xl p-1 !duration-150",
+        "z-50 min-w-[8rem] flex flex-col overflow-hidden rounded-md border bg-background/25 backdrop-blur-xl p-1 !duration-150",
         "animate-in fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
         className,
       )}

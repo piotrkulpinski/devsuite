@@ -51,7 +51,7 @@ export const NewsletterForm = ({
         noValidate
         {...props}
       >
-        <div className="flex w-full border border-foreground/15 transition rounded-lg overflow-clip focus-within:ring-[3px] focus-within:ring-foreground/10 focus-within:border-foreground/25">
+        <div className="flex w-full border transition rounded-lg overflow-clip focus-within:ring-[3px] focus-within:ring-foreground/10 focus-within:border-foreground/25">
           <FormField
             control={form.control}
             name="email"

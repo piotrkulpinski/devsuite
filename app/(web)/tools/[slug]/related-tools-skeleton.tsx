@@ -10,7 +10,7 @@ export const RelatedToolsSkeleton = () => {
       </H4>
 
       <Grid className="w-full">
-        {Array.from({ length: 4 }).map((_, index) => (
+        {Array.from({ length: 3 }).map((_, index) => (
           <ToolSkeleton key={index} />
         ))}
       </Grid>

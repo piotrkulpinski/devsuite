@@ -2,6 +2,7 @@
 
 import { getUrlHostname } from "@curiousleaf/utils"
 import PlausibleProvider from "next-plausible"
+import { NuqsAdapter } from "nuqs/adapters/next/app"
 import posthog from "posthog-js"
 import { PostHogProvider } from "posthog-js/react"
 import type { PropsWithChildren } from "react"
@@ -32,7 +33,7 @@ export default function Providers({ children }: PropsWithChildren) {
       />
 
       <PosthogPageview />
-      {children}
+      <NuqsAdapter>{children}</NuqsAdapter>
     </PostHogProvider>
   )
 }

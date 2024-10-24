@@ -35,8 +35,10 @@ export const Header = ({ className, ...props }: HTMLAttributes<HTMLElement>) => 
     >
       <div
         className={cx(
-          "absolute bottom-0 inset-x-0 h-[calc(var(--header-top)+var(--header-height))] backdrop-blur-xl duration-300",
-          "max-md:group-data-[state=open]/menu:-bottom-[var(--header-top)] max-md:group-data-[state=open]/menu:h-dvh",
+          "[--offset:25px] [--cutoff:calc(100%-var(--offset))]",
+          "absolute inset-x-0 top-[calc(var(--header-top)*-1)] -bottom-[var(--offset)] backdrop-blur-xl duration-300",
+          "[mask-image:linear-gradient(to_bottom,black_0,black_var(--cutoff),transparent_var(--cutoff))]",
+          isNavOpen && "max-md:-bottom-[calc(var(--offset)+var(--header-top))]",
         )}
       />
 

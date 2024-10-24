@@ -5,7 +5,7 @@ import { forwardRef } from "react"
 import { type VariantProps, cva, cx } from "~/utils/cva"
 
 export const boxVariants = cva({
-  base: "border border-foreground/15",
+  base: "border",
 
   variants: {
     hover: {
